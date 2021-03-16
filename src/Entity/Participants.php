@@ -6,69 +6,64 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\LieuxRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass=LieuxRepository::class)
+ * @ORM\Entity(repositoryClass=ParticipantsRepository::class)
+ * @UniqueEntity(fields={"mail"}, message="Il y a déjà un compte avec cet e-mail")
+ * @UniqueEntity(fields={"pseudo"}, message="Il y a déjà un compte avec ce pseudo")
  */
 class Participants
 {
     /**
-     * @var int
      *
      * @ORM\Column(name="no_participant", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $noParticipant;
+    private int $noParticipant;
 
     /**
-     * @var string
      *
      * @ORM\Column(name="pseudo", type="string", length=30, nullable=false)
      */
-    private $pseudo;
+    private string $pseudo;
 
     /**
-     * @var string
      *
      * @ORM\Column(name="nom", type="string", length=30, nullable=false)
      */
-    private $nom;
+    private string $nom;
 
     /**
-     * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=30, nullable=false)
      */
-    private $prenom;
+    private string $prenom;
 
     /**
-     * @var string|null
      *
      * @ORM\Column(name="telephone", type="string", length=15, nullable=true)
      */
-    private $telephone;
+    private string $telephone;
 
     /**
-     * @var string
      *
      * @ORM\Column(name="mail", type="string", length=20, nullable=false)
      */
-    private $mail;
+    private string $mail;
 
     /**
-     * @var string
      *
      * @ORM\Column(name="mot_de_passe", type="string", length=20, nullable=false)
      */
-    private $motDePasse;
+    private string $motDePasse;
 
     /**
-     * @var bool
      *
      * @ORM\Column(name="administrateur", type="boolean", nullable=false)
      */
-    private $administrateur;
+    private bool $administrateur;
 
     /**
      * @ORM\Column(name="actif", type="boolean", nullable=false)
@@ -81,7 +76,7 @@ class Participants
     private int $sitesNoSite;
 
     /**
-     * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="participantsNoParticipant")
+     * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="participants_no_participant")
      */
     private Collection $inscriptions;
 
