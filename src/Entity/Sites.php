@@ -11,20 +11,16 @@ use Doctrine\ORM\Mapping as ORM;
 class Sites
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="no_site", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $noSite;
+    private int $noSite;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="nom_site", type="string", length=30, nullable=false)
      */
-    private $nomSite;
+    private string $nomSite;
 
     public function getNoSite(): ?int
     {
