@@ -4,132 +4,100 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Repository\SortiesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Sorties
- *
- * @ORM\Table(name="sorties", indexes={@ORM\Index(name="sorties_lieux_fk", columns={"lieux_no_lieu"}), @ORM\Index(name="sorties_etats_fk", columns={"etats_no_etat"}), @ORM\Index(name="sorties_participants_fk", columns={"organisateur"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=SortiesRepository::class)
  */
 class Sorties
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="no_sortie", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $noSortie;
+    private int $noSortie;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="nom", type="string", length=30, nullable=false)
      */
-    private $nom;
+    private string $nom;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="datedebut", type="datetime", nullable=false)
      */
-    private $datedebut;
+    private \DateTime $datedebut;
 
     /**
-     * @var int|null
-     *
      * @ORM\Column(name="duree", type="integer", nullable=true)
      */
-    private $duree;
+    private ?int $duree;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="datecloture", type="datetime", nullable=false)
      */
-    private $datecloture;
+    private \DateTime $datecloture;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="nbinscriptionsmax", type="integer", nullable=false)
      */
-    private $nbinscriptionsmax;
+    private int $nbinscriptionsmax;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="descriptioninfos", type="string", length=500, nullable=true)
      */
-    private $descriptioninfos;
+    private ?string $descriptioninfos;
 
     /**
-     * @var int|null
-     *
      * @ORM\Column(name="etatsortie", type="integer", nullable=true)
      */
-    private $etatsortie;
+    private ?int $etatsortie;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="urlPhoto", type="string", length=250, nullable=true)
      */
-    private $urlphoto;
+    private ?string $urlphoto;
 
     /**
-     * @var \Etats
-     *
      * @ORM\ManyToOne(targetEntity="Etats")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="etats_no_etat", referencedColumnName="no_etat")
      * })
      */
-    private $etatsNoEtat;
+    private \Etats $etatsNoEtat;
 
     /**
-     * @var \Lieux
-     *
      * @ORM\ManyToOne(targetEntity="Lieux")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="lieux_no_lieu", referencedColumnName="no_lieu")
      * })
      */
-    private $lieuxNoLieu;
+    private \Lieux $lieuxNoLieu;
 
     /**
-     * @var \Participants
-     *
      * @ORM\ManyToOne(targetEntity="Participants")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="organisateur", referencedColumnName="no_participant")
      * })
      */
-    private $organisateur;
+    private \Participants $organisateur;
+    /**
+     * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="participantsNoParticipant")
+     */
+
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Participants", inversedBy="sortiesNoSortie")
-     * @ORM\JoinTable(name="inscriptions",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="sorties_no_sortie", referencedColumnName="no_sortie")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="participants_no_participant", referencedColumnName="no_participant")
-     *   }
-     * )
+     * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="sortiesNoSortie")
      */
-    private $participantsNoParticipant;
+    private \Collection $inscriptions;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->participantsNoParticipant = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->inscriptions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getNoSortie(): ?int
@@ -274,21 +242,21 @@ class Sorties
      */
     public function getParticipantsNoParticipant(): Collection
     {
-        return $this->participantsNoParticipant;
+        return $this->inscriptions;
     }
 
-    public function addParticipantsNoParticipant(Participants $participantsNoParticipant): self
+    public function addParticipantsNoParticipant(Participants $inscription): self
     {
-        if (!$this->participantsNoParticipant->contains($participantsNoParticipant)) {
-            $this->participantsNoParticipant[] = $participantsNoParticipant;
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
         }
 
         return $this;
     }
 
-    public function removeParticipantsNoParticipant(Participants $participantsNoParticipant): self
+    public function removeParticipantsNoParticipant(Participants $inscription): self
     {
-        $this->participantsNoParticipant->removeElement($participantsNoParticipant);
+        $this->inscriptions->removeElement($inscription);
 
         return $this;
     }
