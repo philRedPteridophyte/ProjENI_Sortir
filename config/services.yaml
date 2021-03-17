@@ -29,3 +29,8 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    app.form.type.local_datetime:
+        class: App\Form\Type\LocalDateTimeType
+        tags:
+            - { name: form.type, alias: local_datetime }
