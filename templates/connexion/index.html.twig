@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur Sortir.com !{% endblock %}
+
+{% block body %}
+
+    <style>
+        #logo{
+            position: fixed;
+            top: 50px;
+            left: 50px;
+        }
+
+        #background {
+            background-image: url("assets/images/activites/soiree.jpg");
+            background-size: 100% 100%;
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            top: 0;
+        }
+
+        #formulaire form {
+            background-color: #fff;
+            width: 50%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid black;
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0px 5px 15px 10px rgba(0,0,0,0.5);
+            margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
+            transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
+        }
+
+        button[type="submit"] {
+            height: 80px;
+            width: 150px;
+            background-color: deeppink;
+            color: white;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #f31593;
+            color: white;
+            font-weight: bold;
+        }
+
+        .interactions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .souvenir{
+            display: flex;
+            flex-direction: column;
+            float: left;
+        }
+
+        input[type="text"], input[type="password"]{
+            background-color: rgba(0,0,0,0);
+        }
+
+    </style>
+
+    <div id="pageConnexion">
+        <div id="background"></div>
+        <a href="#" id="logo"><img src="assets/images/logo.png" alt="logo" width="150" height="50"></a>
+
+        <div id="formulaire">
+            {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Erreur : </strong> identifiant/email ou mot de passe incorrect(s). Veuillez ré-essayer ou bien cliquez sur <strong><a href="#">Mot de passe oublié</a></strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
+            <form action="traitementFormConnexion/" method="post">
+                <label for="identifiant">Identifiant</label>
+                <input type="text" required name="identifiant" id="identifiant" class="form-control">
+
+                <label for="motDePasse">Mot de passe : </label>
+                <input type="text" required name="motDePasse" id="motDePasse" class="form-control">
+
+                <div class="interactions">
+                    <div class="souvenir">
+                        <div>
+                            <input type="checkbox" id="souvenir" name="souvenir">
+                            <label for="souvenir">Se souvenir de moi</label>
+                        </div>
+                        <a href="#">Mot de passe oublié</a>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn">Connexion</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
