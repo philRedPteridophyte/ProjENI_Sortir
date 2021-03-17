@@ -62,29 +62,29 @@ class Sorties
     /**
      * @ORM\ManyToOne(targetEntity="Etats")
      */
-    private \Etats $etatsNoEtat;
+    private Etats $etatsNoEtat;
 
     /**
      * @ORM\ManyToOne(targetEntity="Lieux")
      */
-    private \Lieux $lieuxNoLieu;
+    private Lieux $lieuxNoLieu;
 
     /**
      * @ORM\ManyToOne(targetEntity="Participants")
      */
-    private \Participants $organisateur;
+    private Participants $organisateur;
 
     /**
      * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="sorties_no_sortie")
      */
-    private \Collection $inscriptions;
+    private $inscriptions;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->inscriptions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->inscriptions = new ArrayCollection();
     }
 
     public function getId(): ?int

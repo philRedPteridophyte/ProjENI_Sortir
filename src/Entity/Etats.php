@@ -43,5 +43,12 @@ class Etats
         return $this;
     }
 
+    public function  setNoEtat(int $noEtat): self
+    {
+        $this->noEtat = $noEtat;
+
+        return $this;
+    }
+
 
 }
