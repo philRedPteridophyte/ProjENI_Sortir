@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\SortiesRepository;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -65,7 +66,7 @@ class Sorties
      *   @ORM\JoinColumn(name="etats_no_etat", referencedColumnName="no_etat")
      * })
      */
-    private \Etats $etatsNoEtat;
+    private Etats $etatsNoEtat;
 
     /**
      * @ORM\ManyToOne(targetEntity="Lieux")
@@ -73,7 +74,7 @@ class Sorties
      *   @ORM\JoinColumn(name="lieux_no_lieu", referencedColumnName="no_lieu")
      * })
      */
-    private \Lieux $lieuxNoLieu;
+    private Lieux $lieuxNoLieu;
 
     /**
      * @ORM\ManyToOne(targetEntity="Participants")
@@ -81,7 +82,7 @@ class Sorties
      *   @ORM\JoinColumn(name="organisateur", referencedColumnName="no_participant")
      * })
      */
-    private \Participants $organisateur;
+    private Participants $organisateur;
     /**
      * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="participantsNoParticipant")
      */
@@ -90,14 +91,14 @@ class Sorties
     /**
      * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="sortiesNoSortie")
      */
-    private \Collection $inscriptions;
+    private Collection $inscriptions;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->inscriptions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->inscriptions = new ArrayCollection();
     }
 
     public function getNoSortie(): ?int

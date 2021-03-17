@@ -1,0 +1,16 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-12">{{ form_row(form.nom) }}</div>
+    <div class="col-6">{{ form_row(form.datedebut) }}</div>
+    <div class="col-6">{{ form_row(form.duree) }}</div>
+    <div class="col-6">{{ form_row(form.datecloture) }}</div>
+    <div class="col-6">{{ form_row(form.nbinscriptionsmax) }}</div>
+    <div class="col-12">{{ form_row(form.descriptioninfos) }}</div>
+    <div class="col-4">{{ form_row(form.lieux_no_lieu) }}</div>
+
+
+
+</div>
+{{ form_widget(form) }}
+<button class="btn btn-primary mb-2">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
