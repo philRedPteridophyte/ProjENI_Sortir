@@ -11,11 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Villes
 {
     /**
-     * @ORM\Column(name="no_ville", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
      */
-    private int $noVille;
+    private int $id;
 
     /**
      * @ORM\Column(name="nom_ville", type="string", length=30, nullable=false)
@@ -27,9 +27,9 @@ class Villes
      */
     private string $codePostal;
 
-    public function getNoVille(): ?int
+    public function getId(): ?int
     {
-        return $this->noVille;
+        return $this->id;
     }
 
     public function getNomVille(): ?string

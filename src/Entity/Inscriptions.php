@@ -15,22 +15,23 @@ class Inscriptions
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_inscription;
+    private Datetime $date_inscription;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Sorties", inversedBy="inscriptions")
+     *
      */
-    private $sorties_no_sortie;
+    private int  $sorties_no_sortie;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Participants", inversedBy="inscriptions" )
      */
-    private $participants_no_participant;
+    private int $participants_no_participant;
 
     public function getId(): ?int
     {

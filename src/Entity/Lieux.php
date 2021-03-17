@@ -11,11 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Lieux
 {
     /**
-     * @ORM\Column(name="no_lieu", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
      */
-    private int $noLieu;
+    private int $id;
 
     /**
      * @ORM\Column(name="nom_lieu", type="string", length=30, nullable=false)
@@ -39,15 +39,12 @@ class Lieux
 
     /**
      * @ORM\ManyToOne(targetEntity="Villes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="villes_no_ville", referencedColumnName="no_ville")
-     * })
      */
     private ?Villes $villesNoVille;
 
-    public function getNoLieu(): ?int
+    public function getId(): ?int
     {
-        return $this->noLieu;
+        return $this->id;
     }
 
     public function getNomLieu(): ?string

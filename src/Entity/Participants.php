@@ -17,11 +17,11 @@ class Participants
 {
     /**
      *
-     * @ORM\Column(name="no_participant", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
      */
-    private int $noParticipant;
+    private int $id;
 
     /**
      *
@@ -78,19 +78,19 @@ class Participants
     /**
      * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="participants_no_participant")
      */
-    private Collection $inscriptions;
+    private \Doctrine\Common\Collections\Collection $inscriptions;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->sortiesNoSortie = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->inscriptions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getNoParticipant(): ?int
+    public function getId(): ?int
     {
-        return $this->noParticipant;
+        return $this->id;
     }
 
     public function getPseudo(): ?string
@@ -202,27 +202,27 @@ class Participants
     }
 
     /**
-     * @return Collection|Sorties[]
+     * @return Collection|Inscriptions[]
      */
-    public function getSortiesNoSortie(): Collection
+    public function getInscriptions(): Collection
     {
-        return $this->sortiesNoSortie;
+        return $this->inscriptions;
     }
 
-    public function addSortiesNoSortie(Sorties $sortiesNoSortie): self
+    public function addInscriptions(Inscriptions $inscriptions): self
     {
-        if (!$this->sortiesNoSortie->contains($sortiesNoSortie)) {
-            $this->sortiesNoSortie[] = $sortiesNoSortie;
-            $sortiesNoSortie->addParticipantsNoParticipant($this);
+        if (!$this->inscriptions->contains($inscriptions)) {
+            $this->inscriptions[] = $inscriptions;
+            $inscriptions->addParticipantsNoParticipant($this);
         }
 
         return $this;
     }
 
-    public function removeSortiesNoSortie(Sorties $sortiesNoSortie): self
+    public function removeInscriptions(Inscriptions $inscriptions): self
     {
-        if ($this->sortiesNoSortie->removeElement($sortiesNoSortie)) {
-            $sortiesNoSortie->removeParticipantsNoParticipant($this);
+        if ($this->inscriptions->removeElement($inscriptions)) {
+            $inscriptions->removeParticipantsNoParticipant($this);
         }
 
         return $this;

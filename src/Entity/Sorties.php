@@ -13,11 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Sorties
 {
     /**
-     * @ORM\Column(name="no_sortie", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
      */
-    private int $noSortie;
+    private int $id;
 
     /**
      * @ORM\Column(name="nom", type="string", length=30, nullable=false)
@@ -61,34 +61,21 @@ class Sorties
 
     /**
      * @ORM\ManyToOne(targetEntity="Etats")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="etats_no_etat", referencedColumnName="no_etat")
-     * })
      */
     private \Etats $etatsNoEtat;
 
     /**
      * @ORM\ManyToOne(targetEntity="Lieux")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="lieux_no_lieu", referencedColumnName="no_lieu")
-     * })
      */
     private \Lieux $lieuxNoLieu;
 
     /**
      * @ORM\ManyToOne(targetEntity="Participants")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="organisateur", referencedColumnName="no_participant")
-     * })
      */
     private \Participants $organisateur;
-    /**
-     * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="participantsNoParticipant")
-     */
-
 
     /**
-     * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="sortiesNoSortie")
+     * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="sorties_no_sortie")
      */
     private \Collection $inscriptions;
 
@@ -100,9 +87,9 @@ class Sorties
         $this->inscriptions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getNoSortie(): ?int
+    public function getId(): ?int
     {
-        return $this->noSortie;
+        return $this->id;
     }
 
     public function getNom(): ?string
