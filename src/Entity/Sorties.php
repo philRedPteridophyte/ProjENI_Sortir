@@ -65,6 +65,7 @@ class Sorties
     private Etats $etatsNoEtat;
 
     /**
+     *
      * @ORM\ManyToOne(targetEntity="Lieux")
      */
     private Lieux $lieuxNoLieu;

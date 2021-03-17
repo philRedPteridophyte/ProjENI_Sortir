@@ -18,4 +18,48 @@ class SortiesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Sorties::class);
     }
+
+    // /**
+    //  * @return Sorties[] Returns an array of Sorties objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('i.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?Sorties
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
+
+    public function filteredSearch( $lieuxNoLieu , $nom, $datedebut, $datecloture, $suisOrga, $inscr, $pasInscr, $passee, $user) : ?Sorties
+    {
+        $qb = $this->createQueryBuilder('s')
+                    //->join('s.lieuxNoLieux','l')
+        ;
+/*
+        if($lieuxNoLieu){
+            //$qb->where('s.lieuxNoLieu = :v_lieuxNoLieu');
+            //$qb->setParameter('v_lieuxNoLieu', $lieuxNoLieu);
+        }
+*/
+        return null;
+        return $qb->getQuery()->getMaxResults();
+    }
 }

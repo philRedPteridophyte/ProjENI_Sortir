@@ -24,7 +24,6 @@ class Inscriptions
 
     /**
      * @ORM\ManyToOne(targetEntity="Sorties", inversedBy="inscriptions")
-     * @ORM\Column(type="integer")
      */
     private int  $sorties_no_sortie_id;
 

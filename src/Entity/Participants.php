@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Repository\LieuxRepository;
 use App\Repository\ParticipantsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -79,6 +80,11 @@ class Participants
      * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="participants_no_participant")
      */
     private \Doctrine\Common\Collections\Collection $inscriptions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Sorties", mappedBy="organisateur")
+     */
+    private \Doctrine\Common\Collections\Collection $sortiesOrganisees;
 
     /**
      * Constructor
@@ -223,6 +229,33 @@ class Participants
     {
         if ($this->inscriptions->removeElement($inscriptions)) {
             $inscriptions->removeParticipantsNoParticipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \Collection|Sorties[]
+     */
+    public function getSortiesOrganisees(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->sortiesOrganisees;
+    }
+
+    public function addSortiesOrganisees(Sorties $sortiesOrganisees): self
+    {
+        if (!$this->sortiesOrganisees->contains($sortiesOrganisees)) {
+            $this->sortiesOrganisees[] = $sortiesOrganisees;
+            $this->sortiesOrganisees->addParticipantsNoParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSortiesOrganisees(Sorties $sortiesOrganisees): self
+    {
+        if ($this->sortiesOrganisees->removeElement($sortiesOrganisees)) {
+            $this->sortiesOrganisees->removeParticipantsNoParticipant($this);
         }
 
         return $this;

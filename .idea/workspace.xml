@@ -38,11 +38,12 @@
       <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ConnexionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ConnexionController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Etats.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Etats.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Inscriptions.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Inscriptions.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Lieux.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Lieux.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Inscriptions.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Inscriptions.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Participants.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Participants.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Sorties.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Sorties.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Villes.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Villes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/SortiesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/SortiesRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,6 +167,7 @@
       <option name="presentableId" value="Default" />
       <updated>1615818578280</updated>
       <workItem from="1615818582621" duration="4806000" />
+<<<<<<< Updated upstream
       <workItem from="1615881184160" duration="3007000" />
       <workItem from="1615886383002" duration="8000" />
       <workItem from="1615886404867" duration="11688000" />
@@ -174,6 +176,11 @@
       <workItem from="1615902299531" duration="2946000" />
       <workItem from="1615906603078" duration="4123000" />
       <workItem from="1615969392603" duration="2607000" />
+=======
+      <workItem from="1615881184160" duration="14221000" />
+      <workItem from="1615898222932" duration="10882000" />
+      <workItem from="1615969540334" duration="7329000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
