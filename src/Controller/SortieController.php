@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Inscriptions;
 use App\Entity\Participants;
 use App\Entity\Sorties;
 use App\Entity\Etats;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\SortieType;
 use App\Repository\SortiesRepository;
@@ -52,5 +54,34 @@ class SortieController extends AbstractController
             'sortie' => $sortie,
             'form' => $sortieForm->createView(),
         ]);
+    }
+
+    #[Route('/sortie/join/{id}', name: 'joinSortie')]
+    public function joinSortie(int $id, EntityManagerInterface $em, Request $request): Response
+    {
+        // TODO handle real user and dont use this
+        $participant = new Participants();
+        $participant = $em->getRepository(Participants::class)->findOneBy(['nom' => 'penaud']);
+
+        $sortie = $em->getRepository(Sorties::class)->findOneBy( ['id' => "1"]);
+        // TODO handle case when id is not in the database (DAMIEN)
+
+        $isAlreadyIn = $em->getRepository(Inscriptions::class)->findBySortieIdAndParticipants($sortie->getId(),$participant->getId());
+        if($isAlreadyIn){
+          // TODO handle case when user already joined the Sortie
+            echo "deja inscrit";
+        }
+        else {
+            //TODO Remove echo
+            echo "vous etes bien inscrit";
+            $inscription = new Inscriptions();
+            $inscription->setSortiesNoSortieId($sortie->getId());
+            $inscription->setParticipantsNoParticipantId($participant->getId());
+            $inscription->setDateInscription(new DateTime('now'));
+
+            $em->persist($inscription);
+            $em->flush();
+        }
+        return new Response();
     }
 }

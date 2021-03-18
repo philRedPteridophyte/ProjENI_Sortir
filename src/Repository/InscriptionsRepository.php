@@ -19,22 +19,23 @@ class InscriptionsRepository extends ServiceEntityRepository
         parent::__construct($registry, Inscriptions::class);
     }
 
-    // /**
-    //  * @return Inscriptions[] Returns an array of Inscriptions objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $idSortie
+     * @param $idParticipant
+     * @return Inscriptions[]|null Returns an array of Inscriptions objects
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findBySortieIdAndParticipants($idSortie,$idParticipant): ?Inscriptions
     {
         return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('i.sorties_no_sortie_id = :idSortie')
+            ->andWhere('i.participants_no_participant_id = :idParticipant')
+            ->setParameter('idSortie', $idSortie)
+            ->setParameter('idParticipant', $idParticipant)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Inscriptions
