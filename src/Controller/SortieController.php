@@ -100,4 +100,25 @@ class SortieController extends AbstractController
         }
         return new Response();
     }
+
+    #[Route('/sortie/cancel/{id}', name: 'cancelSortie')]
+    // En tant qu'organisateur d'une sortie, je peux annuler une sortie si celle-ci n'est pas encore commencée
+        // La sortie sera alors marquée comme annulée et sera accompagnée d'un motif d'annulation.
+    public function cancelSortie(int $id, EntityManagerInterface $em): Response
+    {
+        // TODO handle real user and dont use this
+        $participant = $em->getRepository(Participants::class)->findOneBy(['nom' => 'leneveu']);
+
+        $sortie = $em->getRepository(Sorties::class)->findOneBy( ['id' => $id]);
+        // TODO handle case when id is not in the database (DAMIEN)
+
+        if($sortie->getOrganisateur()->getId() == $participant->getId()){
+            //TODO add date condition in this if ^^^
+            $sortie->setEtatsortie($em->getRepository(Etats::class)->findOneBy(['libelle' => 'Annulée'])->getId());
+            $sortie->setEtatsNoEtat($em->getRepository(Etats::class)->findOneBy(['libelle' => 'Annulée']));
+            $sortie->setDescriptioninfos("Sortie annulée le : ".date_format(new DateTime('now'),'Y-m-d H:i:s'));
+            $em->flush();
+        }
+        return new Response();
+    }
 }
