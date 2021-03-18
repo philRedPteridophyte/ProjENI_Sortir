@@ -43,6 +43,7 @@ class SortiesController extends AbstractController
         $inscr = null;
         $pasInscr = null;
         $passee = null;
+        $results = null;
 
 
 
