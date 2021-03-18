@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TestController!{% endblock %}
+
+{% block body %}
+    <style>
+        .flash{
+            padding: 20px;
+            display: block;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .flash-success{
+            background-color: forestgreen;
+            box-shadow: 5px 5px 5px 5px rgba(0,255,0,0.5);
+        }
+
+        .flash-error{
+            background-color: red;
+            box-shadow: 5px 5px 5px 5px rgba(255,0,0,0.5);
+        }
+    </style>
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <p>{{ session.pseudo }}</p>
+    <p>{{ session.nom }}</p>
+    <p>{{ session.motDePasse }}</p>
+    <p>{{ session.prenom }}</p>
+
+
+{% endblock %}

@@ -19,6 +19,20 @@ class ParticipantsRepository extends ServiceEntityRepository
         parent::__construct($registry, Participants::class);
     }
 
+    public function findIfExist($identifiant, $mdp): ?Participants
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere(
+                '(i.pseudo = :id AND i.motDePasse = :mdp) OR
+                 (i.mail   = :id AND i.motDePasse = :mdp)
+            ')
+            ->setParameter('id', $identifiant)
+            ->setParameter('mdp', $mdp)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Participants[] Returns an array of Participants objects
     //  */
@@ -32,18 +46,6 @@ class ParticipantsRepository extends ServiceEntityRepository
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Participants
-    {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
         ;
     }
     */

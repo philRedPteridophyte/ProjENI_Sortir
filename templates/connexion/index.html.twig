@@ -63,6 +63,24 @@
             background-color: rgba(0,0,0,0);
         }
 
+        .flash{
+            padding: 20px;
+            display: block;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .flash-success{
+            background-color: forestgreen;
+            box-shadow: 5px 5px 5px 5px rgba(0,255,0,0.5);
+        }
+
+        .flash-error{
+            background-color: red;
+            box-shadow: 5px 5px 5px 5px rgba(255,0,0,0.5);
+        }
     </style>
 
     <div id="pageConnexion">
@@ -70,35 +88,42 @@
         <a href="#" id="logo"><img src="assets/images/logo.png" alt="logo" width="150" height="50"></a>
 
         <div id="formulaire">
-            {% if error %}
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Erreur : </strong> identifiant/email ou mot de passe incorrect(s). Veuillez ré-essayer ou bien cliquez sur <strong><a href="#">Mot de passe oublié</a></strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            {{ form_start(connexionForm) }}
+
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash flash-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            <div class="group">
+                {{ form_label(connexionForm.identifiant) }}
+                {{ form_widget(connexionForm.identifiant) }}
+                {{ form_errors(connexionForm.identifiant) }}
             </div>
-            {% endif %}
-            <form action="traitementFormConnexion/" method="post">
-                <label for="identifiant">Identifiant</label>
-                <input type="text" required name="identifiant" id="identifiant" class="form-control">
 
-                <label for="motDePasse">Mot de passe : </label>
-                <input type="text" required name="motDePasse" id="motDePasse" class="form-control">
+            <div class="group">
+                {{ form_label(connexionForm.motDePasse) }}
+                {{ form_widget(connexionForm.motDePasse) }}
+                {{ form_errors(connexionForm.motDePasse) }}
+            </div>
 
-                <div class="interactions">
-                    <div class="souvenir">
-                        <div>
-                            <input type="checkbox" id="souvenir" name="souvenir">
-                            <label for="souvenir">Se souvenir de moi</label>
-                        </div>
-                        <a href="#">Mot de passe oublié</a>
+            <div class="interactions">
+                <div class="souvenir">
+                    <div class="group">
+                        {{ form_widget(connexionForm.souvenir) }}
+                        {{ form_label(connexionForm.souvenir) }}
                     </div>
-
-                    <div>
-                        <button type="submit" class="btn">Connexion</button>
-                    </div>
+                    <a href="#">Mot de passe oublié</a>
                 </div>
-            </form>
+
+                <div>
+                    <button type="submit" class="btn">Connexion</button>
+                </div>
+            </div>
+            {{ form_end(connexionForm) }}
         </div>
     </div>
 {% endblock %}

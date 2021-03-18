@@ -31,12 +31,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a74aef9c-6aa9-4777-a5d6-2c1a9c112675" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/framework.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/framework.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ConnexionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ConnexionController.php" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/src/Entity/Etats.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Etats.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Lieux.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Lieux.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Inscriptions.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Inscriptions.php" afterDir="false" />
@@ -44,6 +43,14 @@
       <change beforePath="$PROJECT_DIR$/src/Entity/Sorties.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Sorties.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/SortiesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/SortiesRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/Controller/TraitementFormConnexionController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Participants.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Participants.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ConnexionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ConnexionType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ParticipantsRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ParticipantsRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connexion/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connexion/index.html.twig" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -221,6 +228,17 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1143" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1615888527340" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/src/Controller/TestController.php</url>
+          <line>4</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
