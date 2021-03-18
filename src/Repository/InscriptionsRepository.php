@@ -37,6 +37,7 @@ class InscriptionsRepository extends ServiceEntityRepository
         ;
     }
 
+
     /*
     public function findOneBySomeField($value): ?Inscriptions
     {
