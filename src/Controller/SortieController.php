@@ -57,13 +57,12 @@ class SortieController extends AbstractController
     }
 
     #[Route('/sortie/join/{id}', name: 'joinSortie')]
-    public function joinSortie(int $id, EntityManagerInterface $em, Request $request): Response
+    public function joinSortie(int $id, EntityManagerInterface $em): Response
     {
         // TODO handle real user and dont use this
-        $participant = new Participants();
         $participant = $em->getRepository(Participants::class)->findOneBy(['nom' => 'penaud']);
 
-        $sortie = $em->getRepository(Sorties::class)->findOneBy( ['id' => "1"]);
+        $sortie = $em->getRepository(Sorties::class)->findOneBy( ['id' => $id]);
         // TODO handle case when id is not in the database (DAMIEN)
 
         $isAlreadyIn = $em->getRepository(Inscriptions::class)->findBySortieIdAndParticipants($sortie->getId(),$participant->getId());
@@ -80,6 +79,23 @@ class SortieController extends AbstractController
             $inscription->setDateInscription(new DateTime('now'));
 
             $em->persist($inscription);
+            $em->flush();
+        }
+        return new Response();
+    }
+
+    #[Route('/sortie/leave/{id}', name: 'leaveSortie')]
+    public function leaveSortie(int $id, EntityManagerInterface $em): Response
+    {
+        // TODO handle real user and dont use this
+        $participant = $em->getRepository(Participants::class)->findOneBy(['nom' => 'penaud']);
+
+        $sortie = $em->getRepository(Sorties::class)->findOneBy( ['id' => $id]);
+        // TODO handle case when id is not in the database (DAMIEN)
+
+        $userIsInSortie = $em->getRepository(Inscriptions::class)->findBySortieIdAndParticipants($sortie->getId(),$participant->getId());
+        if($userIsInSortie){
+            $em->remove($userIsInSortie);
             $em->flush();
         }
         return new Response();
