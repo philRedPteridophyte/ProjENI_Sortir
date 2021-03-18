@@ -20,56 +20,57 @@ class Inscriptions
     /**
      * @ORM\Column(type="datetime")
      */
-    private Datetime $date_inscription;
+    private \DateTime $date_inscription;
 
     /**
      * @ORM\ManyToOne(targetEntity="Sorties", inversedBy="inscriptions")
-     *
+     * @ORM\Column(type="integer")
      */
-    private int  $sorties_no_sortie;
+    private int  $sorties_no_sortie_id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Participants", inversedBy="inscriptions" )
+     * @ORM\Column(type="integer")
      */
-    private int $participants_no_participant;
+    private int $participants_no_participant_id;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDateInscription(): ?\DateTimeInterface
+    public function getDateInscription(): ?\DateTime
     {
         return $this->date_inscription;
     }
 
-    public function setDateInscription(\DateTimeInterface $date_inscription): self
+    public function setDateInscription(\DateTime $date_inscription): self
     {
         $this->date_inscription = $date_inscription;
 
         return $this;
     }
 
-    public function getSortiesNoSortie(): ?int
+    public function getSortiesNoSortieId(): ?int
     {
-        return $this->sorties_no_sortie;
+        return $this->sorties_no_sortie_id;
     }
 
-    public function setSortiesNoSortie(int $sorties_no_sortie): self
+    public function setSortiesNoSortieId(int $sorties_no_sortie_id): self
     {
-        $this->sorties_no_sortie = $sorties_no_sortie;
+        $this->sorties_no_sortie_id = $sorties_no_sortie_id;
 
         return $this;
     }
 
-    public function getParticipantsNoParticipant(): ?int
+    public function getParticipantsNoParticipantId(): ?int
     {
-        return $this->participants_no_participant;
+        return $this->participants_no_participant_id;
     }
 
-    public function setParticipantsNoParticipant(int $participants_no_participant): self
+    public function setParticipantsNoParticipantId(int $participants_no_participant_id): self
     {
-        $this->participants_no_participant = $participants_no_participant;
+        $this->participants_no_participant_id = $participants_no_participant_id;
 
         return $this;
     }
