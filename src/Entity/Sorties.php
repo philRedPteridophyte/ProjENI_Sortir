@@ -76,7 +76,7 @@ class Sorties
     private Participants $organisateur;
 
     /**
-     * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="sorties_no_sortie")
+     * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="sorties_no_sortie_id")
      */
     private $inscriptions;
 

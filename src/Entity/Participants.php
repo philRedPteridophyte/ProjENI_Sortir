@@ -50,7 +50,7 @@ class Participants
 
     /**
      *
-     * @ORM\Column(name="mail", type="string", length=20, nullable=false)
+     * @ORM\Column(name="mail", type="string", length=225, nullable=false)
      */
     private string $mail;
 
@@ -80,11 +80,6 @@ class Participants
      * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="participants_no_participant")
      */
     private \Doctrine\Common\Collections\Collection $inscriptions;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Sorties", mappedBy="organisateur")
-     */
-    private \Doctrine\Common\Collections\Collection $sortiesOrganisees;
 
     /**
      * Constructor
@@ -234,31 +229,5 @@ class Participants
         return $this;
     }
 
-    /**
-     * @return \Collection|Sorties[]
-     */
-    public function getSortiesOrganisees(): \Doctrine\Common\Collections\Collection
-    {
-        return $this->sortiesOrganisees;
-    }
-
-    public function addSortiesOrganisees(Sorties $sortiesOrganisees): self
-    {
-        if (!$this->sortiesOrganisees->contains($sortiesOrganisees)) {
-            $this->sortiesOrganisees[] = $sortiesOrganisees;
-            $this->sortiesOrganisees->addParticipantsNoParticipant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSortiesOrganisees(Sorties $sortiesOrganisees): self
-    {
-        if ($this->sortiesOrganisees->removeElement($sortiesOrganisees)) {
-            $this->sortiesOrganisees->removeParticipantsNoParticipant($this);
-        }
-
-        return $this;
-    }
 
 }
