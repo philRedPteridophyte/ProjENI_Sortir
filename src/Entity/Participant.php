@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass=ParticipantsRepository::class)
+ * @ORM\Entity(repositoryClass=ParticipantRepository::class)
  * @UniqueEntity(fields={"mail"}, message="Il y a déjà un compte avec cet e-mail")
  * @UniqueEntity(fields={"pseudo"}, message="Il y a déjà un compte avec ce pseudo")
  */
