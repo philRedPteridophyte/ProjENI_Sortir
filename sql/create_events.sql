@@ -6,4 +6,4 @@ ON SCHEDULE
     ON COMPLETION NOT PRESERVE
     ENABLE
 DO
-    UPDATE sorties s SET s.etats_no_etat_id = 2 WHERE s.datecloture > CURDATE() AND s.etats_no_etat_id = 1
+    UPDATE sorties s SET s.etat_id = 2 WHERE s.datecloture > CURDATE() AND s.etat_id = 1
