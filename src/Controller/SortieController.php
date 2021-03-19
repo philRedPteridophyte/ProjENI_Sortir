@@ -61,10 +61,9 @@ class SortieController extends AbstractController
     }
 
     #[Route('/sortie/join/{id}', name: 'joinSortie')]
-    public function joinSortie(int $id, EntityManagerInterface $em): Response
+    public function joinSortie(int $id, EntityManagerInterface $em, Request $request): Response
     {
-        // TODO handle real user and dont use this
-        $participant = $em->getRepository(Participant::class)->findOneBy(['nom' => 'penaud']);
+        $participant = $request->getSession()->get("compteConnecte");
 
         $sortie = $em->getRepository(Sortie::class)->findOneBy( ['id' => $id]);
         // TODO handle case when id is not in the database (DAMIEN)
@@ -78,8 +77,8 @@ class SortieController extends AbstractController
             //TODO Remove echo
             echo "vous etes bien inscrit";
             $inscription = new Inscription();
-            $inscription->setSortie($sortie);
-            $inscription->setParticipant($participant);
+            $inscription->setSortie($sortie->getId());
+            $inscription->setParticipant($participant->getId());
             $inscription->setDateInscription(new DateTime('now'));
 
             $em->persist($inscription);
@@ -89,10 +88,9 @@ class SortieController extends AbstractController
     }
 
     #[Route('/sortie/leave/{id}', name: 'leaveSortie')]
-    public function leaveSortie(int $id, EntityManagerInterface $em): Response
+    public function leaveSortie(int $id, EntityManagerInterface $em, Request $request): Response
     {
-        // TODO handle real user and dont use this
-        $participant = $em->getRepository(Participant::class)->findOneBy(['nom' => 'penaud']);
+        $participant = $request->getSession()->get("compteConnecte");
 
         $sortie = $em->getRepository(Sortie::class)->findOneBy( ['id' => $id]);
         // TODO handle case when id is not in the database (DAMIEN)
@@ -117,8 +115,7 @@ class SortieController extends AbstractController
 
         if($sortie->getOrganisateur()->getId() == $user->getId()){
             //TODO add date condition in this if ^^^
-            $sortie->setEtatsortie($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée'])->getId());
-            $sortie->setEtatsNoEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']));
+            $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée'])->getId());
             $sortie->setDescriptioninfos("Sortie annulée le : ".date_format(new DateTime('now'),'Y-m-d H:i:s'));
             $em->flush();
         }
@@ -129,10 +126,7 @@ class SortieController extends AbstractController
     #[Route('/Sortie', name: 'sorties_1', methods: ['GET','POST'])]
     #[Route('/sorties', name: 'sorties_2', methods: ['GET','POST'])]
     #[Route('/home', name: 'sorties_3', methods: ['GET','POST'])]
-    public function recherche(
-        Request                      $request,
-        SortieRepository       $sortiesRepository
-    ): Response
+    public function recherche(Request $request, SortieRepository $sortiesRepository): Response
     {
         /*
                 if (!$this->isGranted('ROLE_ADMIN') || !$this->isGranted('ROLE_USER')) {
@@ -141,7 +135,7 @@ class SortieController extends AbstractController
         */
 
         //TODO : get user from session
-        $user = new Participant();
+        $user = $request->getSession()->get("compteConnecte");
         //TODO : check roles
 
 

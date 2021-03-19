@@ -60,7 +60,7 @@ class SortieRepository extends ServiceEntityRepository
             //->join('i.Participant', 'p')
             ->addSelect('e')
             ->addSelect('o')
-            ->addSelect( 'CASE WHEN i.participant = :v_user_id THEN 1 ELSE 0 END AS user_inscrit')
+            ->addSelect( 'CASE WHEN i.participant_id = :v_user_id THEN 1 ELSE 0 END AS user_inscrit')
             ->addSelect('COUNT(i) AS participants_count')
             ->where('1 = 1')
             ->setParameter('v_user_id', 1)
@@ -93,12 +93,12 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if($inscr){
-            $qb->andWhere('i.participant = :v_user_id');
+            $qb->andWhere('i.participant_id = :v_user_id');
         }
 
         if($pasInscr){
-            $qb->andWhere(' (CASE WHEN i.participant = :v_user_id THEN 1 ELSE 0 END) = 1');
-            $qb->andWhere(':v_user_id NOT IN (SELECT i2.participant FROM App\Entity\Sortie s2 JOIN App\Entity\Inscription i2 ON s2.id = i2.sorties_no_sortie_id )');
+            $qb->andWhere(' (CASE WHEN i.participant_id = :v_user_id THEN 1 ELSE 0 END) = 1');
+            $qb->andWhere(':v_user_id NOT IN (SELECT i2.participant_id FROM App\Entity\Sortie s2 JOIN App\Entity\Inscription i2 ON s2.id = i2.sortie_id )');
         }
 
         if($passee){
@@ -113,13 +113,12 @@ class SortieRepository extends ServiceEntityRepository
         //var_dump($qb->getQuery()->getSQL());
         //$scal = $qb->getQuery()->getScalarResult();
         $res = $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
-
         foreach ($res as $i => $r ){
             if($r[0] == null){
                 unset($res[$i]);
             }
             else{
-                $res[$i]['sortie'] = $res[0][0];
+                    $res[$i]['sortie'] = $res[0][0];
                 unset($res[$i][0]);
             }
         }
