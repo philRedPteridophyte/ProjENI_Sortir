@@ -6,7 +6,7 @@ use App\Repository\InscriptionsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=InscriptionsRepository::class)
+ * @ORM\Entity(repositoryClass=InscriptionRepository::class)
  */
 class Inscription
 {
