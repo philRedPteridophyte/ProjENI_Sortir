@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=LieuxRepository::class)
  */
-class Lieux
+class Lieu
 {
     /**
      * @ORM\Column(name="id", type="integer", nullable=false)
@@ -38,9 +38,9 @@ class Lieux
     private ?float $longitude;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Villes")
+     * @ORM\ManyToOne(targetEntity="Ville")
      */
-    private ?Villes $villesNoVille;
+    private ?Ville $ville;
 
     public function getId(): ?int
     {
@@ -95,14 +95,14 @@ class Lieux
         return $this;
     }
 
-    public function getVillesNoVille(): ?Villes
+    public function getVille(): ?Ville
     {
-        return $this->villesNoVille;
+        return $this->ville;
     }
 
-    public function setVillesNoVille(?Villes $villesNoVille): self
+    public function setVille(?Ville $ville): self
     {
-        $this->villesNoVille = $villesNoVille;
+        $this->ville = $ville;
 
         return $this;
     }

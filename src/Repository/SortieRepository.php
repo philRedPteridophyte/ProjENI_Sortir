@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Sorties;
+use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Sorties|null find($id, $lockMode = null, $lockVersion = null)
- * @method Sorties|null findOneBy(array $criteria, array $orderBy = null)
- * @method Sorties[]    findAll()
- * @method Sorties[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Sortie|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Sortie[]    findAll()
+ * @method Sortie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class SortieRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Sorties::class);
+        parent::__construct($registry, Sortie::class);
     }
 
     // /**
-    //  * @return Sorties[] Returns an array of Sorties objects
+    //  * @return Sortie[] Returns an array of Sortie objects
     //  */
     /*
     public function findByExampleField($value)
@@ -38,7 +38,7 @@ class SortieRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Sorties
+    public function findOneBySomeField($value): ?Sortie
     {
         return $this->createQueryBuilder('i')
             ->andWhere('i.exampleField = :val')
@@ -52,24 +52,25 @@ class SortieRepository extends ServiceEntityRepository
     public function filteredSearch( $lieuxNoLieu , $nom, $datedebut, $datecloture, $suisOrga, $inscr, $pasInscr, $passee, $user) : ?Array
     {
         $qb = $this->createQueryBuilder('s')
-            ->join('s.etatsNoEtat', 'e')
+            ->join('s.etat', 'e')
             ->join('s.organisateur', 'o')
-            ->leftJoin('s.inscriptions' , 'i')
-            //->leftJoin('s.inscriptions' , 'i2', Query\Expr\Join::WITH, 'i2.participants_no_participant = :v_user_id')
-            //->join('i.Participants', 'p')
+            ->leftJoin('s.inscription' , 'i')
+            ->leftJoin('s.lieu', 'l')
+            //->leftJoin('s.inscriptions' , 'i2', Query\Expr\Join::WITH, 'i2.participant = :v_user_id')
+            //->join('i.Participant', 'p')
             ->addSelect('e')
             ->addSelect('o')
-            ->addSelect( 'CASE WHEN i.participants_no_participant_id = :v_user_id THEN 1 ELSE 0 END AS user_inscrit')
+            ->addSelect( 'CASE WHEN i.participant = :v_user_id THEN 1 ELSE 0 END AS user_inscrit')
             ->addSelect('COUNT(i) AS participants_count')
             ->where('1 = 1')
             ->setParameter('v_user_id', 1)
             ->having('1 = 1');
-            //->addSelect( ' :v_user_id AS HIDDEN user_id')
+        //->addSelect( ' :v_user_id AS HIDDEN user_id')
 
-                    //->join('s.lieuxNoLieux','l')
+        //->join('s.lieuxNoLieux','l')
         ;
         if($lieuxNoLieu){
-            $qb->andWhere('s.lieuxNoLieu = :v_lieuxNoLieu');
+            $qb->andWhere('l.id = :v_lieuxNoLieu');
             $qb->setParameter('v_lieuxNoLieu', $lieuxNoLieu);
         }
 
@@ -92,12 +93,12 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if($inscr){
-            $qb->andWhere('i.participants_no_participant_id = :v_user_id');
+            $qb->andWhere('i.participant = :v_user_id');
         }
 
         if($pasInscr){
-            $qb->andWhere(' (CASE WHEN i.participants_no_participant_id = :v_user_id THEN 1 ELSE 0 END) = 1');
-            //$qb->andWhere(':v_user_id NOT IN (SELECT i2.participants_no_participant FROM App\Entity\Sorties s2 JOIN App\Entity\Inscriptions i2 ON s2.id = i2.sorties_no_sortie_id )');
+            $qb->andWhere(' (CASE WHEN i.participant = :v_user_id THEN 1 ELSE 0 END) = 1');
+            $qb->andWhere(':v_user_id NOT IN (SELECT i2.participant FROM App\Entity\Sortie s2 JOIN App\Entity\Inscription i2 ON s2.id = i2.sorties_no_sortie_id )');
         }
 
         if($passee){
@@ -109,7 +110,7 @@ class SortieRepository extends ServiceEntityRepository
 
 
         //var_dump($qb->getQuery()->getScalarResult());
-
+        //var_dump($qb->getQuery()->getSQL());
         //$scal = $qb->getQuery()->getScalarResult();
         $res = $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
 

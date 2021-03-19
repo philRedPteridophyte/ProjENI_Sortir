@@ -8,14 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=SitesRepository::class)
  */
-class Sites
+class Site
 {
     /**
-     * @ORM\Column(name="no_site", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private int $noSite;
+    private int $id;
 
     /**
      * @ORM\Column(name="nom_site", type="string", length=30, nullable=false)

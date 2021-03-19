@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Inscriptions;
-use App\Entity\Participants;
-use App\Entity\Sorties;
-use App\Entity\Etats;
+use App\Entity\Inscription;
+use App\Entity\Participant;
+use App\Entity\Sortie;
+use App\Entity\Etat;
 use App\Form\SortiesSearchType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,31 +32,29 @@ class SortieController extends AbstractController
     {
 
         $user = $request->getSession()->get('compteConnecte');
-        $sortie = new Sorties();
+        $sortie = new Sortie();
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
 
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             if ($sortieForm->get('save')->isClicked()) {
-                $etat = $em->getRepository(Etats::class)->findOneBy(['libelle' => 'En cours']);
-                $sortie->setEtatsNoEtat($etat);
-                $sortie->setEtatsortie($etat->getId());
-                $sortie->setOrganisateur($em->getRepository(Participants::class)->findOneBy(['pseudo' => $user->getPseudo()]));
+                $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'En cours']);
+                $sortie->setEtat($etat);
+                $sortie->setOrganisateur($em->getRepository(Participant::class)->findOneBy(['pseudo' => $user->getPseudo()]));
                 $em->persist($sortie);
                 $em->flush();
             }
             elseif ($sortieForm->get('publish')->isClicked()) {
-                $etat = $em->getRepository(Etats::class)->findOneBy(['libelle' => 'En cours']);
-                $sortie->setEtatsNoEtat($etat);
-                $sortie->setEtatsortie($etat->getId());
-                $sortie->setOrganisateur($em->getRepository(Participants::class)->findOneBy(['pseudo' => $user->getPseudo()]));
+                $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'En cours']);
+                $sortie->setEtat($etat);
+                $sortie->setOrganisateur($em->getRepository(Participant::class)->findOneBy(['pseudo' => $user->getPseudo()]));
                 $em->persist($sortie);
                 $em->flush();
             }
         }
 
-        return $this->render('sortie/form.html.twig', [
+        return $this->render('sortie/createSortie.html.twig', [
             'sortie' => $sortie,
             'form' => $sortieForm->createView(),
         ]);
@@ -66,12 +64,12 @@ class SortieController extends AbstractController
     public function joinSortie(int $id, EntityManagerInterface $em): Response
     {
         // TODO handle real user and dont use this
-        $participant = $em->getRepository(Participants::class)->findOneBy(['nom' => 'penaud']);
+        $participant = $em->getRepository(Participant::class)->findOneBy(['nom' => 'penaud']);
 
-        $sortie = $em->getRepository(Sorties::class)->findOneBy( ['id' => $id]);
+        $sortie = $em->getRepository(Sortie::class)->findOneBy( ['id' => $id]);
         // TODO handle case when id is not in the database (DAMIEN)
 
-        $isAlreadyIn = $em->getRepository(Inscriptions::class)->findBySortieIdAndParticipants($sortie->getId(),$participant->getId());
+        $isAlreadyIn = $em->getRepository(Inscription::class)->findBySortieIdAndParticipants($sortie->getId(),$participant->getId());
         if($isAlreadyIn){
           // TODO handle case when user already joined the Sortie
             echo "deja inscrit";
@@ -79,9 +77,9 @@ class SortieController extends AbstractController
         else {
             //TODO Remove echo
             echo "vous etes bien inscrit";
-            $inscription = new Inscriptions();
-            $inscription->setSortiesNoSortieId($sortie->getId());
-            $inscription->setParticipantsNoParticipantId($participant->getId());
+            $inscription = new Inscription();
+            $inscription->setSortie($sortie);
+            $inscription->setParticipant($participant);
             $inscription->setDateInscription(new DateTime('now'));
 
             $em->persist($inscription);
@@ -94,12 +92,12 @@ class SortieController extends AbstractController
     public function leaveSortie(int $id, EntityManagerInterface $em): Response
     {
         // TODO handle real user and dont use this
-        $participant = $em->getRepository(Participants::class)->findOneBy(['nom' => 'penaud']);
+        $participant = $em->getRepository(Participant::class)->findOneBy(['nom' => 'penaud']);
 
-        $sortie = $em->getRepository(Sorties::class)->findOneBy( ['id' => $id]);
+        $sortie = $em->getRepository(Sortie::class)->findOneBy( ['id' => $id]);
         // TODO handle case when id is not in the database (DAMIEN)
 
-        $userIsInSortie = $em->getRepository(Inscriptions::class)->findBySortieIdAndParticipants($sortie->getId(),$participant->getId());
+        $userIsInSortie = $em->getRepository(Inscription::class)->findBySortieIdAndParticipants($sortie->getId(),$participant->getId());
         if($userIsInSortie){
             $em->remove($userIsInSortie);
             $em->flush();
@@ -114,13 +112,13 @@ class SortieController extends AbstractController
     {
         $user = $request->getSession()->get('compteConnecte');
 
-        $sortie = $em->getRepository(Sorties::class)->findOneBy( ['id' => $id]);
+        $sortie = $em->getRepository(Sortie::class)->findOneBy( ['id' => $id]);
         // TODO handle case when id is not in the database (DAMIEN)
 
         if($sortie->getOrganisateur()->getId() == $user->getId()){
             //TODO add date condition in this if ^^^
-            $sortie->setEtatsortie($em->getRepository(Etats::class)->findOneBy(['libelle' => 'Annulée'])->getId());
-            $sortie->setEtatsNoEtat($em->getRepository(Etats::class)->findOneBy(['libelle' => 'Annulée']));
+            $sortie->setEtatsortie($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée'])->getId());
+            $sortie->setEtatsNoEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']));
             $sortie->setDescriptioninfos("Sortie annulée le : ".date_format(new DateTime('now'),'Y-m-d H:i:s'));
             $em->flush();
         }
@@ -128,7 +126,7 @@ class SortieController extends AbstractController
     }
 
     #[Route('/Home', name: 'sorties_0', methods: ['GET','POST'])]
-    #[Route('/Sorties', name: 'sorties_1', methods: ['GET','POST'])]
+    #[Route('/Sortie', name: 'sorties_1', methods: ['GET','POST'])]
     #[Route('/sorties', name: 'sorties_2', methods: ['GET','POST'])]
     #[Route('/home', name: 'sorties_3', methods: ['GET','POST'])]
     public function recherche(
@@ -143,7 +141,7 @@ class SortieController extends AbstractController
         */
 
         //TODO : get user from session
-        $user = new Participants();
+        $user = new Participant();
         //TODO : check roles
 
 
@@ -161,7 +159,7 @@ class SortieController extends AbstractController
 
 
 
-        $sortieSearchForm = $this->createForm(SortiesSearchType::class, new Sorties);
+        $sortieSearchForm = $this->createForm(SortiesSearchType::class, new Sortie);
         $sortieSearchForm->handleRequest($request);
         //var_dump($sortieSearchForm->get('lieuxNoLieu')->getData()->getId());
         //var_dump($sortieSearchForm->isSubmitted());

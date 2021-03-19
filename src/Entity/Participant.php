@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\LieuxRepository;
-use App\Repository\ParticipantsRepository;
+use App\Repository\ParticipantRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(fields={"mail"}, message="Il y a déjà un compte avec cet e-mail")
  * @UniqueEntity(fields={"pseudo"}, message="Il y a déjà un compte avec ce pseudo")
  */
-class Participants
+class Participant
 {
     /**
      *
@@ -72,21 +72,21 @@ class Participants
     private bool $actif;
 
     /**
-     * @ORM\Column(name="sites_no_site", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Site")
      */
-    private int $sites_id;
+    private Site $site;
 
     /**
-     * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="participants_no_participant")
+     * @ORM\OneToMany(targetEntity="Inscription", mappedBy="participants")
      */
-    private \Doctrine\Common\Collections\Collection $inscriptions;
+    private \Doctrine\Common\Collections\Collection $inscription;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->inscriptions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->inscription = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,40 +190,40 @@ class Participants
         return $this;
     }
 
-    public function getSitesId(): ?int
+    public function getSite(): ?int
     {
-        return $this->sites_id;
+        return $this->site;
     }
 
-    public function setSitesId(int $sites_id): self
+    public function setSite(int $site): self
     {
-        $this->sites_id = $sites_id;
+        $this->site = $site;
 
         return $this;
     }
 
     /**
-     * @return Collection|Inscriptions[]
+     * @return Collection|Inscription[]
      */
-    public function getInscriptions(): Collection
+    public function getInscription(): Collection
     {
-        return $this->inscriptions;
+        return $this->inscription;
     }
 
-    public function addInscriptions(Inscriptions $inscriptions): self
+    public function addInscription(Inscription $inscription): self
     {
-        if (!$this->inscriptions->contains($inscriptions)) {
-            $this->inscriptions[] = $inscriptions;
-            $inscriptions->addParticipantsNoParticipant($this);
+        if (!$this->inscription->contains($inscription)) {
+            $this->inscription[] = $inscription;
+            $inscription->addParticipant($this);
         }
 
         return $this;
     }
 
-    public function removeInscriptions(Inscriptions $inscriptions): self
+    public function removeInscription(Inscription $inscription): self
     {
-        if ($this->inscriptions->removeElement($inscriptions)) {
-            $inscriptions->removeParticipantsNoParticipant($this);
+        if ($this->inscription->removeElement($inscription)) {
+            $inscription->removeParticipant($this);
         }
 
         return $this;

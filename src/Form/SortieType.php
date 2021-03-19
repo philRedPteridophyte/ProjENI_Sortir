@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Lieux;
-use App\Entity\Sorties;
+use App\Entity\Lieu;
+use App\Entity\Sortie;
 use App\Repository\LieuxRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -61,9 +61,9 @@ class SortieType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('lieux_no_lieu', EntityType::class, [
+            ->add('lieu', EntityType::class, [
                 'label' => "Lieu",
-                'class' => Lieux::class,
+                'class' => Lieu::class,
                 'choice_label' => function ($lieu) {
                     return $lieu->getNomLieu();
                 },

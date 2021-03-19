@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Participants;
+use App\Entity\Participant;
 use App\Form\ConnexionType;
 
 class ConnexionController extends AbstractController
@@ -21,8 +21,8 @@ class ConnexionController extends AbstractController
         $session = $request->getSession();
         //$session->start();
 
-        //Appel du formulaire relié à l'entité Participants
-        $participant = new Participants();
+        //Appel du formulaire relié à l'entité Participant
+        $participant = new Participant();
         $connexionForm = $this->createForm(ConnexionType::class, $participant);
 
         //Vérification de l'envoie du formaulaire
@@ -36,7 +36,7 @@ class ConnexionController extends AbstractController
             //Récupération des variables du Repesitory  et vérification de si exist en base
             $identifiant = htmlentities($connexionForm->get("identifiant")->getData());
             $mot_de_passe = htmlentities($connexionForm->get("motDePasse")->getData());
-            $participantRepo = $this->getDoctrine()->getRepository(Participants::class);
+            $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
             $participantEnBase = $participantRepo->findIfExist($identifiant,$mot_de_passe);
 
             //Si les informations existes

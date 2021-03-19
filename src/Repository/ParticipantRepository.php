@@ -2,24 +2,24 @@
 
 namespace App\Repository;
 
-use App\Entity\Participants;
+use App\Entity\Participant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Participants|null find($id, $lockMode = null, $lockVersion = null)
- * @method Participants|null findOneBy(array $criteria, array $orderBy = null)
- * @method Participants[]    findAll()
- * @method Participants[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Participant|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Participant|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Participant[]    findAll()
+ * @method Participant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ParticipantsRepository extends ServiceEntityRepository
+class ParticipantRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Participants::class);
+        parent::__construct($registry, Participant::class);
     }
 
-    public function findIfExist($identifiant, $mdp): ?Participants
+    public function findIfExist($identifiant, $mdp): ?Participant
     {
         return $this->createQueryBuilder('i')
             ->andWhere(
@@ -34,7 +34,7 @@ class ParticipantsRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Participants[] Returns an array of Participants objects
+    //  * @return Participant[] Returns an array of Participant objects
     //  */
     /*
     public function findByExampleField($value)

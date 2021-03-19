@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\VillesRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=VillesRepository::class)
  */
-class Villes
+class Ville
 {
     /**
      * @ORM\Column(name="id", type="integer", nullable=false)

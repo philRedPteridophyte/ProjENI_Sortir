@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=SortiesRepository::class)
  */
-class Sorties
+class Sortie
 {
     /**
      * @ORM\Column(name="id", type="integer", nullable=false)
@@ -50,42 +50,37 @@ class Sorties
     private ?string $descriptioninfos;
 
     /**
-     * @ORM\Column(name="etatsortie", type="integer", nullable=true)
-     */
-    private ?int $etatsortie;
-
-    /**
      * @ORM\Column(name="urlPhoto", type="string", length=250, nullable=true)
      */
     private ?string $urlphoto;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Etats")
+     * @ORM\ManyToOne(targetEntity="Etat")
      */
-    private Etats $etatsNoEtat;
+    private Etat $etat;
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="Lieux")
+     * @ORM\ManyToOne(targetEntity="Lieu")
      */
-    private Lieux $lieuxNoLieu;
+    private Lieu $lieu;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Participants")
+     * @ORM\ManyToOne(targetEntity="Participant")
      */
-    private Participants $organisateur;
+    private Participant $organisateur;
 
     /**
-     * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="sorties_no_sortie_id")
+     * @ORM\OneToMany(targetEntity="Inscription", mappedBy="sortie")
      */
-    private $inscriptions;
+    private $inscription;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->inscriptions = new ArrayCollection();
+        $this->inscription = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -165,18 +160,6 @@ class Sorties
         return $this;
     }
 
-    public function getEtatsortie(): ?int
-    {
-        return $this->etatsortie;
-    }
-
-    public function setEtatsortie(?int $etatsortie): self
-    {
-        $this->etatsortie = $etatsortie;
-
-        return $this;
-    }
-
     public function getUrlphoto(): ?string
     {
         return $this->urlphoto;
@@ -189,36 +172,36 @@ class Sorties
         return $this;
     }
 
-    public function getEtatsNoEtat(): ?Etats
+    public function getEtat(): ?Etat
     {
-        return $this->etatsNoEtat;
+        return $this->etats;
     }
 
-    public function setEtatsNoEtat(?Etats $etatsNoEtat): self
+    public function setEtat(?Etat $etat): self
     {
-        $this->etatsNoEtat = $etatsNoEtat;
+        $this->etat = $etat;
 
         return $this;
     }
 
-    public function getLieuxNoLieu(): ?Lieux
+    public function getLieu(): ?Lieu
     {
-        return $this->lieuxNoLieu;
+        return $this->lieu;
     }
 
-    public function setLieuxNoLieu(?Lieux $lieuxNoLieu): self
+    public function setLieu(?Lieu $lieu): self
     {
-        $this->lieuxNoLieu = $lieuxNoLieu;
+        $this->lieu = $lieu;
 
         return $this;
     }
 
-    public function getOrganisateur(): ?Participants
+    public function getOrganisateur(): ?Participant
     {
         return $this->organisateur;
     }
 
-    public function setOrganisateur(?Participants $organisateur): self
+    public function setOrganisateur(?Participant $organisateur): self
     {
         $this->organisateur = $organisateur;
 
@@ -226,25 +209,25 @@ class Sorties
     }
 
     /**
-     * @return Collection|Participants[]
+     * @return Collection|Participant[]
      */
-    public function getParticipantsNoParticipant(): Collection
+    public function getParticipant(): Collection
     {
-        return $this->inscriptions;
+        return $this->inscription;
     }
 
-    public function addParticipantsNoParticipant(Participants $inscription): self
+    public function addParticipant(Participant $inscription): self
     {
-        if (!$this->inscriptions->contains($inscription)) {
-            $this->inscriptions[] = $inscription;
+        if (!$this->inscription->contains($inscription)) {
+            $this->inscription[] = $inscription;
         }
 
         return $this;
     }
 
-    public function removeParticipantsNoParticipant(Participants $inscription): self
+    public function removeParticipant(Participant $inscription): self
     {
-        $this->inscriptions->removeElement($inscription);
+        $this->inscription->removeElement($inscription);
 
         return $this;
     }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=InscriptionsRepository::class)
  */
-class Inscriptions
+class Inscription
 {
     /**
      * @ORM\Id
@@ -23,16 +23,14 @@ class Inscriptions
     private \DateTime $date_inscription;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Sorties", inversedBy="inscriptions")
-     * @ORM\Column(name="sorties_no_sortie_id")
+     * @ORM\ManyToOne(targetEntity="Sortie", inversedBy="inscription")
      */
-    private int  $sorties_no_sortie_id;
+    private Sortie $sortie;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Participants", inversedBy="inscriptions" )
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Participant", inversedBy="inscription" )
      */
-    private int $participants_no_participant_id;
+    private Participant $participant;
 
     public function getId(): ?int
     {
@@ -51,26 +49,26 @@ class Inscriptions
         return $this;
     }
 
-    public function getSortiesNoSortieId(): ?int
+    public function getSortie(): ?Sortie
     {
-        return $this->sorties_no_sortie_id;
+        return $this->sorties;
     }
 
-    public function setSortiesNoSortieId(int $sorties_no_sortie_id): self
+    public function setSortie(Sortie $sortie): self
     {
-        $this->sorties_no_sortie_id = $sorties_no_sortie_id;
+        $this->sortie = $sortie;
 
         return $this;
     }
 
-    public function getParticipantsNoParticipantId(): ?int
+    public function getParticipant(): ?Participant
     {
-        return $this->participants_no_participant_id;
+        return $this->participant;
     }
 
-    public function setParticipantsNoParticipantId(int $participants_no_participant_id): self
+    public function setParticipant(Participant $participant): self
     {
-        $this->participants_no_participant_id = $participants_no_participant_id;
+        $this->participant = $participant;
 
         return $this;
     }

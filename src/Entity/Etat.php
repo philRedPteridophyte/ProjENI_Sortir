@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=EtatsRepository::class)
  */
-class Etats
+class Etat
 {
     /**
      * @var int
@@ -17,14 +17,12 @@ class Etats
      * @ORM\Id
      * @ORM\GeneratedValue
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="libelle", type="string", length=30, nullable=false)
      */
-    private $libelle;
+    private string $libelle;
 
     public function getId(): ?int
     {

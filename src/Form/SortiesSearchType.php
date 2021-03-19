@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Lieux;
-use App\Entity\Sorties;
+use App\Entity\Lieu;
+use App\Entity\Sortie;
 use App\Repository\LieuxRepository;
 use App\Form\Type\LocalDateTimeType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,7 +39,7 @@ class SortiesSearchType extends AbstractType
 
             ->add('lieuxNoLieu', EntityType::class, options: [
                 'label' => 'Site'
-                ,'class'=> Lieux::class
+                ,'class'=> Lieu::class
                 ,'choice_label' => 'nomLieu'
                 ,'expanded' => false
                 ,'multiple' => false
@@ -68,22 +68,22 @@ class SortiesSearchType extends AbstractType
                 ,'mapped' => false
             ] )
             ->add('suisOrga', CheckboxType::class,[
-                'label' => 'Sorties dont je suis l\'organisa(teur/trice)'
+                'label' => 'Sortie dont je suis l\'organisa(teur/trice)'
                 ,'mapped' => false
                 ,'required' => false
             ] )
             ->add('inscr', CheckboxType::class,[
-                'label' => 'Sorties auxquelles je suis inscrit(/e)'
+                'label' => 'Sortie auxquelles je suis inscrit(/e)'
                 ,'mapped' => false
                 ,'required' => false
             ] )
             ->add('pasInscr', CheckboxType::class,[
-                'label' => 'Sorties auxquelles je ne suis pas inscrit(/e)'
+                'label' => 'Sortie auxquelles je ne suis pas inscrit(/e)'
                 ,'mapped' => false
                 ,'required' => false
             ] )
             ->add('passee', CheckboxType::class,[
-                'label' => 'Sorties passées )'
+                'label' => 'Sortie passées )'
                 ,'mapped' => false
                 ,'required' => false
             ] )->add('rechercher', SubmitType::class, [
@@ -99,7 +99,7 @@ class SortiesSearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Sorties::class,
+            'data_class' => Sortie::class,
         ]);
     }
 }

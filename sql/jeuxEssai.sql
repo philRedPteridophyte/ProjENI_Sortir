@@ -15,7 +15,7 @@ VALUES ('predfren','redfren','phillip','0712023548','phillip.redfren@sortir.com'
 
 
 
-INSERT INTO `villes` (`id`, `nom_ville`, `code_postal`) VALUES
+INSERT INTO `ville` (`id`, `nom_ville`, `code_postal`) VALUES
 (1, 'Chartres-de-Bretagne', '35131'),
 (2, 'Nantes', '44109'),
 (3, 'Niort', '79000');

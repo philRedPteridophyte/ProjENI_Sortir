@@ -33,19 +33,19 @@
                         <span>{{ r.sortie.datedebut | date('d/m/Y')}}</span>
                         <span>{{ r.sortie.datecloture | date('d/m/Y') }}</span>
                         <span>{{ r.participants_count }}/{{ r.sortie.nbinscriptionsmax }}</span>
-                        <span>{{ r.sortie.etatsNoEtat.libelle }}</span>
+                        <span>{{ r.sortie.etat.libelle }}</span>
                         <span>{{ r.user_inscrit }}</span>
                         <span>{{ r.sortie.organisateur.pseudo }}</span>
                         <span>
-                            {% if r.sortie.etatsNoEtat.id == 4 and r.sortie.organisateur.id == user.id  %}
+                            {% if r.sortie.etat.id == 4 and r.sortie.organisateur.id == user.id  %}
                                 <a href="">modifier</a>
                             {% else %}
                                 <a href="">afficher</a>
                             {% endif %}
 
-                            {% if r.sortie.etatsNoEtat.id == 1 and r.user_inscrit == 0  %}
+                            {% if r.sortie.etat.id == 1 and r.user_inscrit == 0  %}
                                 <a href="{{ path('joinSortie',{ 'id': r.sortie.id }) }}">s'inscrire</a>
-                            {% elseif r.sortie.etatsNoEtat.id == 1 and r.user_inscrit == 1 %}
+                            {% elseif r.sortie.etat.id == 1 and r.user_inscrit == 1 %}
                                 <a href="">se désinscrire</a>
                             {% endif %}
                         </span>
