@@ -18,7 +18,7 @@ class ConnexionController extends AbstractController
     public function index(Request $request): Response
     {
         //Instance des sessions:
-        $session = new Session();
+        $session = $request->getSession();
         //$session->start();
 
         //Appel du formulaire relié à l'entité Participants

@@ -14,6 +14,7 @@ use App\Repository\SortieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
@@ -29,6 +30,8 @@ class SortieController extends AbstractController
     #[Route('/sortie/create', name: 'createSortie')]
     public function createSortie(EntityManagerInterface $em,Request $request): Response
     {
+
+        $user = $request->getSession()->get('compteConnecte');
         $sortie = new Sorties();
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
@@ -38,26 +41,28 @@ class SortieController extends AbstractController
             if ($sortieForm->get('save')->isClicked()) {
                 $etat = $em->getRepository(Etats::class)->findOneBy(['libelle' => 'En cours']);
                 $sortie->setEtatsNoEtat($etat);
-                $sortie->setOrganisateur($em->getRepository(Participants::class)->findOneBy(['nom' => 'leneveu']));
+                $sortie->setEtatsortie($etat->getId());
+                $sortie->setOrganisateur($em->getRepository(Participants::class)->findOneBy(['pseudo' => $user->getPseudo()]));
                 $em->persist($sortie);
                 $em->flush();
             }
             elseif ($sortieForm->get('publish')->isClicked()) {
                 $etat = $em->getRepository(Etats::class)->findOneBy(['libelle' => 'En cours']);
                 $sortie->setEtatsNoEtat($etat);
-                $sortie->setOrganisateur($em->getRepository(Participants::class)->findOneBy(['nom' => 'leneveu']));
+                $sortie->setEtatsortie($etat->getId());
+                $sortie->setOrganisateur($em->getRepository(Participants::class)->findOneBy(['pseudo' => $user->getPseudo()]));
                 $em->persist($sortie);
                 $em->flush();
             }
         }
 
-        return $this->render('sortie/createSortie.html.twig', [
+        return $this->render('sortie/form.html.twig', [
             'sortie' => $sortie,
             'form' => $sortieForm->createView(),
         ]);
     }
 
-    #[Route('/sortie/join/{id}', name: 'joinSortie',requirements: [ 'id' => '\d+'])]
+    #[Route('/sortie/join/{id}', name: 'joinSortie')]
     public function joinSortie(int $id, EntityManagerInterface $em): Response
     {
         // TODO handle real user and dont use this
@@ -105,15 +110,14 @@ class SortieController extends AbstractController
     #[Route('/sortie/cancel/{id}', name: 'cancelSortie')]
     // En tant qu'organisateur d'une sortie, je peux annuler une sortie si celle-ci n'est pas encore commencée
         // La sortie sera alors marquée comme annulée et sera accompagnée d'un motif d'annulation.
-    public function cancelSortie(int $id, EntityManagerInterface $em): Response
+    public function cancelSortie(int $id, EntityManagerInterface $em, Request $request): Response
     {
-        // TODO handle real user and dont use this
-        $participant = $em->getRepository(Participants::class)->findOneBy(['nom' => 'leneveu']);
+        $user = $request->getSession()->get('compteConnecte');
 
         $sortie = $em->getRepository(Sorties::class)->findOneBy( ['id' => $id]);
         // TODO handle case when id is not in the database (DAMIEN)
 
-        if($sortie->getOrganisateur()->getId() == $participant->getId()){
+        if($sortie->getOrganisateur()->getId() == $user->getId()){
             //TODO add date condition in this if ^^^
             $sortie->setEtatsortie($em->getRepository(Etats::class)->findOneBy(['libelle' => 'Annulée'])->getId());
             $sortie->setEtatsNoEtat($em->getRepository(Etats::class)->findOneBy(['libelle' => 'Annulée']));
