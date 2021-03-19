@@ -50,13 +50,13 @@ class SortieController extends AbstractController
             }
         }
 
-        return $this->render('sortie/form.html.twig', [
+        return $this->render('sortie/createSortie.html.twig', [
             'sortie' => $sortie,
             'form' => $sortieForm->createView(),
         ]);
     }
 
-    #[Route('/sortie/join/{id}', name: 'joinSortie')]
+    #[Route('/sortie/join/{id}', name: 'joinSortie',requirements: [ 'id' => '\d+'])]
     public function joinSortie(int $id, EntityManagerInterface $em): Response
     {
         // TODO handle real user and dont use this

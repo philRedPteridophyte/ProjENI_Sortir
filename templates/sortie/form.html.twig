@@ -1,9 +1,13 @@
+{#
 {% include 'base.html.twig' %}
 {% block main %}
     <h1>Créer une sortie</h1>
 
     {% form_theme form 'forms/bootstrap_4_layout.html.twig' %}
+#}
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
+{#
 {% endblock %}
+#}

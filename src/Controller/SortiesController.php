@@ -14,9 +14,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SortiesController extends AbstractController
 {
-    #[Route('/', name: 'sorties_0', methods: ['GET','POST'])]
+    #[Route('/Home', name: 'sorties_0', methods: ['GET','POST'])]
     #[Route('/Sorties', name: 'sorties_1', methods: ['GET','POST'])]
     #[Route('/sorties', name: 'sorties_2', methods: ['GET','POST'])]
+    #[Route('/home', name: 'sorties_3', methods: ['GET','POST'])]
     public function recherche(
         Request                      $request,
         SortiesRepository       $sortiesRepository

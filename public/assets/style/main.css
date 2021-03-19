@@ -1,0 +1,121 @@
+:root{
+    --accent-f : #ff1493;
+    --accent-c : #ff1493CC;
+    --accent-9 : #ff149399;
+    --accent-6 : #ff149366;
+    --accent-3 : #ff149333;
+}
+html{
+    margin: 0;
+    font-family: 'Sriracha', cursive;
+}
+body{
+    position: absolute;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+button[type="submit"] {
+    height: 80px;
+    width: 150px;
+    background-color: var(--accent-f);
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #f31593;
+    color: white;
+    font-weight: bold;
+}
+
+.interactions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.souvenir{
+    display: flex;
+    flex-direction: column;
+    float: left;
+}
+
+input[type="text"], input[type="password"]{
+    background-color: rgba(0,0,0,0);
+}
+
+.flash{
+    padding: 20px;
+    display: block;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.flash-success{
+    background-color: forestgreen;
+    box-shadow: 5px 5px 5px 5px rgba(0,255,0,0.5);
+}
+
+.flash-error{
+    background-color: red;
+    box-shadow: 5px 5px 5px 5px rgba(255,0,0,0.5);
+}
+/*
+NAV
+ */
+nav.navbar{
+}
+/*
+BODY CONTENT
+ */
+.container{
+    padding-top: 40px;
+}
+
+/*
+FORM
+:has()
+ */
+form .form-group {
+    display: block;
+}
+form .form-group:has(input) {
+    display: grid;
+}
+form .form-group > label {
+    width: 30%;
+}
+form .form-group > *:nth-child(2) {
+    width: 69%;
+    margin: 0;
+    display: inline-block;
+}
+
+/*
+Sorties
+ */
+.list-recherche-sortie{
+    padding-top: 30px;
+}
+.list-recherche-sortie > .item-list-titlebar{
+    padding-left: 10px;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    background-color: var(--accent-f);
+    color: white;
+}
+.list-recherche-sortie > .list-item{
+    padding-left: 10px;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    max-height: 300px;
+    overflow-y: auto;
+}

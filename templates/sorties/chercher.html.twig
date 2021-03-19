@@ -1,54 +1,59 @@
-{% extends 'base.html.twig' %}
+{% extends 'document.html.twig' %}
 
-{% block title %}Hello SortiesController!{% endblock %}
+{% block title %}Sortir - Recherche{% endblock %}
 
 {% block body %}
 
-    <div class="filters">
+    <div class="container">
+        <div class="filters filtres-recherche">
 
-    {{ form_start(createArticleForm) }}
-    {{ form_widget(createArticleForm) }}
-    <input type="submit" value="Rechercher">
-    {{ form_end(createArticleForm) }}
+        {{ form_start(createArticleForm) }}
+        {{ form_widget(createArticleForm) }}
+            {#
+            <input type="submit" value="Rechercher">
+            #}
+        {{ form_end(createArticleForm) }}
 
-    </div>
-    <div class="item-list">
-        {% if results %}
-            <div class="item-list-titlebar">
-                <span>Nom de la sortie</span>
-                <span>Date de la sortie</span>
-                <span>Clôture</span>
-                <span>inscrits/places</span>
-                <span>Etat</span>
-                <span>Inscit</span>
-                <span>Organisateur</span>
-                <span>Actions</span>
-            </div>
-            {%  for r in results %}
-                <div class="list-item">
-                    <span>{{ r.sortie.nom }}</span>
-                    <span>{{ r.sortie.datedebut | date('d/m/Y')}}</span>
-                    <span>{{ r.sortie.datecloture | date('d/m/Y') }}</span>
-                    <span>{{ r.participants_count }}/{{ r.sortie.nbinscriptionsmax }}</span>
-                    <span>{{ r.sortie.etatsNoEtat.libelle }}</span>
-                    <span>{{ r.user_inscrit }}</span>
-                    <span>{{ r.sortie.organisateur.pseudo }}</span>
-                    <span>
-                        {% if r.sortie.etatsNoEtat.id == 4 and r.sortie.organisateur.id == user.id  %}
-                            <a href="">modifier</a>
-                        {% else %}
-                            <a href="">afficher</a>
-                        {% endif %}
-
-                        {% if r.sortie.etatsNoEtat.id == 1 and r.user_inscrit == 0  %}
-                            <a href="">s'inscrire</a>
-                        {% elseif r.sortie.etatsNoEtat.id == 1 and r.user_inscrit == 1 %}
-                            <a href="">se désinscrire</a>
-                        {% endif %}
-                    </span>
+        </div>
+        <div class="item-list list-recherche-sortie">
+            {% if results %}
+                <div class="item-list-titlebar">
+                    <span>Nom de la sortie</span>
+                    <span>Date de la sortie</span>
+                    <span>Clôture</span>
+                    <span>inscrits/places</span>
+                    <span>Etat</span>
+                    <span>Inscit</span>
+                    <span>Organisateur</span>
+                    <span>Actions</span>
                 </div>
-            {% else %}
-            {% endfor %}
-        {% endif%}
+                {%  for r in results %}
+                    <div class="list-item">
+                        <span>{{ r.sortie.nom }}</span>
+                        <span>{{ r.sortie.datedebut | date('d/m/Y')}}</span>
+                        <span>{{ r.sortie.datecloture | date('d/m/Y') }}</span>
+                        <span>{{ r.participants_count }}/{{ r.sortie.nbinscriptionsmax }}</span>
+                        <span>{{ r.sortie.etatsNoEtat.libelle }}</span>
+                        <span>{{ r.user_inscrit }}</span>
+                        <span>{{ r.sortie.organisateur.pseudo }}</span>
+                        <span>
+                            {% if r.sortie.etatsNoEtat.id == 4 and r.sortie.organisateur.id == user.id  %}
+                                <a href="">modifier</a>
+                            {% else %}
+                                <a href="">afficher</a>
+                            {% endif %}
+
+                            {% if r.sortie.etatsNoEtat.id == 1 and r.user_inscrit == 0  %}
+                                <a href="{{ path('joinSortie',{ 'id': r.sortie.id }) }}">s'inscrire</a>
+                            {% elseif r.sortie.etatsNoEtat.id == 1 and r.user_inscrit == 1 %}
+                                <a href="">se désinscrire</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                {% else %}
+                {% endfor %}
+            {% endif%}
+        </div>
+
     </div>
 {% endblock %}
