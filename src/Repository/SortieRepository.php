@@ -13,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Sorties[]    findAll()
  * @method Sorties[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SortiesRepository extends ServiceEntityRepository
+class SortieRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
