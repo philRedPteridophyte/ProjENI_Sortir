@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\EtatsRepository;
+use App\Repository\EtatRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
