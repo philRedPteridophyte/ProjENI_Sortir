@@ -72,9 +72,9 @@ class Participants
     private bool $actif;
 
     /**
-     * @ORM\Column(name="sites_id", type="integer", nullable=false)
+     * @ORM\Column(name="sites_no_site", type="integer", nullable=false)
      */
-    private int $sitesId;
+    private int $sites_id;
 
     /**
      * @ORM\OneToMany(targetEntity="Inscriptions", mappedBy="participants_no_participant")
@@ -192,12 +192,12 @@ class Participants
 
     public function getSitesId(): ?int
     {
-        return $this->sitesId;
+        return $this->sites_id;
     }
 
-    public function setSitesId(int $sitesId): self
+    public function setSitesId(int $sites_id): self
     {
-        $this->sitesId = $sitesId;
+        $this->sites_id = $sites_id;
 
         return $this;
     }

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Inscriptions;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,7 +24,7 @@ class InscriptionsRepository extends ServiceEntityRepository
      * @param $idSortie
      * @param $idParticipant
      * @return Inscriptions[]|null Returns an array of Inscriptions objects
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findBySortieIdAndParticipants($idSortie,$idParticipant): ?Inscriptions
     {
