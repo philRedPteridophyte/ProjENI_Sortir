@@ -156,7 +156,6 @@ class SortieController extends AbstractController
                 }
         */
 
-        //TODO : get user from session
         $user = $request->getSession()->get("compteConnecte");
         //TODO : check roles
 
