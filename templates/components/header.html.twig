@@ -12,6 +12,12 @@
             <ul class="navbar-nav">
                 {% if user.administrateur == 1 %}
                 <li class="nav-item">
+                    <a class="nav-link" href="">Gestion Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sites</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ path('ville') }}">Lieux</a>
                 </li>
                 <li class="nav-item">
