@@ -55,7 +55,7 @@ class SortieRepository extends ServiceEntityRepository
             ->join('s.etat', 'e')
             ->join('s.organisateur', 'o')
             ->leftJoin('s.inscription' , 'i')
-            ->leftJoin('s.lieu', 'l')
+            ->leftJoin('s.ville', 'l')
             //->leftJoin('s.inscriptions' , 'i2', Query\Expr\Join::WITH, 'i2.participant = :v_user_id')
             //->join('i.Participant', 'p')
             ->addSelect('e')

@@ -1,0 +1,30 @@
+{% extends 'document.html.twig' %}
+
+{% block title %}Sortir - Gestion des lieux{% endblock %}
+
+{% block body %}
+
+    <h1 style="text-align: center"> Gérer les lieux</h1>
+    <h2> Filtrer les lieux</h2>
+    <div class="container">
+        {{ form_start(villeSearchForm) }}
+        {{ form_widget(villeSearchForm) }}
+        {{ form_end(villeSearchForm) }}
+    </div>
+    <div class="item-list list-recherche-sortie">
+        <div class="item-list-titlebar">
+            <span>Ville</span>
+            <span>Code postal</span>
+            <span>Actions</span>
+        </div>
+        {%  for v in villes %}
+            <div class="list-item">
+                <span>{{ v.nomVille }}</span>
+                <span>{{ v.codePostal }}</span>
+            </div>
+        {% else %}
+        {% endfor %}
+    </div>
+
+    <button>Ajouter</button>
+{% endblock %}
