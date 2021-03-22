@@ -6,7 +6,8 @@
     <div class="container" style="text-align: center">
         <a class="btn btn-primary" href="{{ path('adminAddUser') }}" role="button">Ajouter un utilisateur manuellement</a>
         <br>
-        <label class="form-label" for="customFile">Ou importer une liste au format .csv</label>
-        <input type="file" class="form-control" id="customFile" />
+        {{ form_start(csvForm) }}
+        {{ form_widget(csvForm) }}
+        {{ form_end(csvForm) }}
     </div>
 {% endblock %}
