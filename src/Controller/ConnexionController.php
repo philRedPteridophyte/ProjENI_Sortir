@@ -49,13 +49,13 @@ class ConnexionController extends AbstractController
 
                 if ($souvenir === true) {
 
-                    $cookie = new Cookie('CookieCompteConnecte', $participantEnBase->getPseudo());
+                    $cookie = new Cookie('CookieCompteConnecte', $participantEnBase);
 
                     $response = new Response();
                     $response->headers->setCookie($cookie);
                     $response->send();
                 }else{
-                    $session->set('compteConnecte', $participantEnBase->getPseudo());
+                    $session->set('compteConnecte', $participantEnBase);
                 }
 
                // On envoie vers la page main

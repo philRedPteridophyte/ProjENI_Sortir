@@ -148,7 +148,6 @@ class SortieController extends AbstractController
 
 
         $sorties = null;
-        $user = null;
         $lieuxNoLieu = null;
         $nom = null;
         $datedebut = null;
