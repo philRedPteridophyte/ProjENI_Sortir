@@ -61,7 +61,7 @@ class SortieType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('lieu', EntityType::class, [
+            ->add('ville', EntityType::class, [
                 'label' => "Lieu",
                 'class' => Lieu::class,
                 'choice_label' => function ($lieu) {
