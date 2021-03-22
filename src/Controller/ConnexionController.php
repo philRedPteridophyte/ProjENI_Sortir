@@ -37,23 +37,31 @@ class ConnexionController extends AbstractController
             $identifiant = htmlentities($connexionForm->get("identifiant")->getData());
             $mot_de_passe = htmlentities($connexionForm->get("motDePasse")->getData());
             $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
+
+            $souvenir     = $connexionForm->get("souvenir")->getData();
+            $participantRepo = $this->getDoctrine()->getRepository(Participants::class);
             $participantEnBase = $participantRepo->findIfExist($identifiant,$mot_de_passe);
 
             //Si les informations existes
             if($participantEnBase != null){
                $this->addFlash('success', 'Vous êtes bien connecté en tant que ' . $participantEnBase->getPseudo() . ' :) ');
-               $session->set('compteConnecte', $participantEnBase);
+
+                if ($souvenir === true) {
+                    $this->getResponse()->setCookie('CookieCompteConnecte', $participantEnBase);
+                }else{
+                    $session->set('compteConnecte', $participantEnBase);
+                }
+
                // On envoie vers la page main
+               //return $this->redirectToRoute("sorties_1");
                return $this->redirectToRoute("test");
 
+            //Si les informations existes pas, on ré-affiche le formulaire avec l'erreur
             }else {
                 $this->addFlash('error', 'Erreur : identifiant/email ou mot de passe incorrect(s). Veuillez ré-essayer ou bien cliquez sur mot de passe oublié');
                 $this->redirectToRoute('connexion');
             }
-
-            //Si les informations existes pas
-                //On ré-affiche le formulaire avec l'erreur
-
+            
             // Débugage de vérification si les informations existent en base
             dump($participantEnBase);
         }
