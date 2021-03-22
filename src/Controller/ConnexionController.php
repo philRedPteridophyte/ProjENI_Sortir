@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Participant;
 use App\Form\ConnexionType;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class ConnexionController extends AbstractController
 {
@@ -39,7 +40,7 @@ class ConnexionController extends AbstractController
             $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
 
             $souvenir     = $connexionForm->get("souvenir")->getData();
-            $participantRepo = $this->getDoctrine()->getRepository(Participants::class);
+            $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
             $participantEnBase = $participantRepo->findIfExist($identifiant,$mot_de_passe);
 
             //Si les informations existes
@@ -47,14 +48,19 @@ class ConnexionController extends AbstractController
                $this->addFlash('success', 'Vous êtes bien connecté en tant que ' . $participantEnBase->getPseudo() . ' :) ');
 
                 if ($souvenir === true) {
-                    $this->getResponse()->setCookie('CookieCompteConnecte', $participantEnBase);
+
+                    $cookie = new Cookie('CookieCompteConnecte', $participantEnBase->getPseudo());
+
+                    $response = new Response();
+                    $response->headers->setCookie($cookie);
+                    $response->send();
                 }else{
-                    $session->set('compteConnecte', $participantEnBase);
+                    $session->set('compteConnecte', $participantEnBase->getPseudo());
                 }
 
                // On envoie vers la page main
-               //return $this->redirectToRoute("sorties_1");
-               return $this->redirectToRoute("test");
+               return $this->redirectToRoute("sorties_1");
+               //return $this->redirectToRoute("test");
 
             //Si les informations existes pas, on ré-affiche le formulaire avec l'erreur
             }else {
