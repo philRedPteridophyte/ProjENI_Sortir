@@ -51,7 +51,7 @@ class Inscription
 
     public function getSortie(): ?Sortie
     {
-        return $this->sortie_id;
+        return $this->sortie;
     }
 
     public function setSortie(Sortie $sortie): self
