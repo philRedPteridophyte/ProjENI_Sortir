@@ -119,3 +119,42 @@ Sortie
     max-height: 300px;
     overflow-y: auto;
 }
+.list-participants-sortie{
+    padding-top: 30px;
+}
+.list-participants-sortie > .item-list-titlebar{
+    padding-left: 10px;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 2fr 5fr;
+    grid-template-rows: auto;
+    background-color: var(--accent-f);
+    color: white;
+}
+.list-participants-sortie > .list-item{
+    padding-left: 10px;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 2fr 5fr;
+    grid-template-rows: auto;
+    max-height: 300px;
+    overflow-y: auto;
+}
+/*
+VIEWER
+ */
+.viewer .field-viewer {
+    display: block;
+}
+.viewer .field-viewer:has(input) {
+    display: grid;
+}
+.viewer .field-viewer > label {
+    width: 30%;
+    font-weight: 600;
+}
+.viewer .field-viewer > *:nth-child(2) {
+    width: 69%;
+    margin: 0;
+    display: inline-block;
+}

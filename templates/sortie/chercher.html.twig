@@ -40,7 +40,7 @@
                             {% if r.sortie.etat.id == 4 and r.sortie.organisateur.id == user.id  %}
                                 <a href="">modifier</a>
                             {% else %}
-                                <a href="">afficher</a>
+                                <a href="{{ path('sortie_get_by_id_1',{ 'id': r.sortie.id }) }}">afficher</a>
                             {% endif %}
 
                             {% if r.sortie.etat.id == 1 and r.user_inscrit == 0  %}

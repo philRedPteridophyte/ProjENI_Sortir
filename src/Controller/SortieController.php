@@ -19,12 +19,26 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
 {
-    #[Route('/sortie', name: 'sortie')]
-    public function index(SortieRepository $sortiesRepository): Response
+    #[Route('/sortie/{id}', name: 'sortie_get_by_id_0', requirements: [ 'id' => '\d+' ], methods: ['GET'])]
+    #[Route('/Sortie/{id}', name: 'sortie_get_by_id_1', requirements: [ 'id' => '\d+' ], methods: ['GET'])]
+    public function index(?int $id, Request $request, SortieRepository $sortiesRepository): Response
     {
-        return $this->render('sortie/index.html.twig', [
-            'sorties' => $sortiesRepository->findAll(),
-        ]);
+        $user = $request->getSession()->get('compteConnecte');
+
+        $sortie = $sortiesRepository->findOneByIdDetailed($id);
+
+        //var_dump($sortie->getLieu());
+        foreach ($sortie->getParticipant() as $p){
+        //    var_dump($p);
+        }
+
+        if($sortie){
+            return $this->render('sortie/read_by_id.html.twig', [
+                'sortie' => $sortie,
+            ]);
+        }else{
+            return $this->redirect('');
+        }
     }
 
     #[Route('/sortie/create', name: 'createSortie')]

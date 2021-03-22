@@ -20,7 +20,7 @@ class Sortie
     private int $id;
 
     /**
-     * @ORM\Column(name="nom", type="string", length=30, nullable=false)
+     * @ORM\Column(name="nom", type="string", length=50, nullable=false)
      */
     private string $nom;
 
@@ -60,7 +60,6 @@ class Sortie
     private int $etat;
 
     /**
-     *
      * @ORM\ManyToOne(targetEntity="Lieu")
      */
     private Lieu $lieu;

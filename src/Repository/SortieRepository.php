@@ -6,6 +6,7 @@ use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Expr\Array_;
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -60,8 +61,9 @@ class SortieRepository extends ServiceEntityRepository
             //->join('i.Participant', 'p')
             ->addSelect('e')
             ->addSelect('o')
-            ->addSelect( 'CASE WHEN i.participant_id = :v_user_id THEN 1 ELSE 0 END AS user_inscrit')
-            ->addSelect('COUNT(i) AS participants_count')
+            ->addSelect( 'CASE WHEN i.participant = :v_user_id THEN 1 ELSE 0 END AS user_inscrit')
+            ->addSelect("(SELECT count(so.id) FROM App\Entity\Sortie so INNER JOIN App\Entity\Inscription in WHERE so.id = s.id ) AS participants_count")
+
             ->where('1 = 1')
             ->setParameter('v_user_id', 1)
             ->having('1 = 1');
@@ -110,7 +112,7 @@ class SortieRepository extends ServiceEntityRepository
 
 
         //var_dump($qb->getQuery()->getScalarResult());
-        //var_dump($qb->getQuery()->getSQL());
+        //var_dump(substr($qb->getQuery()->getSQL(), 1000, 500));
         //$scal = $qb->getQuery()->getScalarResult();
         $res = $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
         foreach ($res as $i => $r ){
@@ -118,10 +120,32 @@ class SortieRepository extends ServiceEntityRepository
                 unset($res[$i]);
             }
             else{
-                    $res[$i]['sortie'] = $res[0][0];
+                $res[$i]['sortie'] = $res[$i][0];
                 unset($res[$i][0]);
             }
         }
         return $res;
+    }
+
+    public function findOneByIdDetailed(int $id) : ?Sortie
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->leftJoin('s.etat', 'e')
+            ->leftJoin('s.organisateur', 'o')
+            ->leftJoin('s.inscription' , 'i')
+            ->leftJoin('i.participant' , 'p')
+            ->leftJoin('s.lieu', 'l')
+            ->leftJoin('l.ville', 'v')
+            ->addSelect('e')
+            ->addSelect('o')
+            ->addSelect('i')
+            ->addSelect('p')
+            ->addSelect('l')
+            ->addSelect('v')
+            ->where('s.id = :v_sortie_id')
+            ->setParameter('v_sortie_id', $id);
+        //$res = $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
+        //var_dump($qb->getQuery()->getResult());
+        return $qb->getQuery()->getResult()[0];
     }
 }
