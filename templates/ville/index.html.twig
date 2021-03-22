@@ -21,6 +21,9 @@
             <div class="list-item">
                 <span>{{ v.nomVille }}</span>
                 <span>{{ v.codePostal }}</span>
+                <span>
+                    <a href="{{ path('editVille',{ 'id': v.id }) }}">Modifier</a>
+                </span>
             </div>
         {% else %}
         {% endfor %}

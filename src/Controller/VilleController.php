@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Inscription;
+use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\LieuxSearchType;
+use App\Form\VilleEditType;
 use App\Form\VilleSearchType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,6 +38,37 @@ class VilleController extends AbstractController
             'user' => $user,
             'villeSearchForm' => $villeSearchForm->createView(),
             'villes' => $villes
+        ]);
+    }
+
+    #[Route('/ville/edit/{id}', name: 'editVille')]
+    public function editVille(int $id,Request $request, EntityManagerInterface $em): Response
+    {
+        $user = $request->getSession()->get('compteConnecte');
+
+        $villeEditForm = $this->createForm(VilleEditType::class, new Ville());
+        $villeEditForm->handleRequest($request);
+
+        $villeToEdit = $em->getRepository(Ville::class)->findOneBy( ['id' => $id]);
+
+
+
+        if ($villeEditForm->isSubmitted() && $villeEditForm->isValid()) {
+            if ($villeEditForm->get('submit')->isClicked()) {
+                $villeToEdit->setNomVille($villeEditForm->get('nomVille')->getData());
+                $villeToEdit->setCodePostal($villeEditForm->get('codePostal')->getData());
+                $em->flush();
+            }
+        }
+        else{
+            $villeEditForm->get('nomVille')->setData($villeToEdit->getNomVille());
+            $villeEditForm->get('codePostal')->setData($villeToEdit->getCodePostal());
+        }
+
+        return $this->render('ville/editVille.html.twig', [
+            'user' => $user,
+            'villeEditForm' => $villeEditForm->createView(),
+            'villeToEdit' => $villeToEdit
         ]);
     }
 }
