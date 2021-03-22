@@ -31,7 +31,15 @@ class SortieController extends AbstractController
     public function createSortie(EntityManagerInterface $em,Request $request): Response
     {
 
-        $user = $request->getSession()->get('compteConnecte');
+        if ($request->cookies->has("CookieCompteConnecte")){
+            $user = $this->getRequest()->getCookie('CookieCompteConnecte');
+        }else if ($request->hasSession() && $request->getSession()->has("compteConnecte")){
+            $user = $request->getSession()->get('compteConnecte');
+        }else{
+            $this->redirectToRoute('connexion');
+        }
+
+
         $sortie = new Sortie();
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
