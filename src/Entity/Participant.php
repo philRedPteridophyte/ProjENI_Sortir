@@ -195,7 +195,7 @@ class Participant
         return $this->site;
     }
 
-    public function setSite(int $site): self
+    public function setSite(Site $site): self
     {
         $this->site = $site;
 
