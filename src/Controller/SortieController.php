@@ -100,8 +100,8 @@ class SortieController extends AbstractController
             //TODO Remove echo
             echo "vous etes bien inscrit";
             $inscription = new Inscription();
-            $inscription->setSortie($sortie->getId());
-            $inscription->setParticipant($participant->getId());
+            $inscription->setSortie($sortie);
+            $inscription->setParticipant($em->getRepository(Participant::class)->findOneBy(['id' => $participant->getId()]));
             $inscription->setDateInscription(new DateTime('now'));
 
             $em->persist($inscription);
