@@ -35,6 +35,7 @@ class SortieController extends AbstractController
         if($sortie){
             return $this->render('sortie/read_by_id.html.twig', [
                 'sortie' => $sortie,
+                'user' => $user,
             ]);
         }else{
             return $this->redirect('');

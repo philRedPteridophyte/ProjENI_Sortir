@@ -57,7 +57,7 @@ class Sortie
     /**
      * @ORM\ManyToOne(targetEntity="Etat")
      */
-    private int $etat;
+    private Etat $etat;
 
     /**
      * @ORM\ManyToOne(targetEntity="Lieu")
@@ -171,12 +171,12 @@ class Sortie
         return $this;
     }
 
-    public function getEtat(): ?int
+    public function getEtat(): ?Etat
     {
         return $this->etat;
     }
 
-    public function setEtat(?int $etat): self
+    public function setEtat(?Etat $etat): self
     {
         $this->etat = $etat;
 

@@ -30,7 +30,7 @@ class InscriptionRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('i')
             ->andWhere('i.sortie = :idSortie')
-            ->andWhere('i.participant= :idParticipant')
+            ->andWhere('i.participant = :idParticipant')
             ->setParameter('idSortie', $idSortie)
             ->setParameter('idParticipant', $idParticipant)
             ->getQuery()
