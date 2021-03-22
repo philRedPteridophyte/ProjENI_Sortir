@@ -58,14 +58,14 @@ class SortieRepository extends ServiceEntityRepository
             ->leftJoin('s.inscription' , 'i')
             ->leftJoin('s.lieu', 'l')
             //->leftJoin('s.inscriptions' , 'i2', Query\Expr\Join::WITH, 'i2.participant = :v_user_id')
-            //->join('i.Participant', 'p')
+            ->leftJoin('i.participant', 'p')
             ->addSelect('e')
             ->addSelect('o')
             ->addSelect( 'CASE WHEN i.participant = :v_user_id THEN 1 ELSE 0 END AS user_inscrit')
             ->addSelect("(SELECT count(so.id) FROM App\Entity\Sortie so INNER JOIN App\Entity\Inscription in WHERE so.id = s.id ) AS participants_count")
 
             ->where('1 = 1')
-            ->setParameter('v_user_id', 1)
+            ->setParameter('v_user_id', $user->getId())
             ->having('1 = 1');
         //->addSelect( ' :v_user_id AS HIDDEN user_id')
 
@@ -95,7 +95,7 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if($inscr){
-            $qb->andWhere('i.participant_id = :v_user_id');
+            $qb->andWhere('p.id = :v_user_id');
         }
 
         if($pasInscr){
