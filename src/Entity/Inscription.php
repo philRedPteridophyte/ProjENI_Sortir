@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\InscriptionsRepository;
+use App\Repository\InscriptionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,12 +25,12 @@ class Inscription
     /**
      * @ORM\ManyToOne(targetEntity="Sortie", inversedBy="inscription")
      */
-    private Sortie $sortie;
+    private int $sortie_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Participant", inversedBy="inscription" )
+     * @ORM\ManyToOne(targetEntity="Participant", inversedBy="inscription")
      */
-    private Participant $participant;
+    private int $participant_id;
 
     public function getId(): ?int
     {
@@ -49,26 +49,26 @@ class Inscription
         return $this;
     }
 
-    public function getSortie(): ?Sortie
+    public function getSortie(): ?int
     {
-        return $this->sorties;
+        return $this->sortie_id;
     }
 
-    public function setSortie(Sortie $sortie): self
+    public function setSortie(int $sortie): self
     {
-        $this->sortie = $sortie;
+        $this->sortie_id = $sortie;
 
         return $this;
     }
 
-    public function getParticipant(): ?Participant
+    public function getParticipant(): ?int
     {
-        return $this->participant;
+        return $this->participant_id;
     }
 
-    public function setParticipant(Participant $participant): self
+    public function setParticipant(int $participant): self
     {
-        $this->participant = $participant;
+        $this->participant_id = $participant;
 
         return $this;
     }
