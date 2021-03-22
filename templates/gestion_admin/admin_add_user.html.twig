@@ -1,0 +1,13 @@
+{% extends 'document.html.twig' %}
+
+{% block title %}Sortir - Ajouter un utilisateur{% endblock %}
+
+{% block body %}
+
+    <h1 style="text-align: center"> Ajouter un utilisateur</h1>
+    <div style="text-align: center" class="container">
+        {{ form_start(adminAddUser) }}
+        {{ form_widget(adminAddUser) }}
+        {{ form_end(adminAddUser) }}
+    </div>
+{% endblock %}

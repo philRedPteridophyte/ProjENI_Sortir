@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\SitesRepository;
+use App\Repository\SiteRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
