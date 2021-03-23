@@ -22,9 +22,9 @@ class Site
      */
     private string $nomSite;
 
-    public function getNoSite(): ?int
+    public function getId(): ?int
     {
-        return $this->noSite;
+        return $this->id;
     }
 
     public function getNomSite(): ?string
