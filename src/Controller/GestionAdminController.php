@@ -38,9 +38,8 @@ class GestionAdminController extends AbstractController
             $pathCSV = $this->getParameter('csv_directory');
             if (($handle = fopen($pathCSV . '/importUser.txt', 'r')) !== FALSE) {
                 //On boucle sur chaque ligne du csv
-                while (($data = fgetcsv($handle, 0, ";")) !== FALSE) {
-                    echo "rrr";
-                    
+                fgetcsv($handle,1000,";");
+                while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                     if (!(strlen($data[0]) > 0 && strlen($data[0]) < 255) ||
                         !(strlen($data[1]) > 0 && strlen($data[1]) < 255) ||
                         !(strlen($data[2]) > 0 && strlen($data[2]) < 255) ||
@@ -50,13 +49,16 @@ class GestionAdminController extends AbstractController
                         !($data[6] == 0 || $data[6] == 1) ||
                         !($data[7] == 0 || $data[7] == 1)) {
                         echo "tttt";
-                        $this->addFlash("erreur", ["text" => "le fichier csv ne respecte pas le standard d'import", "couleur" => "#E51F1E"]);
+                        $this->addFlash("erreur", "le fichier csv ne respecte pas le standard d'import");
+                        $this->redirectToRoute("gestion_admin");
                     }
                     if ($em->getRepository(Site::class)->findOneBy(['id' => $data[8]]) == null) {
-                        $this->addFlash("erreur", ["text" => "le campus : ' .$data[8].'n\'existe pas", "couleur" => "#E51F1E"]);
+                        $this->addFlash("erreur", "le site : $data[8] n'existe pas");
+                        $this->redirectToRoute("gestion_admin");
                     }
                     if ($em->getRepository(Participant::class)->findOneBy(['mail' => $data[4]]) != null) {
-                        $this->addFlash("erreur", ["text" => "le mail ' . $data[4]. 'est déja utilisé", "couleur" => "#E51F1E"]);
+                        $this->addFlash("erreur", "le mail  $data[4] est déja utilisé");
+                        $this->redirectToRoute("gestion_admin");
                     }
                 }
             }
@@ -88,6 +90,7 @@ class GestionAdminController extends AbstractController
         return $this->render('gestion_admin/index.html.twig', [
             'controller_name' => 'GestionAdminController',
             'csvForm' => $csvForm->createView(),
+            'session' => $request->getSession(),
             'user' => $user,
         ]);
     }

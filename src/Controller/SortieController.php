@@ -78,10 +78,9 @@ class SortieController extends AbstractController
                 $em->persist($sortie);
                 $em->flush();
                 $this->addFlash('created', 'Votre sortie est créée !');
-                return $this->redirectToRoute('sortie_get_by_id_0',['id' => $sortie->getId()]);
+                return $this->redirectToRoute('sortie_get_by_id_0', ['id' => $sortie->getId()]);
             }
         }
-
         return $this->render('sortie/createSortie.html.twig', [
             'sortie' => $sortie,
             'user' => $user,
@@ -214,6 +213,10 @@ class SortieController extends AbstractController
 
                 //var_dump([$results,$lieuxNoLieu,$nom,$datedebut,$datecloture,$suisOrga,$inscr,$pasInscr,$passee]);
                 //var_dump($results);
+            }
+
+            if($sortieSearchForm->get('add')->isClicked()){
+                return $this->redirectToRoute('createSortie');
             }
 
 

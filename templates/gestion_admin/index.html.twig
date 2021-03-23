@@ -3,6 +3,11 @@
 {% block title %}Sortir - Panneau admin{% endblock %}
 
 {% block body %}
+    {% for msg in session.flashBag.get('erreur') %}
+        <div  class="alert alert-danger">
+            {{ msg }}
+        </div>
+    {% endfor %}
     <div class="container" style="text-align: center">
         <a class="btn btn-primary" href="{{ path('adminAddUser') }}" role="button">Ajouter un utilisateur manuellement</a>
         <br>
