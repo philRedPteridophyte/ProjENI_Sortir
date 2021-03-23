@@ -23,7 +23,9 @@ class GestionController extends AbstractController
         $gestionForm->handleRequest($request);
 
         if ($gestionForm->isSubmitted() && $gestionForm->isValid()) {
-        $entityManager->flush();
+            //TODO Penser verifier la conformité des données update (exemple: je modifie mon mail en un mail déjà utilisé)
+            //TODO Idem pour le pseudo
+            $entityManager->flush();
         }
         else {
             $this->addFlash('error', 'Les changements n\'ont pas été pris en compte ');
