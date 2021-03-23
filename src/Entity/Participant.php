@@ -72,6 +72,11 @@ class Participant
     private bool $actif;
 
     /**
+     * @ORM\Column(name="urlPhoto", type="string", length=5000, nullable=true)
+     */
+    private ?string $urlPhoto;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Site")
      */
     private Site $site;
@@ -87,6 +92,7 @@ class Participant
     public function __construct()
     {
         $this->inscription = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->urlPhoto = "https://i.stack.imgur.com/l60Hf.png";
     }
 
     public function getId(): ?int
@@ -229,5 +235,13 @@ class Participant
         return $this;
     }
 
+    public function getUrlPhoto(): ?string{
+        return $this->urlPhoto;
+    }
 
+    public function setUrlPhoto(string $urlPhoto): self{
+        $this->urlPhoto = $urlPhoto;
+
+        return $this;
+    }
 }
