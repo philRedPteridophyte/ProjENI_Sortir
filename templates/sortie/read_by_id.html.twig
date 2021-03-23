@@ -70,18 +70,20 @@
                 <span>{{ sortie.lieu.latitude}}</span>
             </div>
         </div>
-        <div class="item-list list-participants-sortie">
+        <div class="padded-body-block">
             <h3>List des participants inscrits</h3>
-            <div class="item-list-titlebar">
-                <span>Pseudo</span>
-                <span>Nom</span>
+            <div class="item-list list-participants-sortie">
+                <div class="item-list-titlebar">
+                    <span>Pseudo</span>
+                    <span>Nom</span>
+                </div>
+                {% for part in sortie.participant %}
+                <div class="list-item">
+                    <span>{{ part.participant.pseudo }}</span>
+                    <span>{{ part.participant.prenom | capitalize}} {{ part.participant.nom | upper}}</span>
+                </div>
+                {% endfor %}
             </div>
-            {% for part in sortie.participant %}
-            <div class="list-item">
-                <span>{{ part.participant.pseudo }}</span>
-                <span>{{ part.participant.prenom | capitalize}} {{ part.participant.nom | upper}}</span>
-            </div>
-            {% endfor %}
         </div>
     </div>
 {% endblock %}

@@ -68,6 +68,30 @@ input[type="text"], input[type="password"]{
     background-color: red;
     box-shadow: 5px 5px 5px 5px rgba(255,0,0,0.5);
 }
+
+.item-list > .item-list-titlebar{
+    padding: 10px 0 10px 10px;
+    display: grid;
+    width: 100%;
+    grid-template-rows: auto;
+    background-color: var(--accent-f);
+    color: white;
+}
+.item-list > .list-item{
+    padding: 10px 0 10px 10px;
+    display: grid;
+    width: 100%;
+    grid-template-rows: auto;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.item-list > .list-item:nth-child(2n+1){
+    background-color: var(--accent-3);
+}
+.item-list > .list-item:hover{
+    background-color: var(--accent-6);
+    transition: .1s;
+}
 /*
 NAV
  */
@@ -130,59 +154,19 @@ Sortie
     padding-top: 30px;
 }
 .list-recherche-sortie > .item-list-titlebar{
-    padding: 10px 0 10px 10px;
-    display: grid;
-    width: 100%;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    background-color: var(--accent-f);
-    color: white;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr 1fr 2fr 2fr;
 }
 .list-recherche-sortie > .list-item{
-    padding: 10px 0 10px 10px;
-    display: grid;
-    width: 100%;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    max-height: 300px;
-    overflow-y: auto;
-}
-.list-recherche-sortie > .list-item:hover{
-    padding: 10px 0 10px 10px;
-    display: grid;
-    width: 100%;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    max-height: 300px;
-    overflow-y: auto;
-}
-.list-recherche-sortie > .list-item:nth-child(2n+1){
-    background-color: var(--accent-3);
- }
-.list-recherche-sortie > .list-item:hover{
-    background-color: var(--accent-6);
-    transition: .1s;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr 1fr 2fr 2fr;
 }
 .list-participants-sortie{
     padding-top: 30px;
 }
 .list-participants-sortie > .item-list-titlebar{
-    padding-left: 10px;
-    display: grid;
-    width: 100%;
     grid-template-columns: 2fr 5fr;
-    grid-template-rows: auto;
-    background-color: var(--accent-f);
-    color: white;
 }
 .list-participants-sortie > .list-item{
-    padding-left: 10px;
-    display: grid;
-    width: 100%;
     grid-template-columns: 2fr 5fr;
-    grid-template-rows: auto;
-    max-height: 300px;
-    overflow-y: auto;
 
 }
 /*
