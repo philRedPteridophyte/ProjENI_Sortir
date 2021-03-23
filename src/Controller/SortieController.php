@@ -187,7 +187,7 @@ class SortieController extends AbstractController
             $inscr = null;
             $pasInscr = null;
             $passee = null;
-            $results = $sortiesRepository->findAll();
+            $results = null;
 
 
 
