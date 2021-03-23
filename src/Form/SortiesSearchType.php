@@ -92,6 +92,12 @@ class SortiesSearchType extends AbstractType
                     'class' => 'btn btn-success'
                 ]
             ])
+            ->add('add', SubmitType::class, [
+                'label' => 'Ajouter',
+                'attr' => [
+                    'class' => 'btn btn-success'
+                ]
+            ])
         ;
     }
 
