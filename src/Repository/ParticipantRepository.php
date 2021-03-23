@@ -33,6 +33,19 @@ class ParticipantRepository extends ServiceEntityRepository
             ;
     }
 
+    public function getByIdDetailed(int $id) : ?Participant
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.site', 's')
+            ->addSelect('s')
+            ->where('p.id = :v_user_id')
+            ->setParameter('v_user_id', $id);
+        //$res = $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
+        //var_dump($qb->getQuery()->getResult());
+        return $qb->getQuery()->getResult()[0];
+    }
+
+
     // /**
     //  * @return Participant[] Returns an array of Participant objects
     //  */

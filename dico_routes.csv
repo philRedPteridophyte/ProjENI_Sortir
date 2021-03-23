@@ -1,4 +1,4 @@
-#Résumé,#nom methode controlleurs,#chemin url,#methodes http,#parametres url,#eventuelle variable GET
+#Résumé,#nom methode controleurs,#chemin url,#methodes http,#parametres url,#eventuelle variable GET
 Page de connexion : Afficher la page,connexion,/,GET,,
 Page de connexion : Tentative de connexion,connexion,/,POST,,
 Afficher une sortie et ses participants,sortie_get_by_id_0,/sortie/{id},GET,[int id],
@@ -16,3 +16,5 @@ Page accueil : Rechercher une sortie,sorties_0,/Home,POST,,
 Page accueil : Rechercher une sortie,sorties_1,/Sorties,POST,,
 Page accueil : Rechercher une sortie,sorties_2,/sorties,POST,,
 Page accueil : Rechercher une sortie,sorties_3,/home,POST,,
+Participant : Afficher,participant_read_0,/Participant/{id},GET,[int id],
+Participant : Désactiver,participant_deactivate_0,/Participant/Deactivate/{id},GET,[int id],

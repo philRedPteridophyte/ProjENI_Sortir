@@ -190,7 +190,7 @@ class Participant
         return $this;
     }
 
-    public function getSite(): ?int
+    public function getSite(): ?Site
     {
         return $this->site;
     }

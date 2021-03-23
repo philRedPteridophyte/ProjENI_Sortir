@@ -138,7 +138,7 @@ class SortieController extends AbstractController
         }else{
             return $this->redirectToRoute('connexion');
         }
-        return new Response();
+        return $this->redirectToRoute('connexion');
     }
 
     #[Route('/sortie/cancel/{id}', name: 'cancelSortie')]

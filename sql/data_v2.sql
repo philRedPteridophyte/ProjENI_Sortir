@@ -4,7 +4,7 @@ INSERT INTO `ville` (`id`, `nom_ville`, `code_postal`) VALUES
 (3, 'Niort', '79000');
 
 INSERT INTO `site` (`id`, `nom_site`) VALUES
-(1, 'Valendré'),
+(1, 'Val André'),
 (2, 'Baignoire');
 
 INSERT INTO `etat` (`id`, `libelle`) VALUES

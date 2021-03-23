@@ -1,0 +1,56 @@
+{% extends 'document.html.twig' %}
+
+{% block title %}Participant | {{ participant.pseudo }}{% endblock %}
+
+{% block body %}
+    {% for msg in session.flashBag.get('inscrit') %}
+        <div class="alert alert-success">
+            {{ msg  }}
+        </div>
+    {% endfor %}
+    {% for msg in session.flashBag.get('cancel') %}
+        <div class="alert alert-success">
+            {{ msg  }}
+        </div>
+    {% endfor %}
+    {% for msg in session.flashBag.get('created') %}
+        <div class="alert alert-success">
+            {{ msg  }}
+        </div>
+    {% endfor %}
+<div class="container">
+    <h1>{{ participant.pseudo }}</h1>
+    <div class="viewer participant-viewer padded-body-block">
+        <div class="field-viewer">
+            <label for="">Nom</label>
+            <span>{{ participant.nom | upper }}</span>
+        </div>
+        <div class="field-viewer">
+            <label for="">Prénom</label>
+            <span>{{ participant.prenom | capitalize }}</span>
+        </div>
+        <div class="field-viewer">
+            <label for="">Téléphone</label>
+            <span>{{ participant.telephone }}</span>
+        </div>
+        <div class="field-viewer">
+            <label for="">e-mail</label>
+            <span>{{ participant.mail }}</span>
+        </div>
+        <div class="field-viewer">
+            <label for="">Site de Rattachement</label>
+            <span>{{ participant.site.nomSite }}</span>
+        </div>
+        <div class="padded-body-block">
+            {# modifier désactiver ou supprimer si le participant en à le droit #}
+            {% if user.id == participant.id or user.administrateur %}
+                <a href="" class="btn">modifier</a>
+            {% endif %}
+            {% if participant.actif and user.administrateur %}
+                <a href="{{ path('participant_deactivate_0',{ 'id': participant.id }) }}" class="btn btn-danger">Désactiver</a>
+                <a href="" class="btn btn-danger">Supprimer</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

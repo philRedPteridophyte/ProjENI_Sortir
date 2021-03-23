@@ -28,7 +28,7 @@
                     <a class="nav-link" href="{{ path('sorties_0') }}">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Mon Profil</a>
+                    <a class="nav-link" href="{{ path('participant_read_0',{ 'id': user.id }) }}">Mon Profil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Se déconnecter</a>
