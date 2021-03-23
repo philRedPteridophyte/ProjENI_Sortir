@@ -36,6 +36,7 @@ class SortieController extends AbstractController
             return $this->render('sortie/read_by_id.html.twig', [
                 'sortie' => $sortie,
                 'user' => $user,
+                'session' => $request->getSession(),
             ]);
         }else{
             return $this->redirect('');
@@ -67,6 +68,8 @@ class SortieController extends AbstractController
                 $sortie->setOrganisateur($em->getRepository(Participant::class)->findOneBy(['pseudo' => $user->getPseudo()]));
                 $em->persist($sortie);
                 $em->flush();
+                $this->addFlash('created', 'Votre sortie est créée !');
+                return $this->redirectToRoute('sortie_get_by_id_0',['id' => $sortie->getId()]);
             }
             elseif ($sortieForm->get('publish')->isClicked()) {
                 $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'En cours']);
@@ -74,6 +77,8 @@ class SortieController extends AbstractController
                 $sortie->setOrganisateur($em->getRepository(Participant::class)->findOneBy(['pseudo' => $user->getPseudo()]));
                 $em->persist($sortie);
                 $em->flush();
+                $this->addFlash('created', 'Votre sortie est créée !');
+                return $this->redirectToRoute('sortie_get_by_id_0',['id' => $sortie->getId()]);
             }
         }
 
@@ -92,23 +97,28 @@ class SortieController extends AbstractController
         $sortie = $em->getRepository(Sortie::class)->findOneBy( ['id' => $id]);
         // TODO handle case when id is not in the database (DAMIEN)
 
-        $isAlreadyIn = $em->getRepository(Inscription::class)->findBySortieIdAndParticipants($sortie->getId(),$participant->getId());
-        if($isAlreadyIn){
-          // TODO handle case when user already joined the Sortie
-            echo "deja inscrit";
-        }
-        else {
-            //TODO Remove echo
-            echo "vous etes bien inscrit";
-            $inscription = new Inscription();
-            $inscription->setSortie($sortie);
-            $inscription->setParticipant($em->getRepository(Participant::class)->findOneBy(['id' => $participant->getId()]));
-            $inscription->setDateInscription(new DateTime('now'));
+        if($sortie != null) {
+            $isAlreadyIn = $em->getRepository(Inscription::class)->findBySortieIdAndParticipants($sortie->getId(), $participant->getId());
+            if ($isAlreadyIn) {
+                // TODO handle case when user already joined the Sortie
+                echo "deja inscrit";
+            } else {
+                //TODO Remove echo
+                echo "vous etes bien inscrit";
+                $inscription = new Inscription();
+                $inscription->setSortie($sortie);
+                $inscription->setParticipant($em->getRepository(Participant::class)->findOneBy(['id' => $participant->getId()]));
+                $inscription->setDateInscription(new DateTime('now'));
 
-            $em->persist($inscription);
-            $em->flush();
+                $em->persist($inscription);
+                $em->flush();
+            }
         }
-        return new Response();
+        else{
+            return $this->redirectToRoute('sorties_0');
+        }
+        $this->addFlash('inscrit', 'Vous êtes inscrit !');
+        return $this->redirectToRoute('sortie_get_by_id_0',['id' => $sortie->getId()]);
     }
 
     #[Route('/sortie/leave/{id}', name: 'leaveSortie')]
@@ -146,6 +156,7 @@ class SortieController extends AbstractController
         else{
             return $this->redirectToRoute('sorties_0');
         }
+        $this->addFlash('cancel', 'Votre sortie a bien été annulé.');
         return $this->redirectToRoute('sortie_get_by_id_0',['id' => $sortie->getId()]);
     }
 
