@@ -39,6 +39,7 @@
                         <span>
                             {% if r.sortie.etat.id == 4 and r.sortie.organisateur.id == user.id  %}
                                 <a href="">modifier</a>
+                                <a href="{{ path('cancelSortie',{ 'id': r.sortie.id }) }}">annuler</a>
                             {% else %}
                                 <a href="{{ path('sortie_get_by_id_1',{ 'id': r.sortie.id }) }}">afficher</a>
                             {% endif %}

@@ -36,9 +36,11 @@ class GestionAdminController extends AbstractController
                 }
             }
             $pathCSV = $this->getParameter('csv_directory');
-            /*if (($handle = fopen($pathCSV . '/importUser.txt', 'r')) !== FALSE) {
+            if (($handle = fopen($pathCSV . '/importUser.txt', 'r')) !== FALSE) {
                 //On boucle sur chaque ligne du csv
                 while (($data = fgetcsv($handle, 0, ";")) !== FALSE) {
+                    echo "rrr";
+                    
                     if (!(strlen($data[0]) > 0 && strlen($data[0]) < 255) ||
                         !(strlen($data[1]) > 0 && strlen($data[1]) < 255) ||
                         !(strlen($data[2]) > 0 && strlen($data[2]) < 255) ||
@@ -47,19 +49,17 @@ class GestionAdminController extends AbstractController
                         !(strlen($data[5]) > 0 && strlen($data[5]) < 255) ||
                         !($data[6] == 0 || $data[6] == 1) ||
                         !($data[7] == 0 || $data[7] == 1)) {
+                        echo "tttt";
                         $this->addFlash("erreur", ["text" => "le fichier csv ne respecte pas le standard d'import", "couleur" => "#E51F1E"]);
-                        return $this->redirectToRoute('gestion_admin');
                     }
                     if ($em->getRepository(Site::class)->findOneBy(['id' => $data[8]]) == null) {
                         $this->addFlash("erreur", ["text" => "le campus : ' .$data[8].'n\'existe pas", "couleur" => "#E51F1E"]);
-                        return $this->redirectToRoute('gestion_admin');
                     }
                     if ($em->getRepository(Participant::class)->findOneBy(['mail' => $data[4]]) != null) {
                         $this->addFlash("erreur", ["text" => "le mail ' . $data[4]. 'est déja utilisé", "couleur" => "#E51F1E"]);
-                        return $this->redirectToRoute('gestion_admin');
                     }
                 }
-            }*/
+            }
             if (($handle = fopen($pathCSV . '/importUser.txt', 'r')) !== FALSE) {
                 //On boucle sur chaque ligne du csv
                 while (($data = fgetcsv($handle, 0, ";")) !== FALSE) {
