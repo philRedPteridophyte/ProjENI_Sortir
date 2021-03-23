@@ -135,15 +135,18 @@ class SortieController extends AbstractController
         $user = $request->getSession()->get('compteConnecte');
 
         $sortie = $em->getRepository(Sortie::class)->findOneBy( ['id' => $id]);
-        // TODO handle case when id is not in the database (DAMIEN)
-
-        if($sortie->getOrganisateur()->getId() == $user->getId()){
-            //TODO add date condition in this if ^^^
-            $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']));
-            $sortie->setDescriptioninfos("Sortie annulée le : ".date_format(new DateTime('now'),'Y-m-d H:i:s'));
-            $em->flush();
+        if($sortie != null) {
+            if ($sortie->getOrganisateur()->getId() == $user->getId()) {
+                //TODO add date condition in this if ^^^
+                $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']));
+                $sortie->setDescriptioninfos("Sortie annulée le : " . date_format(new DateTime('now'), 'Y-m-d H:i:s'));
+                $em->flush();
+            }
         }
-        return new Response();
+        else{
+            return $this->redirectToRoute('sorties_0');
+        }
+        return $this->redirectToRoute('sortie_get_by_id_0',['id' => $sortie->getId()]);
     }
 
     #[Route('/Home', name: 'sorties_0', methods: ['GET','POST'])]
