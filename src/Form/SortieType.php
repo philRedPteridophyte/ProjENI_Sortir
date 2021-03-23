@@ -5,6 +5,9 @@ namespace App\Form;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Repository\LieuxRepository;
+use App\Repository\SiteRepository;
+use App\Repository\VilleRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
@@ -20,6 +23,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SortieType extends AbstractType
 {
+
+    public function __construct(VilleRepository $em)
+    {
+        $this->em = $em;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -65,7 +74,8 @@ class SortieType extends AbstractType
                 'label' => "Lieu",
                 'class' => Lieu::class,
                 'choice_label' => function ($lieu) {
-                    return $lieu->getNomLieu();
+                    $villeLieu = $this->em->findOneBy(['id' => $lieu->getVille()]);
+                    return $lieu->getNomLieu()." -- ".strtoupper($villeLieu->getNomVille());
                 },
                 'attr' => [
                     'class' => 'form-control'
