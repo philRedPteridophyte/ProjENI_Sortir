@@ -215,11 +215,6 @@ class SortieController extends AbstractController
                 //var_dump($results);
             }
 
-            if($sortieSearchForm->get('add')->isClicked()){
-                return $this->redirectToRoute('createSortie');
-            }
-
-
             return $this->render('sortie/chercher.html.twig', [
                 'controller_name'   => 'ArticleController'
                 ,'results' => $results
