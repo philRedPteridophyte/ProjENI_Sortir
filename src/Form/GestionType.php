@@ -75,6 +75,10 @@ class GestionType extends AbstractType
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Répéter le mot de passe'],
             ])
+            ->add('urlPhoto',TextType::class, [
+                'label' => 'Url de photo de profil',
+                'required' => false
+            ])
             ->add('publish', SubmitType::class, [
                 'label' => 'Confirmer les changements',
                 'attr' => [

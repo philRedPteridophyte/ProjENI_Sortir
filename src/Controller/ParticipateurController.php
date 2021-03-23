@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Repository\ParticipantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParticipateurController extends AbstractController
 {
     #[Route('/Participant/{id}', name: 'participant_read_0', requirements: [ 'id' => '\d+' ], methods: ['GET'])]
-    public function readById(?int $id, Request $request, ParticipantRepository $repository): Response
+    public function readById(?int $id, Request $request, ParticipantRepository $repository, EntityManagerInterface $em): Response
     {
 
         $user = $request->getSession()->get("compteConnecte");
@@ -20,7 +21,14 @@ class ParticipateurController extends AbstractController
         if($user && $session){
             $participant = $repository->getByIdDetailed($id);
             if($participant){
+                $urlPhotoParticipant = $participant->getUrlPhoto();
+                if($urlPhotoParticipant == null){
+                    $participant->setUrlPhoto("https://i.stack.imgur.com/l60Hf.png");
+                    $em->flush();
+                }
+                $urlPhotoParticipant = $participant->getUrlPhoto();
                 return $this->render('participant/read_by_id.html.twig', [
+                    'urlPhoto' => $urlPhotoParticipant,
                     'user'  => $user,
                     'session' => $session,
                     'participant' => $participant,
