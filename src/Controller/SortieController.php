@@ -62,7 +62,7 @@ class SortieController extends AbstractController
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             if ($sortieForm->get('save')->isClicked()) {
-                $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'En cours']);
+                $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'En création']);
                 $sortie->setEtat($etat);
                 $sortie->setOrganisateur($em->getRepository(Participant::class)->findOneBy(['pseudo' => $user->getPseudo()]));
                 $em->persist($sortie);
@@ -79,6 +79,7 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/createSortie.html.twig', [
             'sortie' => $sortie,
+            'user' => $user,
             'form' => $sortieForm->createView(),
         ]);
     }
@@ -138,7 +139,7 @@ class SortieController extends AbstractController
 
         if($sortie->getOrganisateur()->getId() == $user->getId()){
             //TODO add date condition in this if ^^^
-            $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée'])->getId());
+            $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']));
             $sortie->setDescriptioninfos("Sortie annulée le : ".date_format(new DateTime('now'),'Y-m-d H:i:s'));
             $em->flush();
         }
