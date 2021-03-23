@@ -77,7 +77,7 @@ class Participant
     private Site $site;
 
     /**
-     * @ORM\OneToMany(targetEntity="Inscription", mappedBy="participants")
+     * @ORM\OneToMany(targetEntity="Inscription", mappedBy="participant")
      */
     private \Doctrine\Common\Collections\Collection $inscription;
 
