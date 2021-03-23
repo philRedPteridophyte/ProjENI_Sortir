@@ -48,7 +48,7 @@
             {% endif %}
             {% if participant.actif and user.administrateur %}
                 <a href="{{ path('participant_deactivate_0',{ 'id': participant.id }) }}" class="btn btn-danger">Désactiver</a>
-                <a href="" class="btn btn-danger">Supprimer</a>
+                <a href="{{ path('participant_delete_0',{ 'id': participant.id }) }}" class="btn btn-danger">Supprimer</a>
             {% endif %}
         </div>
     </div>

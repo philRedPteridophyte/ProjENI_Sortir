@@ -66,6 +66,9 @@ class Sortie
 
     /**
      * @ORM\ManyToOne(targetEntity="Participant")
+     *  @ORM\JoinColumn(
+     *      onDelete="CASCADE",
+     * )
      */
     private Participant $organisateur;
 

@@ -24,11 +24,17 @@ class Inscription
 
     /**
      * @ORM\ManyToOne(targetEntity="Sortie", inversedBy="inscription")
+     *  @ORM\JoinColumn(
+     *      onDelete="CASCADE",
+     * )
      */
     private Sortie $sortie;
 
     /**
      * @ORM\ManyToOne(targetEntity="Participant", inversedBy="inscription")
+     *  @ORM\JoinColumn(
+     *      onDelete="CASCADE",
+     * )
      */
     private Participant $participant;
 

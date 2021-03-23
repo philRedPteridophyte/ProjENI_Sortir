@@ -42,7 +42,10 @@ class ParticipantRepository extends ServiceEntityRepository
             ->setParameter('v_user_id', $id);
         //$res = $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
         //var_dump($qb->getQuery()->getResult());
-        return $qb->getQuery()->getResult()[0];
+        if($qb->getQuery()->getResult()){
+            return $qb->getQuery()->getResult()[0];
+
+        }
     }
 
 

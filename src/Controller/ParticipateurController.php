@@ -52,4 +52,27 @@ class ParticipateurController extends AbstractController
         }
         return $this->redirectToRoute('connexion');
     }
+
+    #[Route('/Participant/Delete/{id}', name: 'participant_delete_0', requirements: [ 'id' => '\d+' ], methods: ['GET'])]
+    public function delete(?int $id, Request $request, ParticipantRepository $repository): Response
+    {
+
+        $user = $request->getSession()->get("compteConnecte");
+        $session = $request->getSession();
+        if($user && $session){
+            $entityManager = $this->getDoctrine()->getManager();
+            $participant = $entityManager->getRepository(Participant::class)->find($id);
+            if($participant) {
+                $user_adm = $repository->getByIdDetailed($user->getId());
+                if ($user_adm && $user_adm->getAdministrateur()) {
+                    $entityManager->remove($participant);
+                    $entityManager->flush();
+                } else {
+                    return $this->redirectToRoute('participant_read_0', ['id' => $participant->getId()]);
+                }
+                return $this->redirectToRoute('sorties_0');
+            }
+        }
+        return $this->redirectToRoute('connexion');
+    }
 }
