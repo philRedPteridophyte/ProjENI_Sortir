@@ -19,38 +19,44 @@
         </div>
     {% endfor %}
 <div class="container">
-    <img src="{{ participant.urlPhoto }}" class="img-fluid" alt="Responsive image">
-    <h1>{{ participant.pseudo }}</h1>
-    <div class="viewer participant-viewer padded-body-block">
-        <div class="field-viewer">
-            <label for="">Nom</label>
-            <span>{{ participant.nom | upper }}</span>
+    <div class="row">
+        <div class="col">
+            <h1>{{ participant.pseudo }}</h1>
+            <div class="viewer participant-viewer padded-body-block">
+                <div class="field-viewer">
+                    <label for="">Nom</label>
+                    <span>{{ participant.nom | upper }}</span>
+                </div>
+                <div class="field-viewer">
+                    <label for="">Prénom</label>
+                    <span>{{ participant.prenom | capitalize }}</span>
+                </div>
+                <div class="field-viewer">
+                    <label for="">Téléphone</label>
+                    <span>{{ participant.telephone }}</span>
+                </div>
+                <div class="field-viewer">
+                    <label for="">e-mail</label>
+                    <span>{{ participant.mail }}</span>
+                </div>
+                <div class="field-viewer">
+                    <label for="">Site de Rattachement</label>
+                    <span>{{ participant.site.nomSite }}</span>
+                </div>
+                <div class="padded-body-block">
+                    {# modifier désactiver ou supprimer si le participant en à le droit #}
+                    {% if user.id == participant.id or user.administrateur %}
+                        <a href="{{ path('gestion',{ 'id': participant.id }) }}" class="btn">modifier</a>
+                    {% endif %}
+                    {% if participant.actif and user.administrateur %}
+                        <a href="{{ path('participant_deactivate_0',{ 'id': participant.id }) }}" class="btn btn-danger">Désactiver</a>
+                        <a href="{{ path('participant_delete_0',{ 'id': participant.id }) }}" class="btn btn-danger">Supprimer</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        <div class="field-viewer">
-            <label for="">Prénom</label>
-            <span>{{ participant.prenom | capitalize }}</span>
-        </div>
-        <div class="field-viewer">
-            <label for="">Téléphone</label>
-            <span>{{ participant.telephone }}</span>
-        </div>
-        <div class="field-viewer">
-            <label for="">e-mail</label>
-            <span>{{ participant.mail }}</span>
-        </div>
-        <div class="field-viewer">
-            <label for="">Site de Rattachement</label>
-            <span>{{ participant.site.nomSite }}</span>
-        </div>
-        <div class="padded-body-block">
-            {# modifier désactiver ou supprimer si le participant en à le droit #}
-            {% if user.id == participant.id or user.administrateur %}
-                <a href="{{ path('gestion',{ 'id': participant.id }) }}" class="btn">modifier</a>
-            {% endif %}
-            {% if participant.actif and user.administrateur %}
-                <a href="{{ path('participant_deactivate_0',{ 'id': participant.id }) }}" class="btn btn-danger">Désactiver</a>
-                <a href="{{ path('participant_delete_0',{ 'id': participant.id }) }}" class="btn btn-danger">Supprimer</a>
-            {% endif %}
+        <div class="col">
+            <img src="{{ participant.urlPhoto }}" class="img-fluid" alt="Responsive image">
         </div>
     </div>
 </div>
