@@ -147,16 +147,22 @@ Sortie
     max-height: 300px;
     overflow-y: auto;
 }
+.list-recherche-sortie > .list-item:hover{
+    padding: 10px 0 10px 10px;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    max-height: 300px;
+    overflow-y: auto;
+}
 .list-recherche-sortie > .list-item:nth-child(2n+1){
-     padding: 10px 0 10px 10px;
-     display: grid;
-     width: 100%;
-     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-     grid-template-rows: auto;
-     max-height: 300px;
-     overflow-y: auto;
     background-color: var(--accent-3);
  }
+.list-recherche-sortie > .list-item:hover{
+    background-color: var(--accent-6);
+    transition: .1s;
+}
 .list-participants-sortie{
     padding-top: 30px;
 }
