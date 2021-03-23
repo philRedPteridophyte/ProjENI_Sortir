@@ -99,14 +99,14 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if($pasInscr){
-            $qb->andWhere(' (CASE WHEN i.participant_id = :v_user_id THEN 1 ELSE 0 END) = 1');
-            $qb->andWhere(':v_user_id NOT IN (SELECT i2.participant_id FROM App\Entity\Sortie s2 JOIN App\Entity\Inscription i2 ON s2.id = i2.sortie_id )');
+            $qb->andWhere(' (CASE WHEN p.id = :v_user_id THEN 0 ELSE 1 END) = 1');
+            //$qb->andWhere(':v_user_id NOT IN (SELECT p2.id FROM App\Entity\Sortie s2 JOIN App\Entity\Inscription i2 JOIN App\Entity\Participant p2)');
         }
 
         if($passee){
 
         }else{
-            $qb->andWhere(":v_date <= DATE_ADD(s.datedebut, ((CASE WHEN s.duree IS NULL THEN 0 ELSE s.duree END) +1 ) , 'day')");
+            $qb->andWhere(":v_date <= DATE_ADD(s.datedebut, ((CASE WHEN s.duree IS NULL THEN 0 ELSE s.duree END) +1 ) , 'minute')");
             $qb->setParameter('v_date', date("Y-m-d H:i:s"));
         }
 

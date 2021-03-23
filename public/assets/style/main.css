@@ -4,6 +4,7 @@
     --accent-9 : #ff149399;
     --accent-6 : #ff149366;
     --accent-3 : #ff149333;
+    --danger : #dc3545;
 }
 html{
     margin: 0;
@@ -18,16 +19,19 @@ body{
 }
 
 button[type="submit"] {
-    height: 80px;
-    width: 150px;
-    background-color: var(--accent-f);
+    height: 50px;
+    min-width: 150px;
+    background-color: var(--accent-c);
     color: white;
+    border: none;
 }
 
 button[type="submit"]:hover {
-    background-color: #f31593;
+    background-color: var(--accent-f);
     color: white;
-    font-weight: bold;
+    -webkit-box-shadow: 1px 1px 10px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 1px 10px -4px rgba(0,0,0,0.75);
+    box-shadow: 1px 1px 10px -4px rgba(0,0,0,0.75);
 }
 
 .interactions {
@@ -75,7 +79,9 @@ BODY CONTENT
 .container{
     padding-top: 40px;
 }
-
+.padded-body-block{
+    padding: 40px 0;
+}
 /*
 FORM
 :has()
@@ -95,6 +101,28 @@ form .form-group > *:nth-child(2) {
     display: inline-block;
 }
 
+a.btn {
+    display: inline-block;
+    padding-top: 10px;
+    height: 50px;
+    min-width: 150px;
+    background-color: var(--accent-c);
+    color: white;
+    border: none;
+}
+a.btn.btn-danger{
+    background-color: var(--danger);
+}
+a.btn:hover {
+    background-color: var(--accent-f);
+    color: white;
+    -webkit-box-shadow: 1px 1px 10px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 1px 10px -4px rgba(0,0,0,0.75);
+    box-shadow: 1px 1px 10px -4px rgba(0,0,0,0.75);
+}
+a.btn.btn-danger:hover{
+    background-color: var(--danger);
+}
 /*
 Sortie
  */
