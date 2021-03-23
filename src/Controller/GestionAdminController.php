@@ -38,7 +38,8 @@ class GestionAdminController extends AbstractController
             $pathCSV = $this->getParameter('csv_directory');
             if (($handle = fopen($pathCSV . '/importUser.txt', 'r')) !== FALSE) {
                 //On boucle sur chaque ligne du csv
-                fgetcsv($handle,1000,";");
+                fgetcsv($handle,1000,";"); // skip first line
+                $flag = false;
                 while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                     if (!(strlen($data[0]) > 0 && strlen($data[0]) < 255) ||
                         !(strlen($data[1]) > 0 && strlen($data[1]) < 255) ||
@@ -48,40 +49,49 @@ class GestionAdminController extends AbstractController
                         !(strlen($data[5]) > 0 && strlen($data[5]) < 255) ||
                         !($data[6] == 0 || $data[6] == 1) ||
                         !($data[7] == 0 || $data[7] == 1)) {
-                        echo "tttt";
                         $this->addFlash("erreur", "le fichier csv ne respecte pas le standard d'import");
+                        $flag = true;
                         $this->redirectToRoute("gestion_admin");
                     }
                     if ($em->getRepository(Site::class)->findOneBy(['id' => $data[8]]) == null) {
                         $this->addFlash("erreur", "le site : $data[8] n'existe pas");
+                        $flag = true;
                         $this->redirectToRoute("gestion_admin");
                     }
                     if ($em->getRepository(Participant::class)->findOneBy(['mail' => $data[4]]) != null) {
                         $this->addFlash("erreur", "le mail  $data[4] est déja utilisé");
+                        $flag = true;
+                        $this->redirectToRoute("gestion_admin");
+                    }
+                    if ($em->getRepository(Participant::class)->findOneBy(['pseudo' => $data[0]]) != null) {
+                        $this->addFlash("erreur", "le pseudo  $data[0] est déja utilisé");
+                        $flag = true;
                         $this->redirectToRoute("gestion_admin");
                     }
                 }
             }
-            if (($handle = fopen($pathCSV . '/importUser.txt', 'r')) !== FALSE) {
-                //On boucle sur chaque ligne du csv
-                while (($data = fgetcsv($handle, 0, ";")) !== FALSE) {
-                    $site = $em->getRepository(Site::class)->findOneBy(['id' => $data[8]]);
-                    if ($site != null) {
-                        $participant = new Participant();
-                        $participant->setPseudo($data[0])
-                            ->setNom($data[1])
-                            ->setPrenom($data[2])
-                            ->setTelephone($data[3])
-                            ->setMail($data[4])
-                            ->setAdministrateur($data[6])
-                            ->setActif($data[7])
-                            ->setSite($site)
-                            ->setMotDePasse($data[5]);
-                        $em->persist($participant);
+            if($flag == false) {
+                if (($handle = fopen($pathCSV . '/importUser.txt', 'r')) !== FALSE) {
+                    //On boucle sur chaque ligne du csv
+                    while (($data = fgetcsv($handle, 0, ";")) !== FALSE) {
+                        $site = $em->getRepository(Site::class)->findOneBy(['id' => $data[8]]);
+                        if ($site != null) {
+                            $participant = new Participant();
+                            $participant->setPseudo($data[0])
+                                ->setNom($data[1])
+                                ->setPrenom($data[2])
+                                ->setTelephone($data[3])
+                                ->setMail($data[4])
+                                ->setAdministrateur($data[6])
+                                ->setActif($data[7])
+                                ->setSite($site)
+                                ->setMotDePasse($data[5]);
+                            $em->persist($participant);
+                        }
                     }
+                    $em->flush();
+                    unlink($pathCSV . '/importUser.txt');
                 }
-                $em->flush();
-                unlink($pathCSV . '/importUser.txt');
             }
         }
 
