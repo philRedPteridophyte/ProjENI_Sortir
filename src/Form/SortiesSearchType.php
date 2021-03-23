@@ -83,7 +83,7 @@ class SortiesSearchType extends AbstractType
                 ,'required' => false
             ] )
             ->add('passee', CheckboxType::class,[
-                'label' => 'Sortie passées )'
+                'label' => 'Sortie passées'
                 ,'mapped' => false
                 ,'required' => false
             ] )->add('rechercher', SubmitType::class, [
