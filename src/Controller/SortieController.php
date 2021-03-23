@@ -21,7 +21,7 @@ class SortieController extends AbstractController
 {
     #[Route('/sortie/{id}', name: 'sortie_get_by_id_0', requirements: [ 'id' => '\d+' ], methods: ['GET'])]
     #[Route('/Sortie/{id}', name: 'sortie_get_by_id_1', requirements: [ 'id' => '\d+' ], methods: ['GET'])]
-    public function index(?int $id, Request $request, SortieRepository $sortiesRepository): Response
+    public function afficherSortie(?int $id, Request $request, SortieRepository $sortiesRepository): Response
     {
         $user = $request->getSession()->get('compteConnecte');
 
@@ -108,23 +108,27 @@ class SortieController extends AbstractController
             $em->persist($inscription);
             $em->flush();
         }
-        return new Response();
+        return $this->redirectToRoute('sortie_get_by_id_1',['id'=>$id] );
     }
 
     #[Route('/sortie/leave/{id}', name: 'leaveSortie')]
     public function leaveSortie(int $id, EntityManagerInterface $em, Request $request): Response
     {
         $participant = $request->getSession()->get("compteConnecte");
+        if($participant){
+            $sortie = $em->getRepository(Sortie::class)->findOneBy( ['id' => $id]);
+            // TODO handle case when id is not in the database (DAMIEN)
 
-        $sortie = $em->getRepository(Sortie::class)->findOneBy( ['id' => $id]);
-        // TODO handle case when id is not in the database (DAMIEN)
-
-        $userIsInSortie = $em->getRepository(Inscription::class)->findBySortieIdAndParticipants($sortie->getId(),$participant->getId());
-        if($userIsInSortie){
-            $em->remove($userIsInSortie);
-            $em->flush();
+            $userIsInSortie = $em->getRepository(Inscription::class)->findBySortieIdAndParticipants($sortie,$participant);
+            if($userIsInSortie){
+                $em->remove($userIsInSortie);
+                $em->flush();
+            }
+            return $this->redirectToRoute('sorties_0');
+        }else{
+            return $this->redirectToRoute('connexion');
         }
-        return new Response();
+
     }
 
     #[Route('/sortie/cancel/{id}', name: 'cancelSortie')]
@@ -150,7 +154,7 @@ class SortieController extends AbstractController
     }
 
     #[Route('/Home', name: 'sorties_0', methods: ['GET','POST'])]
-    #[Route('/Sortie', name: 'sorties_1', methods: ['GET','POST'])]
+    #[Route('/Sorties', name: 'sorties_1', methods: ['GET','POST'])]
     #[Route('/sorties', name: 'sorties_2', methods: ['GET','POST'])]
     #[Route('/home', name: 'sorties_3', methods: ['GET','POST'])]
     public function recherche(Request $request, SortieRepository $sortiesRepository): Response
@@ -163,52 +167,55 @@ class SortieController extends AbstractController
 
         $user = $request->getSession()->get("compteConnecte");
         //TODO : check roles
+        if($user){
+            $sorties = null;
+            $lieuxNoLieu = null;
+            $nom = null;
+            $datedebut = null;
+            $datecloture = null;
+            $suisOrga = null;
+            $inscr = null;
+            $pasInscr = null;
+            $passee = null;
+            $results = null;
 
 
-        $sorties = null;
-        $lieuxNoLieu = null;
-        $nom = null;
-        $datedebut = null;
-        $datecloture = null;
-        $suisOrga = null;
-        $inscr = null;
-        $pasInscr = null;
-        $passee = null;
-        $results = null;
+
+            $sortieSearchForm = $this->createForm(SortiesSearchType::class, new Sortie);
+            $sortieSearchForm->handleRequest($request);
+            //var_dump($sortieSearchForm->get('lieuxNoLieu')->getData()->getId());
+            //var_dump($sortieSearchForm->isSubmitted());
+            if ($sortieSearchForm->isSubmitted() ) {
+                $lieuxNoLieu =  $sortieSearchForm->get('lieuxNoLieu') != null ? $sortieSearchForm->get('lieuxNoLieu')->getData() != null ? $sortieSearchForm->get('lieuxNoLieu')->getData()->getId() : null : null;
+                $nom = $sortieSearchForm->get('nom')->getData();
+                //var_dump($sortieSearchForm->get('datedebut'));
+                $datedebut = $sortieSearchForm->get('datedebut') != null ? $sortieSearchForm->get('datedebut')->getData() : null;
+                $datecloture = $sortieSearchForm->get('datecloture') != null ? $sortieSearchForm->get('datecloture')->getData() : null;
+                $suisOrga = $sortieSearchForm->get('suisOrga')->getData();
+                $inscr = $sortieSearchForm->get('inscr')->getData();
+                $pasInscr = $sortieSearchForm->get('pasInscr')->getData();
+                $passee = $sortieSearchForm->get('passee')->getData();
+
+                //var_dump([$sorties,$nom,$datedebut,$datecloture,$suisOrga,$inscr,$pasInscr,$passee]);
 
 
+                $results = $sortiesRepository->filteredSearch( $lieuxNoLieu , $nom, $datedebut, $datecloture, $suisOrga, $inscr, $pasInscr, $passee, $user);
 
-        $sortieSearchForm = $this->createForm(SortiesSearchType::class, new Sortie);
-        $sortieSearchForm->handleRequest($request);
-        //var_dump($sortieSearchForm->get('lieuxNoLieu')->getData()->getId());
-        //var_dump($sortieSearchForm->isSubmitted());
-        if ($sortieSearchForm->isSubmitted() ) {
-            $lieuxNoLieu =  $sortieSearchForm->get('lieuxNoLieu') != null ? $sortieSearchForm->get('lieuxNoLieu')->getData() != null ? $sortieSearchForm->get('lieuxNoLieu')->getData()->getId() : null : null;
-            $nom = $sortieSearchForm->get('nom')->getData();
-            //var_dump($sortieSearchForm->get('datedebut'));
-            $datedebut = $sortieSearchForm->get('datedebut') != null ? $sortieSearchForm->get('datedebut')->getData() : null;
-            $datecloture = $sortieSearchForm->get('datecloture') != null ? $sortieSearchForm->get('datecloture')->getData() : null;
-            $suisOrga = $sortieSearchForm->get('suisOrga')->getData();
-            $inscr = $sortieSearchForm->get('inscr')->getData();
-            $pasInscr = $sortieSearchForm->get('pasInscr')->getData();
-            $passee = $sortieSearchForm->get('passee')->getData();
-
-            //var_dump([$sorties,$nom,$datedebut,$datecloture,$suisOrga,$inscr,$pasInscr,$passee]);
+                //var_dump([$results,$lieuxNoLieu,$nom,$datedebut,$datecloture,$suisOrga,$inscr,$pasInscr,$passee]);
+                //var_dump($results);
+            }
 
 
-            $results = $sortiesRepository->filteredSearch( $lieuxNoLieu , $nom, $datedebut, $datecloture, $suisOrga, $inscr, $pasInscr, $passee, $user);
-
-            //var_dump([$results,$lieuxNoLieu,$nom,$datedebut,$datecloture,$suisOrga,$inscr,$pasInscr,$passee]);
-            //var_dump($results);
+            return $this->render('sortie/chercher.html.twig', [
+                'controller_name'   => 'ArticleController'
+                ,'results' => $results
+                ,'user' => $user
+                ,'createArticleForm' => $sortieSearchForm->createView(),
+            ]);
+        }else{
+            return $this->redirectToRoute('connexion');
         }
 
-
-        return $this->render('sortie/chercher.html.twig', [
-            'controller_name'   => 'ArticleController'
-            ,'results' => $results
-            ,'user' => $user
-            ,'createArticleForm' => $sortieSearchForm->createView(),
-        ]);
 
     }
 }

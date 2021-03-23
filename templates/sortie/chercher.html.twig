@@ -47,7 +47,7 @@
                             {% if r.sortie.etat.id == 1 and r.user_inscrit == 0  %}
                                 <a href="{{ path('joinSortie',{ 'id': r.sortie.id }) }}">s'inscrire</a>
                             {% elseif r.sortie.etat.id == 1 and r.user_inscrit == 1 %}
-                                <a href="">se désinscrire</a>
+                                <a href="{{ path('leaveSortie',{ 'id': r.sortie.id }) }}">se désinscrire</a>
                             {% endif %}
                         </span>
                     </div>
