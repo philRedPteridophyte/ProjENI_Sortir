@@ -3,6 +3,21 @@
 {% block title %}Sortir | {{ sortie.nom }}{% endblock %}
 
 {% block body %}
+    {% for msg in session.flashBag.get('inscrit') %}
+        <div class="alert alert-success">
+            {{ msg  }}
+        </div>
+    {% endfor %}
+    {% for msg in session.flashBag.get('cancel') %}
+        <div class="alert alert-success">
+            {{ msg  }}
+        </div>
+    {% endfor %}
+    {% for msg in session.flashBag.get('created') %}
+        <div class="alert alert-success">
+            {{ msg  }}
+        </div>
+    {% endfor %}
     <div class="container">
         <h1>Sortie : {{ sortie.nom }}</h1>
         <div class="viewer sortie-viewer">
