@@ -104,7 +104,7 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if($passee){
-            
+
         }else{
             $qb->andWhere(":v_date <= DATE_ADD(s.datedebut, ((CASE WHEN s.duree IS NULL THEN 0 ELSE s.duree END) +1 ) , 'minute')");
             $qb->andWhere("e.id != 5");
