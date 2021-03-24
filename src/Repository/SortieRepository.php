@@ -95,11 +95,11 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if($inscr){
-            $qb->andWhere('p.id = :v_user_id');
+            $qb->andWhere('(CASE WHEN i2.participant = :v_user_id THEN 0 ELSE 1 END) = 0');
         }
 
         if($pasInscr){
-            $qb->andWhere(' (CASE WHEN p.id = :v_user_id THEN 0 ELSE 1 END) = 1');
+            $qb->andWhere(' (CASE WHEN i2.participant = :v_user_id THEN 0 ELSE 1 END) = 1');
             //$qb->andWhere(':v_user_id NOT IN (SELECT p2.id FROM App\Entity\Sortie s2 JOIN App\Entity\Inscription i2 JOIN App\Entity\Participant p2)');
         }
 
