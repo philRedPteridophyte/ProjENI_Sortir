@@ -39,10 +39,9 @@
                         <span>
                             {% if r.sortie.etat.id == 4 and r.sortie.organisateur.id == user.id  %}
                                 <a href=""><i class="fas fa-edit"></i></a>
-                                | <a href="{{ path('cancelSortie',{ 'id': r.sortie.id }) }}">annuler</a>
+                                | <a href="{{ path('cancelSortie',{ 'id': r.sortie.id }) }}"><i class="fas fa-eraser"></i></a>
                             {% elseif r.sortie.etat.id != 4 and r.sortie.organisateur.id == user.id  %}
                                 <a href="{{ path('sortie_get_by_id_1',{ 'id': r.sortie.id }) }}"><i class="fas fa-file-alt"></i></a>
-                                | <a href="{{ path('cancelSortie',{ 'id': r.sortie.id }) }}"><i class="fas fa-eraser"></i></a>
                             {% else %}
                                 <a href="{{ path('sortie_get_by_id_1',{ 'id': r.sortie.id }) }}"><i class="fas fa-file-alt"></i></a>
                             {% endif %}
