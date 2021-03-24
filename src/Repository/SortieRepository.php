@@ -3,10 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Sortie;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
-use PhpParser\Node\Expr\Array_;
+
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -103,13 +104,14 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if($passee){
-
+            $qb->andWhere(":v_date >= DATE_ADD(s.datedebut, ((CASE WHEN s.duree IS NULL THEN 0 ELSE s.duree END) +1 ) , 'minute')");
+            $qb->andWhere("e.id != 5");
+            $qb->setParameter('v_date', date_format(new DateTime('now', new \DateTimeZone("Europe/Paris")),"Y-m-d H:i:s"));
         }else{
             $qb->andWhere(":v_date <= DATE_ADD(s.datedebut, ((CASE WHEN s.duree IS NULL THEN 0 ELSE s.duree END) +1 ) , 'minute')");
             $qb->andWhere("e.id != 5");
             $qb->setParameter('v_date', date("Y-m-d H:i:s"));
         }
-
 
         //var_dump($qb->getQuery()->getScalarResult());
         //var_dump(substr($qb->getQuery()->getSQL(), 1000, 500));
