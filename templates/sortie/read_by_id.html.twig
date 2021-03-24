@@ -78,8 +78,8 @@
                     <span>Nom</span>
                 </div>
                 {% for part in sortie.participant %}
-                    <div class="list-item">
-                        <span>{{ part.participant.pseudo }}</span>
+                    <div style="cursor: pointer" onclick="location.href='{{ path('participant_read_0',{ 'id': part.participant.id }) }}'" class="list-item">
+                    <span>{{ part.participant.pseudo }}</span>
                         <span>{{ part.participant.prenom | capitalize}} {{ part.participant.nom | upper}}</span>
                     </div>
                 {% endfor %}
