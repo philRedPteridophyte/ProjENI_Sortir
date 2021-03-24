@@ -18,7 +18,7 @@ class Site
     private int $id;
 
     /**
-     * @ORM\Column(name="nom_site", type="string", length=30, nullable=false)
+     * @ORM\Column(name="nom_site", type="string", length=255, nullable=false)
      */
     private string $nomSite;
 

@@ -18,12 +18,12 @@ class Ville
     private int $id;
 
     /**
-     * @ORM\Column(name="nom_ville", type="string", length=30, nullable=false)
+     * @ORM\Column(name="nom_ville", type="string", length=255, nullable=false)
      */
     private string $nomVille;
 
     /**
-     * @ORM\Column(name="code_postal", type="string", length=10, nullable=false)
+     * @ORM\Column(name="code_postal", type="string", length=5, nullable=false)
      */
     private string $codePostal;
 

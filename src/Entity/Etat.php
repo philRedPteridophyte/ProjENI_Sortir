@@ -20,7 +20,7 @@ class Etat
     private int $id;
 
     /**
-     * @ORM\Column(name="libelle", type="string", length=30, nullable=false)
+     * @ORM\Column(name="libelle", type="string", length=255, nullable=false)
      */
     private string $libelle;
 
