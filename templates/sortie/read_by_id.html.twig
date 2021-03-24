@@ -18,77 +18,71 @@
             {{ msg  }}
         </div>
     {% endfor %}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Sortie : {{ sortie.nom }}</h1>
-                <div class="viewer sortie-viewer">
-                    <div class="field-viewer">
-                        <label for="">Nom de la sortie</label>
-                        <span>{{ sortie.nom }}</span>
-                    </div>
-                    <div class="field-viewer">
-                        <label for="">Date de début de la sortie</label>
-                        <span>{{ sortie.datedebut | date('d/m/Y') }}</span>
-                    </div>
-                    <div class="field-viewer">
-                        <label for="">Date limite d'inscription</label>
-                        <span>{{ sortie.datecloture | date('d/m/Y') }}</span>
-                    </div>
-                    <div class="field-viewer">
-                        <label for="">Nombre de places</label>
-                        <span>{{ sortie.nbinscriptionsmax }}</span>
-                    </div>
-                    <div class="field-viewer">
-                        <label for="">Durée</label>
-                        <span>{{ sortie.duree }} minute{% if sortie.duree > 1 %}s{% endif %}</span>
-                    </div>
-                    <div class="field-viewer">
-                        <label for="">Description et infos</label>
-                        <p>{{ sortie.descriptioninfos }}</p>
-                    </div>
-                    <div class="field-viewer">
-                        <label for="">Lieu</label>
-                        <span>{{ sortie.lieu.nomLieu}}</span>
-                    </div>
-                    <div class="field-viewer">
-                        <label for="">Rue</label>
-                        <span>{{ sortie.lieu.rue}}</span>
-                    </div>
-                    <div class="field-viewer">
-                        <label for="">Ville</label>
-                        <span>{{ sortie.lieu.ville.nomVille}}</span>
-                    </div>
-                    <div class="field-viewer">
-                        <label for="">Code Postal</label>
-                        <span>{{ sortie.lieu.ville.codePostal}}</span>
-                    </div>
-                    <div class="field-viewer">
-                        <label for="">Longitude</label>
-                        <span>{{ sortie.lieu.longitude}}</span>
-                    </div>
-                    <div class="field-viewer">
-                        <label for="">Latitude</label>
-                        <span>{{ sortie.lieu.latitude}}</span>
-                    </div>
-                </div>
+    <div class="container page-sortie_by_id">
+        <h1>Sortie : {{ sortie.nom }}</h1>
+        <div class="viewer sortie-viewer">
+            <div class="field-viewer">
+                <label for="">Nom de la sortie</label>
+                <span>{{ sortie.nom }}</span>
             </div>
-            <div class="col">
-                <div class="padded-body-block">
-                    <h3>List des participants inscrits</h3>
-                    <div class="item-list list-participants-sortie">
-                        <div class="item-list-titlebar">
-                            <span>Pseudo</span>
-                            <span>Nom</span>
-                        </div>
-                        {% for part in sortie.participant %}
-                            <div class="list-item">
-                                <span>{{ part.participant.pseudo }}</span>
-                                <span>{{ part.participant.prenom | capitalize}} {{ part.participant.nom | upper}}</span>
-                            </div>
-                        {% endfor %}
-                    </div>
+            <div class="field-viewer">
+                <label for="">Date de début de la sortie</label>
+                <span>{{ sortie.datedebut | date('d/m/Y') }}</span>
+            </div>
+            <div class="field-viewer">
+                <label for="">Date limite d'inscription</label>
+                <span>{{ sortie.datecloture | date('d/m/Y') }}</span>
+            </div>
+            <div class="field-viewer">
+                <label for="">Nombre de places</label>
+                <span>{{ sortie.nbinscriptionsmax }}</span>
+            </div>
+            <div class="field-viewer">
+                <label for="">Durée</label>
+                <span>{{ sortie.duree }} minute{% if sortie.duree > 1 %}s{% endif %}</span>
+            </div>
+            <div class="field-viewer">
+                <label for="">Description et infos</label>
+                <p>{{ sortie.descriptioninfos }}</p>
+            </div>
+            <div class="field-viewer">
+                <label for="">Lieu</label>
+                <span>{{ sortie.lieu.nomLieu}}</span>
+            </div>
+            <div class="field-viewer">
+                <label for="">Rue</label>
+                <span>{{ sortie.lieu.rue}}</span>
+            </div>
+            <div class="field-viewer">
+                <label for="">Ville</label>
+                <span>{{ sortie.lieu.ville.nomVille}}</span>
+            </div>
+            <div class="field-viewer">
+                <label for="">Code Postal</label>
+                <span>{{ sortie.lieu.ville.codePostal}}</span>
+            </div>
+            <div class="field-viewer">
+                <label for="">Longitude</label>
+                <span>{{ sortie.lieu.longitude}}</span>
+            </div>
+            <div class="field-viewer">
+                <label for="">Latitude</label>
+                <span>{{ sortie.lieu.latitude}}</span>
+            </div>
+        </div>
+        <div class="padded-body-block list-section">
+            <h3>Liste des participants inscrits</h3>
+            <div class="item-list list-participants-sortie">
+                <div class="item-list-titlebar">
+                    <span>Pseudo</span>
+                    <span>Nom</span>
                 </div>
+                {% for part in sortie.participant %}
+                    <div class="list-item">
+                        <span>{{ part.participant.pseudo }}</span>
+                        <span>{{ part.participant.prenom | capitalize}} {{ part.participant.nom | upper}}</span>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>
