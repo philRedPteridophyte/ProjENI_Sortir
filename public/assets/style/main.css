@@ -19,6 +19,8 @@ body{
 }
 body>*:nth-child(2){
     padding-top: 100px;
+}
+main{
     min-height: calc(100% - 200px);
 }
 button[type="submit"] {
@@ -71,7 +73,15 @@ input[type="text"], input[type="password"]{
     background-color: red;
     box-shadow: 5px 5px 5px 5px rgba(255,0,0,0.5);
 }
+.flash-created, .flash-inscrit, .flash-cancel   {
+    background-color: forestgreen;
+    box-shadow: 5px 5px 5px 5px rgba(0,255,0,0.5);
+}
 
+.flash-erreurCreation{
+    background-color: red;
+    box-shadow: 5px 5px 5px 5px rgba(255,0,0,0.5);
+}
 .item-list > .item-list-titlebar{
     padding: 10px 0 10px 10px;
     display: grid;
@@ -98,6 +108,14 @@ input[type="text"], input[type="password"]{
 .item-list > .list-item:hover{
     background-color: var(--accent-6);
     transition: .1s;
+}
+h1{
+    position: relative;
+    left: -10px;
+    width: calc(100% + 10px);
+    background-color: var(--accent-3);
+    padding-left: 10px;
+    padding-bottom: 5px;
 }
 /*
 NAV
@@ -228,8 +246,9 @@ PAGE _ Sortie_by_id
     grid-template-areas:
             "title title"
             "detail list"
+            "a a"
     ;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto 1fr;
     grid-template-columns: 3fr 2fr;
 }
 .container.page-sortie_by_id > h1{
@@ -248,8 +267,9 @@ PAGE _ Sortie_by_id
             "title"
             "detail"
             "list"
+            "a"
     ;
-        grid-template-rows: auto auto auto;
+        grid-template-rows: auto auto auto 1fr;
         grid-template-columns: 100%;
     }
 }
@@ -385,12 +405,25 @@ PAGE _ participant_by_id
             "title"
             "pic"
             "detail"
+            "a"
     ;
-        grid-template-rows: auto auto auto;
+        grid-template-rows: auto auto auto 1fr;
         grid-template-columns: 100%;
     }
     .container.page-participant_by_id > .pic-section img{
         max-width: 440px;
         width: 100%;
     }
+}
+/*
+PAGE _ villes_search
+ */
+.list-recherche-ville{
+    padding-top: 30px;
+}
+.list-recherche-ville > .item-list-titlebar{
+    grid-template-columns: 2fr 2fr 1fr;
+}
+.list-recherche-ville > .list-item{
+    grid-template-columns: 2fr 2fr 1fr;
 }

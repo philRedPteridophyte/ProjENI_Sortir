@@ -4,30 +4,34 @@
 
 {% block body %}
 
-    <h1 style="text-align: center"> Gérer les Villes</h1>
-    <h2> Filtrer les Villes</h2>
-    <div class="container">
-        {{ form_start(villeSearchForm) }}
-        {{ form_widget(villeSearchForm) }}
-        {{ form_end(villeSearchForm) }}
-    </div>
-    <div class="item-list list-recherche-sortie">
-        <div class="item-list-titlebar">
-            <span>Ville</span>
-            <span>Code postal</span>
-            <span>Actions</span>
+
+    <div class="container page-villes_search">
+        <h1> Gérer les Villes</h1>
+        <h2> Filtrer les Villes</h2>
+        <div class="filters padded-body-block">
+            {{ form_start(villeSearchForm) }}
+            {{ form_widget(villeSearchForm) }}
+            {{ form_end(villeSearchForm) }}
         </div>
-        {%  for v in villes %}
-            <div class="list-item">
-                <span>{{ v.nomVille }}</span>
-                <span>{{ v.codePostal }}</span>
-                <span>
-                    <a href="{{ path('editVille',{ 'id': v.id }) }}">Modifier</a>
-                </span>
+        <div class="item-list list-recherche-ville">
+            <div class="item-list-titlebar">
+                <span>Ville</span>
+                <span>Code postal</span>
+                <span>Actions</span>
             </div>
-        {% else %}
-        {% endfor %}
+            {%  for v in villes %}
+                <div class="list-item">
+                    <span>{{ v.nomVille }}</span>
+                    <span>{{ v.codePostal }}</span>
+                    <span>
+                        <a href="{{ path('editVille',{ 'id': v.id }) }}">Modifier</a>
+                    </span>
+                </div>
+            {% else %}
+            {% endfor %}
+        </div>
+
+        <a class="btn ptn-primary" href="{{ path('addVille')}}">Ajouter</a>
     </div>
 
-    <button><a href="{{ path('addVille')}}">Ajouter</a></button>
 {% endblock %}
