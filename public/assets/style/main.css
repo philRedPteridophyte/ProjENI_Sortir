@@ -138,6 +138,7 @@ a.btn {
     background-color: var(--accent-c);
     color: white;
     border: none;
+    margin-top:5px;
 }
 a.btn.btn-danger{
     background-color: var(--danger);
@@ -240,7 +241,6 @@ PAGE _ Sortie_by_id
 /*
 PAGE _ recherche_sorties
  */
-
 .list-recherche-sortie > .list-item{
     grid-template-columns: 2fr 2fr 2fr 2fr 2fr 1fr 2fr 2fr;
 }
