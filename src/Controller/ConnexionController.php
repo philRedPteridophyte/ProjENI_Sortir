@@ -77,4 +77,15 @@ class ConnexionController extends AbstractController
             'controller_name' => 'ConnexionController',
         ]);
     }
+
+
+    #[Route('/deconnexion/', name: 'deconnexion')]
+    public function deconnexion(Request $request): Response
+    {
+        //Destruction des session:
+        $session = $request->getSession();
+        $session->clear();
+
+        return $this->redirectToRoute('connexion');
+    }
 }
