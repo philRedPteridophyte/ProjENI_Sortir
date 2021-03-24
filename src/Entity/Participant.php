@@ -26,37 +26,37 @@ class Participant
 
     /**
      *
-     * @ORM\Column(name="pseudo", type="string", length=30, nullable=false)
+     * @ORM\Column(name="pseudo", type="string", length=100, nullable=false)
      */
     private string $pseudo;
 
     /**
      *
-     * @ORM\Column(name="nom", type="string", length=30, nullable=false)
+     * @ORM\Column(name="nom", type="string", length=255, nullable=false)
      */
     private string $nom;
 
     /**
      *
-     * @ORM\Column(name="prenom", type="string", length=30, nullable=false)
+     * @ORM\Column(name="prenom", type="string", length=255, nullable=false)
      */
     private string $prenom;
 
     /**
      *
-     * @ORM\Column(name="telephone", type="string", length=15, nullable=true)
+     * @ORM\Column(name="telephone", type="string", length=10, nullable=true)
      */
     private string $telephone;
 
     /**
      *
-     * @ORM\Column(name="mail", type="string", length=225, nullable=false)
+     * @ORM\Column(name="mail", type="string", length=255, nullable=false)
      */
     private string $mail;
 
     /**
      *
-     * @ORM\Column(name="mot_de_passe", type="string", length=20, nullable=false)
+     * @ORM\Column(name="mot_de_passe", type="string", length=255, nullable=false)
      */
     private string $motDePasse;
 

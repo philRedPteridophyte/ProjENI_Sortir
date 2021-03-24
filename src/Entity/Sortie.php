@@ -20,7 +20,7 @@ class Sortie
     private int $id;
 
     /**
-     * @ORM\Column(name="nom", type="string", length=50, nullable=false)
+     * @ORM\Column(name="nom", type="string", length=255, nullable=false)
      */
     private string $nom;
 
@@ -45,12 +45,12 @@ class Sortie
     private int $nbinscriptionsmax;
 
     /**
-     * @ORM\Column(name="descriptioninfos", type="string", length=500, nullable=true)
+     * @ORM\Column(name="descriptioninfos", type="string", length=5000, nullable=true)
      */
     private ?string $descriptioninfos;
 
     /**
-     * @ORM\Column(name="urlPhoto", type="string", length=250, nullable=true)
+     * @ORM\Column(name="urlPhoto", type="string", length=1000, nullable=true)
      */
     private ?string $urlphoto;
 

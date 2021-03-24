@@ -18,12 +18,12 @@ class Lieu
     private int $id;
 
     /**
-     * @ORM\Column(name="nom_lieu", type="string", length=30, nullable=false)
+     * @ORM\Column(name="nom_lieu", type="string", length=255, nullable=false)
      */
     private string $nomLieu;
 
     /**
-     * @ORM\Column(name="rue", type="string", length=30, nullable=true)
+     * @ORM\Column(name="rue", type="string", length=255, nullable=true)
      */
     private ?string $rue;
 
