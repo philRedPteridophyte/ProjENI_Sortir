@@ -31,7 +31,8 @@ class LocalDateTimeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'format' => self::HTML5_FORMAT
+            'format' => self::HTML5_FORMAT,
+            'html5' => false
             /*
             ,'widget'=>'single_text'
             ,'html5' => false

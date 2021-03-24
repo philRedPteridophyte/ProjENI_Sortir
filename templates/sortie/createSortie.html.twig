@@ -3,6 +3,32 @@
 {% block title %}Ajouter une sortie - Admin || {{ parent() }}{% endblock %}
 
 {% block body %}
+    <style>
+        .flash{
+            padding: 20px;
+            display: block;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .flash-success{
+            background-color: forestgreen;
+            box-shadow: 5px 5px 5px 5px rgba(0,255,0,0.5);
+        }
+
+        .flash-erreurCreation{
+            background-color: red;
+            box-shadow: 5px 5px 5px 5px rgba(255,0,0,0.5);
+        }
+    </style>
+
+    {% for msg in  session.flashBag.get('erreurCreation') %}
+        <div class="flash flash-erreurCreation">
+                {{ msg }}
+            </div>
+    {% endfor %}
     <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-10 col-sm-6">

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Form\Type\LocalDateTimeType;
 use App\Repository\LieuxRepository;
 use App\Repository\SiteRepository;
 use App\Repository\VilleRepository;
@@ -35,40 +36,44 @@ class SortieType extends AbstractType
             ->add('nom', TextType::class, [
                 'label' => "Nom de la sortie",
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'pattern' => '[a-zA-Z0-9\s]+',
                 ]
             ])
-            ->add('datedebut', DateType::class, [
-                'label' => "Date de début de la sortie",
-                'widget' => 'single_text',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('datecloture', DateType::class, [
-                'label' => "Date limite d'inscription",
-                'widget' => 'single_text',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
+            ->add('datedebut',LocalDateTimeType::class ,[
+                'widget' => 'single_text'
+                ,'html5' => false
+                ,'label' => 'Date de début'
+            ] )
+            ->add('datecloture',LocalDateTimeType::class ,[
+                'widget' => 'single_text'
+                ,'html5' => false
+                ,'label' => 'Date de fin des inscriptions'
+            ] )
             ->add('nbinscriptionsmax', NumberType::class, [
                 'label' => "Nombre de places",
+                'html5' => true,
+                'required' => true,
                 'attr' => [
+                    'min' => 1,
                     'class' => 'form-control'
                 ]
             ])
             ->add('duree', NumberType::class, [
-                'label' => "Durée",
+                'label' => "Durée (minutes)",
+                'html5' => true,
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                    'min' => 1,
+                ],
+                'required' => false,
             ])
             ->add('descriptioninfos', TextareaType::class, [
                 'label' => "Description et infos",
                 'attr' => [
                     'class' => 'form-control'
-                ]
+                ],
+                'required' => false,
             ])
             ->add('lieu', EntityType::class, [
                 'label' => "Lieu",
