@@ -24,12 +24,8 @@ class ParticipantController extends AbstractController
         $gestionForm->handleRequest($request);
 
         if ($gestionForm->isSubmitted() && $gestionForm->isValid()) {
-            //TODO Penser verifier la conformité des données update (exemple: je modifie mon mail en un mail déjà utilisé)
-            //TODO Idem pour le pseudo
             $entityManager->flush();
-        }
-        else {
-            $this->addFlash('error', 'Les changements n\'ont pas été pris en compte ');
+            $this->addFlash('success', 'Les changements ont bien été pris en compte');
         }
         return $this->render('participant/update.html.twig', [
             'gestionForm' => $gestionForm->createView(),

@@ -9,7 +9,7 @@ use App\Repository\LieuxRepository;
 use App\Repository\SiteRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -37,16 +37,6 @@ class GestionType extends AbstractType
             ->getResult();
 
         $builder
-            ->add('site', EntityType::class, [
-                'label' => 'Site'
-                ,'class'=> Site::class
-                ,'choice_label' => 'nomSite'
-                ,'expanded' => false
-                ,'multiple' => false
-                ,'required' => true
-                ,'choices' => $listSites
-                ,'mapped' => true
-            ] )
             ->add('pseudo', TextType::class, [
                 'label' => 'Pseudo',
                 'required' => false
@@ -68,12 +58,22 @@ class GestionType extends AbstractType
                 'required' => false
             ])
             ->add('motDePasse', RepeatedType::class, [
-                'type' => TextType::class,
+                'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être identiques.',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Répéter le mot de passe'],
+            ])
+            ->add('site', EntityType::class, [
+                'label' => 'Site'
+                ,'class'=> Site::class
+                ,'choice_label' => 'nomSite'
+                ,'expanded' => false
+                ,'multiple' => false
+                ,'required' => true
+                ,'choices' => $listSites
+                ,'mapped' => true
             ])
             ->add('urlPhoto',TextType::class, [
                 'label' => 'Url de photo de profil',
@@ -84,14 +84,7 @@ class GestionType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]
-            ])
-            ->add('cancel', ResetType::class, [
-                'label' => 'Annuler',
-                'attr' => [
-                    'class' => 'btn btn-danger'
-                ]
             ]);
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
