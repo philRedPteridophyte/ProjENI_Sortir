@@ -17,6 +17,11 @@ class ParticipantController extends AbstractController
     public function index(Request $request, ?int $id, ParticipantRepository $repository): Response
     {
         $user = $request->getSession()->get('compteConnecte');
+
+        if($user->getAdministrateur() == false){
+            return $this->redirectToRoute('sorties_0');
+        }
+
         $entityManager = $this->getDoctrine()->getManager();
         $participant = $entityManager->getRepository(Participant::class)->find($id);
 
@@ -64,6 +69,11 @@ class ParticipantController extends AbstractController
     {
 
         $user = $request->getSession()->get("compteConnecte");
+
+        if($user->getAdministrateur() == false){
+            return $this->redirectToRoute('sorties_0');
+        }
+
         $session = $request->getSession();
         if($user && $session){
             $entityManager = $this->getDoctrine()->getManager();
@@ -88,6 +98,11 @@ class ParticipantController extends AbstractController
 
         $user = $request->getSession()->get("compteConnecte");
         $session = $request->getSession();
+
+        if($user->getAdministrateur() == false){
+            return $this->redirectToRoute('sorties_0');
+        }
+
         if($user && $session){
             $entityManager = $this->getDoctrine()->getManager();
             $participant = $entityManager->getRepository(Participant::class)->find($id);

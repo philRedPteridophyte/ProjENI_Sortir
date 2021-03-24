@@ -21,6 +21,12 @@ class GestionAdminController extends AbstractController
         $csvForm = $this->createForm(UploadCSVType::class);
         $csvForm->handleRequest($request);
 
+        $user = $request->getSession()->get('compteConnecte');
+
+        if($user->getAdministrateur() == false){
+            return $this->redirectToRoute('sorties_0');
+        }
+
         if ($csvForm->isSubmitted() && $csvForm->isValid()) {
             $csvFile = $csvForm['csv']->getData();
             if ($csvFile) {
@@ -110,6 +116,10 @@ class GestionAdminController extends AbstractController
     {
 
         $user = $request->getSession()->get('compteConnecte');
+
+        if($user->getAdministrateur() == false){
+            return $this->redirectToRoute('sorties_0');
+        }
 
         $adminAddUserForm =$this->createForm(AdminAddUserType::class, new Participant());
         $adminAddUserForm->handleRequest($request);

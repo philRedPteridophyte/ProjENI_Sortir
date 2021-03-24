@@ -23,6 +23,11 @@ class VilleController extends AbstractController
     {
         $user = $request->getSession()->get('compteConnecte');
 
+        if($user->getAdministrateur() == false){
+            return $this->redirectToRoute('sorties_0');
+        }
+
+
         $villeSearchForm = $this->createForm(VilleSearchType::class, new Ville());
         $villeSearchForm->handleRequest($request);
 
@@ -46,6 +51,10 @@ class VilleController extends AbstractController
     public function editVille(int $id,Request $request, EntityManagerInterface $em): Response
     {
         $user = $request->getSession()->get('compteConnecte');
+
+        if($user->getAdministrateur() == false){
+            return $this->redirectToRoute('sorties_0');
+        }
 
         $villeEditForm = $this->createForm(VilleEditType::class, new Ville());
         $villeEditForm->handleRequest($request);
@@ -77,6 +86,10 @@ class VilleController extends AbstractController
     public function addVille(Request $request, EntityManagerInterface $em): Response
     {
         $user = $request->getSession()->get('compteConnecte');
+
+        if($user->getAdministrateur() == false){
+            return $this->redirectToRoute('sorties_0');
+        }
 
         $villeAddForm = $this->createForm(VilleAddType::class, new Ville());
         $villeAddForm->handleRequest($request);

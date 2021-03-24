@@ -28,7 +28,11 @@
                 </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('participant_read_0',{ 'id': user.id }) }}"><i class="fas fa-user"></i> <strong>({{ user.pseudo }}</strong>)</a>
+                    {% if user.administrateur == 0 %}
+                        <a class="nav-link" href="{{ path('participant_read_0',{ 'id': user.id }) }}"><i class="fas fa-user"></i> <strong>({{ user.pseudo }}</strong>)</a>
+                    {% else %}
+                        <a class="nav-link" href="{{ path('participant_read_0',{ 'id': user.id }) }}"><i class="fas fa-user"></i> <strong>({{ user.pseudo }} - Admin</strong>)</a>
+                    {% endif %}
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('deconnexion') }}"><i class="fas fa-sign-out-alt"></i></a>
