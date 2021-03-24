@@ -28,6 +28,7 @@
                     <span>Actions</span>
                 </div>
                 {%  for r in results %}
+                    {{ r.user_inscrit }}
                     <div class="list-item">
                         <span>{{ r.sortie.nom }}</span>
                         <span>{{ r.sortie.datedebut | date('d/m/Y')}}</span>
@@ -46,6 +47,9 @@
                                 <a href="{{ path('sortie_get_by_id_1',{ 'id': r.sortie.id }) }}"><i class="fas fa-file-alt"></i></a>
                             {% endif %}
 
+                            {% if user.administrateur and r.sortie.etat.id != 6 %}
+                                | <a href="{{ path('cancelSortie',{ 'id': r.sortie.id }) }}"><i class="fas fa-eraser"></i></a>
+                            {% endif %}
                             {% if r.sortie.etat.id == 1 and r.user_inscrit == 0  %}
                                 | <a href="{{ path('joinSortie',{ 'id': r.sortie.id }) }}"><i class="fas fa-calendar-plus"></i></a>
                             {% elseif r.sortie.etat.id == 1 and r.user_inscrit == 1 %}
