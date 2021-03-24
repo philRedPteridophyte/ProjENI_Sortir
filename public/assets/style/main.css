@@ -187,3 +187,49 @@ VIEWER
     margin: 0;
     display: inline-block;
 }
+@media screen and (max-width: 600px) {
+    .viewer .field-viewer > label {
+        width: 100%;
+        font-weight: 600;
+        margin-bottom: 0;
+        margin-top: 7px;
+    }
+    .viewer .field-viewer > *:nth-child(2) {
+        width: 100%;
+        margin: 0;
+        display: inline-block;
+    }
+}
+/*
+PAGE _ Sortie_by_id
+ */
+.container.page-sortie_by_id{
+    display: grid;
+    grid-template-areas:
+            "title title"
+            "detail list"
+    ;
+    grid-template-rows: auto auto;
+    grid-template-columns: 3fr 2fr;
+}
+.container.page-sortie_by_id > h1{
+    grid-area: title;
+}
+.container.page-sortie_by_id > .viewer{
+    grid-area: detail;
+}
+.container.page-sortie_by_id > .list-section{
+    grid-area: list;
+}
+@media screen and (max-width: 1100px) {
+    .container.page-sortie_by_id{
+        display: grid;
+        grid-template-areas:
+            "title"
+            "detail"
+            "list"
+    ;
+        grid-template-rows: auto auto auto;
+        grid-template-columns: 100%;
+    }
+}
