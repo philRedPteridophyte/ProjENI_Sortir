@@ -62,28 +62,55 @@ class SortieController extends AbstractController
 
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-            if ($sortieForm->get('save')->isClicked()) {
-                $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'En création']);
-                $sortie->setEtat($etat);
-                $sortie->setOrganisateur($em->getRepository(Participant::class)->findOneBy(['pseudo' => $user->getPseudo()]));
-                $em->persist($sortie);
-                $em->flush();
-                $this->addFlash('created', 'Votre sortie est créée !');
-                return $this->redirectToRoute('sortie_get_by_id_0',['id' => $sortie->getId()]);
+
+            //Vérification cohérence
+            $incoherences = array();
+
+            //Date de début est après la date du jour
+            $dateDebutSortie = date_format($sortieForm->get('datedebut')->getData(),'Y-m-d H:i');
+            $now=date_format(new DateTime('now', new \DateTimeZone('Europe/Paris')),'Y-m-d H:i');
+
+            if(strtotime($now) > strtotime($dateDebutSortie)){
+                array_push($incoherences,"La sortie n'a pas été créée car la date de début est antérieur à aujourd'hui !");
             }
-            elseif ($sortieForm->get('publish')->isClicked()) {
-                $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'En cours']);
-                $sortie->setEtat($etat);
-                $sortie->setOrganisateur($em->getRepository(Participant::class)->findOneBy(['pseudo' => $user->getPseudo()]));
-                $em->persist($sortie);
-                $em->flush();
-                $this->addFlash('created', 'Votre sortie est créée !');
-                return $this->redirectToRoute('sortie_get_by_id_0', ['id' => $sortie->getId()]);
+
+            //Date cloture est antérieur Date début
+            $dateClotureInscription = date_format($sortieForm->get('datecloture')->getData(),'Y-m-d H:i');
+            if(strtotime($dateClotureInscription) > strtotime($dateDebutSortie)){
+                array_push($incoherences,"La sortie n'a pas été créée car la date de cloture est postérieur à la date de début de la sortie !");
+            }
+
+            if(sizeof($incoherences) > 0){
+                foreach ($incoherences as $incoherence){
+                    $this->addFlash('erreurCreation', $incoherence);
+                }
+                return $this->redirectToRoute('createSortie');
+            }
+            else{
+                if ($sortieForm->get('save')->isClicked()) {
+                    $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'En création']);
+                    $sortie->setEtat($etat);
+                    $sortie->setOrganisateur($em->getRepository(Participant::class)->findOneBy(['pseudo' => $user->getPseudo()]));
+                    $em->persist($sortie);
+                    $em->flush();
+                    $this->addFlash('created', 'Votre sortie est créée !');
+                    return $this->redirectToRoute('sortie_get_by_id_0',['id' => $sortie->getId()]);
+                }
+                elseif ($sortieForm->get('publish')->isClicked()) {
+                    $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'En cours']);
+                    $sortie->setEtat($etat);
+                    $sortie->setOrganisateur($em->getRepository(Participant::class)->findOneBy(['pseudo' => $user->getPseudo()]));
+                    $em->persist($sortie);
+                    $em->flush();
+                    $this->addFlash('created', 'Votre sortie est créée !');
+                    return $this->redirectToRoute('sortie_get_by_id_0', ['id' => $sortie->getId()]);
+                }
             }
         }
         return $this->render('sortie/createSortie.html.twig', [
             'sortie' => $sortie,
             'user' => $user,
+            'session' => $request->getSession(),
             'form' => $sortieForm->createView(),
         ]);
     }

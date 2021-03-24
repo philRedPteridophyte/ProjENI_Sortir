@@ -3,7 +3,26 @@
 {% block title %}Sortir | {{ sortie.nom }}{% endblock %}
 
 {% block body %}
-    {% for msg in session.flashBag.get('inscrit') %}
+    <style>
+        .flash{
+            padding: 20px;
+            display: block;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .flash-created, .flash-inscrit, .flash-cancel{
+            background-color: forestgreen;
+            box-shadow: 5px 5px 5px 5px rgba(0,255,0,0.5);
+        }
+
+        .flash-erreurCreation{
+            background-color: red;
+            box-shadow: 5px 5px 5px 5px rgba(255,0,0,0.5);
+        }
+    </style>    {% for msg in session.flashBag.get('inscrit') %}
         <div class="alert alert-success">
             {{ msg  }}
         </div>
