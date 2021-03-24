@@ -62,8 +62,7 @@ class SortieRepository extends ServiceEntityRepository
             ->addSelect('e')
             ->addSelect('o')
             ->addSelect( 'CASE WHEN i.participant = :v_user_id THEN 1 ELSE 0 END AS user_inscrit')
-            ->addSelect("(SELECT count(so.id) FROM App\Entity\Sortie so INNER JOIN App\Entity\Inscription in WHERE so.id = s.id ) AS participants_count")
-
+            ->addSelect("(SELECT count(so.sortie) FROM App\Entity\Inscription so WHERE so.sortie = s.id ) AS participants_count")
             ->where('1 = 1')
             ->setParameter('v_user_id', $user->getId())
             ->having('1 = 1');
