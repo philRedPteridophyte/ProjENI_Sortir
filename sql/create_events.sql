@@ -6,4 +6,15 @@ ON SCHEDULE
     ON COMPLETION NOT PRESERVE
     ENABLE
 DO
-    UPDATE sorties s SET s.etat_id = 2 WHERE s.datecloture > CURDATE() AND s.etat_id = 1
+    UPDATE sortie s SET s.etat_id = 2 WHERE s.datecloture > CURDATE() AND s.etat_id = 1;
+
+
+CREATE EVENT `EVNT_ARCHIVAGE`
+ON SCHEDULE
+    EVERY 1 DAY
+    STARTS '2021-03-19 23:59:59.999999'
+    ENDS '2021-03-27 23:59:59.000000'
+    ON COMPLETION NOT PRESERVE
+    ENABLE
+DO
+    UPDATE sortie s SET s.etat_id = 5 WHERE DATE_ADD(s.datedebut, INTERVAL s.duree MINUTE)  = CURDATE() + INTERVAL 30 DAY ;

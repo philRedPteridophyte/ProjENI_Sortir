@@ -64,7 +64,7 @@ class SortieRepository extends ServiceEntityRepository
             ->addSelect( 'CASE WHEN i.participant = :v_user_id THEN 1 ELSE 0 END AS user_inscrit')
             ->addSelect("(SELECT count(so.id) FROM App\Entity\Sortie so INNER JOIN App\Entity\Inscription in WHERE so.id = s.id ) AS participants_count")
 
-            ->where('1 = 1')
+            ->where('1 = 1 ')
             ->setParameter('v_user_id', $user->getId())
             ->having('1 = 1');
         //->addSelect( ' :v_user_id AS HIDDEN user_id')
@@ -104,9 +104,10 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if($passee){
-
+            
         }else{
             $qb->andWhere(":v_date <= DATE_ADD(s.datedebut, ((CASE WHEN s.duree IS NULL THEN 0 ELSE s.duree END) +1 ) , 'minute')");
+            $qb->andWhere("e.id != 5");
             $qb->setParameter('v_date', date("Y-m-d H:i:s"));
         }
 
