@@ -28,7 +28,6 @@
                     <span>Actions</span>
                 </div>
                 {%  for r in results %}
-                    {{ r.user_inscrit }}
                     <div class="list-item">
                         <span>{{ r.sortie.nom }}</span>
                         <span>{{ r.sortie.datedebut | date('d/m/Y')}}</span>
