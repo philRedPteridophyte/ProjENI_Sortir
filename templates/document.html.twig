@@ -1,7 +1,8 @@
 {% if styles is not defined or styles is null %}
-    {% set styles = [{"href":'assets/style/main.css'}] %}
+    {% set styles = [{"href":'assets/style/main.css'},{"href":'assets/style/fontawesome.all.css'}] %}
 {% else %}
     {% set styles = styles|merge({"href":'assets/style/main.css'}) %}
+    {% set styles = styles|merge({"href":'assets/style/fontawesome.all.css'}) %}
 {% endif %}
 <!doctype html>
 <html lang="en">

@@ -19,6 +19,7 @@ body{
 }
 body>*:nth-child(2){
     padding-top: 100px;
+    min-height: 100%;
 }
 button[type="submit"] {
     height: 50px;
@@ -79,6 +80,10 @@ input[type="text"], input[type="password"]{
     background-color: var(--accent-f);
     color: white;
 }
+.item-list > .item-list-titlebar >*{
+    display: inline-block;
+    padding-right: 7px;
+}
 .item-list > .list-item{
     padding: 10px 0 10px 10px;
     display: grid;
@@ -101,6 +106,16 @@ nav.navbar{
     position: fixed;
     width: 100%;
     z-index: 1;
+}
+/*
+FOOTER
+ */
+footer{
+    margin-top: 70px;
+    min-height: 100px;
+    width: 100%;
+    background-color: var(--accent-f);
+    border-top: #ff6bb7 40px solid;
 }
 /*
 BODY CONTENT
@@ -302,6 +317,11 @@ PAGE _ recherche_sorties
         grid-template-columns: 2fr 2fr 2fr 2fr 2fr 1fr 2fr 2fr 20%;
         grid-template-rows: auto auto auto auto auto auto auto auto;
         clip-path: polygon(0 0, 63% 0, 100% 65%, 100% 100%, 20% 100%, 0% 50%);
+    }
+    .page-recherche-sorties .list-recherche-sortie > .list-item > *{
+        min-height: 20px;
+        min-width: 1px;
+        display: inline-block;
     }
     .page-recherche-sorties .list-recherche-sortie > .list-item > *:nth-child(1) {
         grid-column: 1 / 10;
