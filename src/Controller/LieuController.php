@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Lieu;
-use App\Entity\Participant;
-use App\Entity\Ville;
 use App\Form\LieuSearchType;
 use App\Form\LieuEditType;
 use App\Form\LieuAddType;

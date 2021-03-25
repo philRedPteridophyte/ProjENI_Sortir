@@ -26,7 +26,7 @@ class LieuxRepository extends ServiceEntityRepository
             ->andWhere('o.nomLieu LIKE :nomLieu')
             ->setParameter('nomLieu', '%'.$text.'%')
             ->getQuery()
-            ->getResult(Query::HYDRATE_ARRAY);
+            ->getResult();
     }
 
     // /**
