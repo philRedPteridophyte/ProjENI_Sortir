@@ -48,7 +48,7 @@ class SortieController extends AbstractController
     {
 
         if ($request->cookies->has("CookieCompteConnecte")){
-            $user = $this->getRequest()->getCookie('CookieCompteConnecte');
+            $user = $request->cookies->get('CookieCompteConnecte');
         }else if ($request->hasSession() && $request->getSession()->has("compteConnecte")){
             $user = $request->getSession()->get('compteConnecte');
         }else{

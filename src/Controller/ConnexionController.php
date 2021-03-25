@@ -16,66 +16,77 @@ use Symfony\Component\HttpFoundation\Cookie;
 class ConnexionController extends AbstractController
 {
     #[Route('/', name: 'connexion')]
-    public function index(Request $request): Response
+    public function index(Request $request, EntityManagerInterface $em): Response
     {
         //Instance des sessions:
         $session = $request->getSession();
-        //$session->start();
+        if ($request->cookies->has("CookieCompteConnecte")){
+            $pseudo = $request->cookies->get('CookieCompteConnecte');
 
-        //Appel du formulaire relié à l'entité Participant
-        $participant = new Participant();
-        $connexionForm = $this->createForm(ConnexionType::class, $participant);
+            $user = $em->getRepository(Participant::class)->findOneBy(["pseudo" => $pseudo]);
+            $session->set('compteConnecte', $user);
 
-        //Vérification de l'envoie du formaulaire
-        $connexionForm->handleRequest($request);
+            return $this->redirectToRoute('sorties_1');
+        } else {
 
-        //Debugage vérif de saisie:
-        //dump($participant);
+            //Appel du formulaire relié à l'entité Participant
+            $participant = new Participant();
+            $connexionForm = $this->createForm(ConnexionType::class, $participant);
 
-        if ($connexionForm->isSubmitted() && $connexionForm->isValid()) {
+            //Vérification de l'envoie du formaulaire
+            $connexionForm->handleRequest($request);
 
-            //Récupération des variables du Repesitory  et vérification de si exist en base
-            $identifiant = htmlentities($connexionForm->get("identifiant")->getData());
-            $mot_de_passe = htmlentities($connexionForm->get("motDePasse")->getData());
-            $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
+            //Debugage vérif de saisie:
+            //dump($participant);
 
-            $souvenir     = $connexionForm->get("souvenir")->getData();
-            $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
-            $participantEnBase = $participantRepo->findIfExist($identifiant,$mot_de_passe);
+            if ($connexionForm->isSubmitted() && $connexionForm->isValid()) {
 
-            //Si les informations existes
-            if($participantEnBase != null){
-               $this->addFlash('success', 'Vous êtes bien connecté en tant que ' . $participantEnBase->getPseudo() . ' :) ');
+                //Récupération des variables du Repesitory  et vérification de si exist en base
+                $identifiant = htmlentities($connexionForm->get("identifiant")->getData());
+                $mot_de_passe = htmlentities($connexionForm->get("motDePasse")->getData());
+                $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
 
-                if ($souvenir === true) {
+                $souvenir = $connexionForm->get("souvenir")->getData();
+                $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
+                $participantEnBase = $participantRepo->findIfExist($identifiant, $mot_de_passe);
 
-                    $cookie = new Cookie('CookieCompteConnecte', $participantEnBase);
+                //Si les informations existes
+                if ($participantEnBase != null) {
+                    $this->addFlash('success', 'Vous êtes bien connecté en tant que ' . $participantEnBase->getPseudo() . ' :) ');
 
-                    $response = new Response();
-                    $response->headers->setCookie($cookie);
-                    $response->send();
-                }else{
-                    $session->set('compteConnecte', $participantEnBase);
+                    if ($souvenir === true) {
+
+                       $cookie = new Cookie('CookieCompteConnecte', $participantEnBase->getPseudo());
+
+                        $response = new Response();
+                        $response->headers->setCookie($cookie);
+                        $response->send();
+
+                        $session->set('compteConnecte', $participantEnBase);
+
+                    } else {
+                        $session->set('compteConnecte', $participantEnBase);
+                    }
+
+                    // On envoie vers la page main
+                    return $this->redirectToRoute("sorties_1");
+                    //return $this->redirectToRoute("test");
+
+                    //Si les informations existes pas, on ré-affiche le formulaire avec l'erreur
+                } else {
+                    $this->addFlash('error', 'Erreur : identifiant/email ou mot de passe incorrect(s). Veuillez ré-essayer ou bien cliquez sur mot de passe oublié');
+                    $this->redirectToRoute('connexion');
                 }
 
-               // On envoie vers la page main
-               return $this->redirectToRoute("sorties_1");
-               //return $this->redirectToRoute("test");
-
-            //Si les informations existes pas, on ré-affiche le formulaire avec l'erreur
-            }else {
-                $this->addFlash('error', 'Erreur : identifiant/email ou mot de passe incorrect(s). Veuillez ré-essayer ou bien cliquez sur mot de passe oublié');
-                $this->redirectToRoute('connexion');
+                // Débugage de vérification si les informations existent en base
+                dump($participantEnBase);
             }
-            
-            // Débugage de vérification si les informations existent en base
-            dump($participantEnBase);
-        }
 
-        return $this->render('connexion/index.html.twig', [
-            'connexionForm' => $connexionForm->createView(),
-            'controller_name' => 'ConnexionController',
-        ]);
+            return $this->render('connexion/index.html.twig', [
+                'connexionForm' => $connexionForm->createView(),
+                'controller_name' => 'ConnexionController',
+            ]);
+        }
     }
 
 
@@ -85,6 +96,12 @@ class ConnexionController extends AbstractController
         //Destruction des session:
         $session = $request->getSession();
         $session->clear();
+
+        if ($request->cookies->has("CookieCompteConnecte")){
+            $response = New Response();
+            $response->headers->clearCookie('CookieCompteConnecte');
+            $response->send();
+        }
 
         return $this->redirectToRoute('connexion');
     }
