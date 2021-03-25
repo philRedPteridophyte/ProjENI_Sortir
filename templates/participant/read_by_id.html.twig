@@ -44,7 +44,7 @@
         <div class="padded-body-block">
             {# modifier désactiver ou supprimer si le participant en à le droit #}
             {% if user.id == participant.id or user.administrateur %}
-                <a href="{{ path('gestion',{ 'id': participant.id }) }}" class="btn">modifier</a>
+                <a href="{{ path('gestion',{ 'id': participant.id }) }}" class="btn">Modifier</a>
             {% endif %}
             {% if participant.actif and user.administrateur %}
                 <a href="{{ path('participant_deactivate_0',{ 'id': participant.id }) }}" class="btn btn-danger">Désactiver</a>
@@ -52,7 +52,7 @@
             {% endif %}
         </div>
     </div>
-    <div class="pic-section">
+    <div class="pic-section padded-body-block">
         <img src="{{ participant.urlPhoto }}" class="img-fluid" alt="Responsive image">
     </div>
 </div>

@@ -1,0 +1,2 @@
+pseudo;nom;prenom;telephone;mail;mot_de_passe;administrateur;actif;site_id
+Jean22d;Loup;Jean;645105045;jlds@gmail.com;1234;1;1;1
