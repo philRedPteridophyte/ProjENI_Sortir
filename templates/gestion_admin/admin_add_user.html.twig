@@ -4,10 +4,12 @@
 
 {% block body %}
 
-    <h1 style="text-align: center"> Ajouter un utilisateur</h1>
-    <div style="text-align: center" class="container">
-        {{ form_start(adminAddUser) }}
-        {{ form_widget(adminAddUser) }}
-        {{ form_end(adminAddUser) }}
+    <div class="container">
+        <h1>Ajouter un utilisateur</h1>
+        <div class="padded-body-block">
+            {{ form_start(adminAddUser) }}
+            {{ form_widget(adminAddUser) }}
+            {{ form_end(adminAddUser) }}
+        </div>
     </div>
 {% endblock %}

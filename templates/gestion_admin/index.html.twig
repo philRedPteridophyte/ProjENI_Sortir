@@ -8,9 +8,11 @@
             {{ msg }}
         </div>
     {% endfor %}
-    <div class="container" style="text-align: center">
+    <div class="container">
+        <h1>Administration utilisateur</h1>
+        <div class="padded-body-block">
         <a class="btn btn-primary" href="{{ path('adminAddUser') }}" role="button">Ajouter un utilisateur manuellement</a>
-        <br>
+        </div>
         {{ form_start(csvForm) }}
         {{ form_widget(csvForm) }}
         {{ form_end(csvForm) }}
