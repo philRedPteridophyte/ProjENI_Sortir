@@ -126,6 +126,26 @@ class SortieRepository extends ServiceEntityRepository
                 unset($res[$i][0]);
             }
         }
+        /*
+        [
+
+            [
+                0 => sortie
+                ,'user_inscrit' => user_inscrit
+                ,'participants_count' => participants_count
+            ],
+        [
+                ,'user_inscrit' => user_inscrit
+                ,'participants_count' => participants_count
+                'sortie' => sortie
+            ],
+            [
+                ,'user_inscrit' => user_inscrit
+                ,'participants_count' => participants_count
+                'sortie' => sortie
+            ],
+        ]
+        */
         return $res;
     }
 

@@ -8,6 +8,7 @@ use App\Entity\Sortie;
 use App\Repository\LieuxRepository;
 use App\Form\Type\LocalDateTimeType;
 use App\Repository\SiteRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -22,9 +23,9 @@ class SortiesSearchType extends AbstractType
     private $em;
 
     /**
-     * @param LieuxRepository $em
+     * @param VilleRepository $em
      */
-    public function __construct(SiteRepository $em)
+    public function __construct(VilleRepository $em)
     {
         $this->em = $em;
     }
@@ -32,22 +33,26 @@ class SortiesSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $siterepo = $this->em;//->getRepository('App\Repository\LieuxRepository');
+        /*$siterepo = $this->em;//->getRepository('App\Repository\LieuxRepository');
         $listSites = $siterepo->createQueryBuilder('l')
+            ->join( 'l.ville','v')
+            ->addSelect('v')
                 ->getQuery()
                 ->getResult();
-
+*/
         $builder
             ->setMethod('POST')
 
             ->add('lieuxNoLieu', EntityType::class, options: [
-                'label' => 'Site'
-                ,'class'=> Site::class
-                ,'choice_label' => 'nomSite'
+                'label' => 'Lieu'
+                ,'class'=> Lieu::class
+                ,'choice_label' => function ($lieu) {
+                    $villeLieu = $this->em->findOneBy(['id' => $lieu->getVille()]);
+                    return $lieu->getNomLieu()." -- ".strtoupper($villeLieu->getNomVille());
+                }
                 ,'expanded' => false
                 ,'multiple' => false
                 ,'required' => false
-                ,'choices' => $listSites
                 ,'mapped' => false
 
             ] )
