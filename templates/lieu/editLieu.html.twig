@@ -1,0 +1,38 @@
+{% extends 'document.html.twig' %}
+
+{% block title %}Sortir - Editer un lieu{% endblock %}
+
+{% block body %}
+    <style>
+        .flash{
+            padding: 20px;
+            display: block;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: 5px 5px 5px 5px rgba(0,255,0,0.5);
+        }
+    </style>
+
+    <div class="container">
+
+        <h1 style="text-align: center"> Modifier le lieu</h1>
+
+        <div style="text-align: center" class="container">
+            {{ form_start(lieuEditForm) }}
+            {{ form_widget(lieuEditForm) }}
+            {{ form_end(lieuEditForm) }}
+        </div>
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+
+{% endblock %}
