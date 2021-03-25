@@ -84,6 +84,28 @@
     </style>
 
     <div id="pageConnexion">
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Mot de passe oublié</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Souhaitez-vous demander auprès de l'ENI une réinitialisation de mot de passe ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Oui</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="background"></div>
         <a href="#" id="logo"><img src="assets/images/logo.png" alt="logo" width="150" height="50"></a>
 
@@ -116,7 +138,10 @@
                         {{ form_widget(connexionForm.souvenir) }}
                         {{ form_label(connexionForm.souvenir) }}
                     </div>
-                    <a href="#">Mot de passe oublié</a>
+                    <!-- Button trigger modal -->
+                    <a href="#" data-toggle="modal" data-target="#exampleModal">
+                        Mot de passe oublié
+                    </a>
                 </div>
 
                 <div>
