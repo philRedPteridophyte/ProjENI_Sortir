@@ -502,3 +502,15 @@ PAGE _ villes_search
 .list-recherche-ville > .list-item{
     grid-template-columns: 2fr 2fr 1fr;
 }
+/*
+PAGE _ lieux_update
+ */
+.list-lieux{
+    padding-top: 30px;
+}
+.list-lieux > .item-list-titlebar{
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+.list-lieux > .list-item{
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
