@@ -39,7 +39,7 @@ class GestionAdminController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    $this->addFlash("erreur", ["text" => "Erreur pendant l'import du fichier", "couleur" => "#E51F1E"]);
+                    $this->addFlash("error","Erreur pendant l'import du fichier");
                 }
             }
             $pathCSV = $this->getParameter('csv_directory');
@@ -147,6 +147,7 @@ class GestionAdminController extends AbstractController
                     }
                     $em->flush();
                     unlink($pathCSV . '/importUser.txt');
+                    $this->addFlash("success", "L'import a été effectué avec succès");
                 }
             }
         }
