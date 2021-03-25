@@ -195,6 +195,7 @@ class GestionAdminController extends AbstractController
         return $this->render('gestion_admin/admin_add_user.html.twig', [
             'controller_name' => 'GestionAdminController',
             'user' => $user,
+            'session' =>$request->getSession(),
             'adminAddUser' => $adminAddUserForm->createView(),
         ]);
     }
