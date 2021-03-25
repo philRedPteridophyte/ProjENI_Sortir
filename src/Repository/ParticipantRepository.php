@@ -25,6 +25,10 @@ class ParticipantRepository extends ServiceEntityRepository
             ->andWhere(
                 '(i.pseudo = :id AND i.motDePasse = :mdp) OR
                  (i.mail   = :id AND i.motDePasse = :mdp)
+                 
+            ')
+            ->andWhere(
+                'i.actif = 1                 
             ')
             ->setParameter('id', $identifiant)
             ->setParameter('mdp', $mdp)
