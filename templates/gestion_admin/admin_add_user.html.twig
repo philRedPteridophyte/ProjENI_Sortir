@@ -3,7 +3,11 @@
 {% block title %}Sortir - Ajouter un utilisateur{% endblock %}
 
 {% block body %}
-
+    {% for msg in session.flashBag.get('erreur') %}
+        <div  class="alert alert-danger">
+            {{ msg }}
+        </div>
+    {% endfor %}
     <div class="container">
         <h1>Ajouter un utilisateur</h1>
         <div class="padded-body-block">

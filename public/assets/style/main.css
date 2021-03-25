@@ -147,12 +147,15 @@ h1{
         box-shadow: 0px 6px 10px 0px rgba(255,0,0,0.5);
         top: 75px;
     }
-    90%{
+    70%{
         top: 0px;
+        opacity: 1;
+        box-shadow: 0px 10px 15px 0px rgba(255,0,0,0.5);
     }
     100%{
         top: 0px;
         visibility: collapse;
+        opacity: 0;
         box-shadow: 0px 0px 0px 0px rgba(255,0,0,0.5);
     }
 }
@@ -285,6 +288,9 @@ VIEWER
         margin: 0;
         display: inline-block;
     }
+    .viewer .field-viewer:nth-child(2n) {
+        background-color: #F8F9FA;
+    }
 }
 /*
 PAGE _ Sortie_by_id
@@ -337,8 +343,8 @@ PAGE _ recherche_sorties
     grid-template-columns: 2fr 5fr;
 }
 @media screen and (max-width: 600px) {
-    .item-list > .list-item:nth-child(2n){
-        background-color: rgb(248, 249, 250);
+    .page-recherche-sorties .item-list > .list-item:nth-child(2n){
+        background-color: #F8F9FA;
     }
     .page-recherche-sorties .list-recherche-sortie > .item-list-titlebar{
         grid-template-columns: 2fr 2fr 2fr 2fr 2fr 1fr 2fr 2fr 20%;
