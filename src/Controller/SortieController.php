@@ -194,14 +194,9 @@ class SortieController extends AbstractController
     #[Route('/home', name: 'sorties_3', methods: ['GET','POST'])]
     public function recherche(Request $request, SortieRepository $sortiesRepository): Response
     {
-        /*
-                if (!$this->isGranted('ROLE_ADMIN') || !$this->isGranted('ROLE_USER')) {
-                    throw new AccessDeniedException('Vous n\'avez pas les droits suffisants.');
-                }
-        */
 
         $user = $request->getSession()->get("compteConnecte");
-        //TODO : check roles
+
         if($user){
             $sorties = null;
             $lieuxNoLieu = null;
@@ -218,12 +213,9 @@ class SortieController extends AbstractController
 
             $sortieSearchForm = $this->createForm(SortiesSearchType::class, new Sortie);
             $sortieSearchForm->handleRequest($request);
-            //var_dump($sortieSearchForm->get('lieuxNoLieu')->getData()->getId());
-            //var_dump($sortieSearchForm->isSubmitted());
             if ($sortieSearchForm->isSubmitted() ) {
                 $lieuxNoLieu =  $sortieSearchForm->get('lieuxNoLieu') != null ? $sortieSearchForm->get('lieuxNoLieu')->getData() != null ? $sortieSearchForm->get('lieuxNoLieu')->getData()->getId() : null : null;
                 $nom = $sortieSearchForm->get('nom')->getData();
-                //var_dump($sortieSearchForm->get('datedebut'));
                 $datedebut = $sortieSearchForm->get('datedebut') != null ? $sortieSearchForm->get('datedebut')->getData() : null;
                 $datecloture = $sortieSearchForm->get('datecloture') != null ? $sortieSearchForm->get('datecloture')->getData() : null;
                 $suisOrga = $sortieSearchForm->get('suisOrga')->getData();
@@ -231,13 +223,10 @@ class SortieController extends AbstractController
                 $pasInscr = $sortieSearchForm->get('pasInscr')->getData();
                 $passee = $sortieSearchForm->get('passee')->getData();
 
-                //var_dump([$sorties,$nom,$datedebut,$datecloture,$suisOrga,$inscr,$pasInscr,$passee]);
-
-
                 $results = $sortiesRepository->filteredSearch( $lieuxNoLieu , $nom, $datedebut, $datecloture, $suisOrga, $inscr, $pasInscr, $passee, $user);
 
-                //var_dump([$results,$lieuxNoLieu,$nom,$datedebut,$datecloture,$suisOrga,$inscr,$pasInscr,$passee]);
-                //var_dump($results);
+            }else{
+                $results = $sortiesRepository->filteredSearch( $lieuxNoLieu , $nom, $datedebut, $datecloture, $suisOrga, $inscr, $pasInscr, $passee, $user);
             }
 
             return $this->render('sortie/chercher.html.twig', [
@@ -249,7 +238,5 @@ class SortieController extends AbstractController
         }else{
             return $this->redirectToRoute('connexion');
         }
-
-
     }
 }
