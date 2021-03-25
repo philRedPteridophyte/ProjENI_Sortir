@@ -4,10 +4,12 @@
 
 {% block body %}
 
-    <h1 style="text-align: center"> Ajouter une ville</h1>
-    <div style="text-align: center" class="container">
-        {{ form_start(villeAddForm) }}
-        {{ form_widget(villeAddForm) }}
-        {{ form_end(villeAddForm) }}
+    <div class="container">
+        <h1> Ajouter une ville</h1>
+        <div class="padded-body-block">
+            {{ form_start(villeAddForm) }}
+            {{ form_widget(villeAddForm) }}
+            {{ form_end(villeAddForm) }}
+        </div>
     </div>
 {% endblock %}
