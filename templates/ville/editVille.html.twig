@@ -3,11 +3,12 @@
 {% block title %}Sortir - Editer une ville{% endblock %}
 
 {% block body %}
-
-    <h1 style="text-align: center"> Modifier la ville</h1>
-    <div style="text-align: center" class="container">
-        {{ form_start(villeEditForm) }}
-        {{ form_widget(villeEditForm) }}
-        {{ form_end(villeEditForm) }}
+    <div class="container">
+        <h1>Modifier la ville</h1>
+        <div class="padded-body-block">
+            {{ form_start(villeEditForm) }}
+            {{ form_widget(villeEditForm) }}
+            {{ form_end(villeEditForm) }}
+        </div>
     </div>
 {% endblock %}
