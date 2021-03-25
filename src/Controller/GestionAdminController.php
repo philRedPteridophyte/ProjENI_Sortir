@@ -7,6 +7,7 @@ use App\Entity\Site;
 use App\Form\AdminAddUserType;
 use App\Form\UploadCSVType;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Expr\Array_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,22 +56,71 @@ class GestionAdminController extends AbstractController
                         !(strlen($data[5]) > 0 && strlen($data[5]) < 255) ||
                         !($data[6] == 0 || $data[6] == 1) ||
                         !($data[7] == 0 || $data[7] == 1)) {
-                        $this->addFlash("erreur", "le fichier csv ne respecte pas le standard d'import");
+                        $this->addFlash("error", "le fichier csv ne respecte pas le standard d'import");
                         $flag = true;
                         $this->redirectToRoute("gestion_admin");
                     }
+
+                    if(!ctype_alnum($data[0])){
+                        $this->addFlash("error", "Le format du pseudo ".$data[0]." est erroné");
+                        $flag = true;
+                        $this->redirectToRoute("gestion_admin");
+                    }
+
+                    if(!ctype_alpha($data[1])){
+                        $this->addFlash("error", "Le format du nom ".$data[1]." est erroné");
+                        $flag = true;
+                        $this->redirectToRoute("gestion_admin");
+                    }
+
+
+                    if(!ctype_alpha($data[2])){
+                        $this->addFlash("error", "Le format du prenom ".$data[2]." est erroné");
+                        $flag = true;
+                        $this->redirectToRoute("gestion_admin");
+                    }
+
+                    $telephone = preg_match("/^[0-9]{10}+$/", $data[3]);
+
+                    if(!$telephone){
+                        $this->addFlash("error", "Le format du tel ".$data[3]." est erroné");
+                        $flag = true;
+                        $this->redirectToRoute("gestion_admin");
+                    }
+
+                    $mail = filter_var($data[4], FILTER_VALIDATE_EMAIL);
+
+                    if(!$mail ){
+                        $this->addFlash("error", "Le format du mail ".$data[4]." est erroné");
+                        $flag = true;
+                        $this->redirectToRoute("gestion_admin");
+                    }
+
+
+                    if($data[6] != 0 && $data[6] != 1 ){
+                        $this->addFlash("error", "Admin doit être 1 ou 0");
+                        $flag = true;
+                        $this->redirectToRoute("gestion_admin");
+                    }
+
+                    if($data[7] != 0 && $data[7] != 1 ){
+                        $this->addFlash("error", "Actif doit être 1 ou 0");
+                        $flag = true;
+                        $this->redirectToRoute("gestion_admin");
+                    }
+
                     if ($em->getRepository(Site::class)->findOneBy(['id' => $data[8]]) == null) {
-                        $this->addFlash("erreur", "le site : $data[8] n'existe pas");
+                        $this->addFlash("error", "le site : $data[8] n'existe pas");
                         $flag = true;
                         $this->redirectToRoute("gestion_admin");
                     }
                     if ($em->getRepository(Participant::class)->findOneBy(['mail' => $data[4]]) != null) {
-                        $this->addFlash("erreur", "le mail  $data[4] est déja utilisé");
+                        $this->addFlash("error", "le mail  $data[4] est déja utilisé");
                         $flag = true;
                         $this->redirectToRoute("gestion_admin");
                     }
                     if ($em->getRepository(Participant::class)->findOneBy(['pseudo' => $data[0]]) != null) {
-                        $this->addFlash("erreur", "le pseudo  $data[0] est déja utilisé");
+                        $this->addFlash("error", "le pseudo  $data[0] est déja utilisé");
                         $flag = true;
                         $this->redirectToRoute("gestion_admin");
                     }
