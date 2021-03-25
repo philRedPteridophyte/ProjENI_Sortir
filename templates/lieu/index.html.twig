@@ -1,20 +1,48 @@
-{% extends 'base.html.twig' %}
+{% extends 'document.html.twig' %}
 
-{% block title %}Hello LieuController!{% endblock %}
+{% block title %}Sortir - Gestion des lieux{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'E:/Cours/ENI/wamp/www/symfony/ProjENI_Sortir/src/Controller/LieuController.php'|file_link(0) }}">src/Controller/LieuController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'E:/Cours/ENI/wamp/www/symfony/ProjENI_Sortir/templates/lieu/index.html.twig'|file_link(0) }}">templates/lieu/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="container page-villes_search">
+
+        <h1> Gérer les lieux</h1>
+        <h2> Filtrer les lieux</h2>
+
+        <div class="filters padded-body-block">
+            {{ form_start(lieuSearchForm) }}
+            {{ form_widget(lieuSearchForm) }}
+            {{ form_end(lieuSearchForm) }}
+        </div>
+
+        <div class="item-list list-recherche-sortie">
+            <div class="item-list-titlebar">
+                <span>Lieu</span>
+                <span>Rue</span>
+                <span>Latitude</span>
+                <span>Longitude</span>
+                <span>Ville</span>
+                <span>Actions</span>
+            </div>
+
+            {%  for l in lieux %}
+                <div class="list-item">
+                    <span>{{ l.nomLieu }}</span>
+                    <span>{{ l.rue }}</span>
+                    <span>{{ l.latitude }}</span>
+                    <span>{{ l.longitude }}</span>
+                    <span>{{ l.ville.nomVille }}</span>
+                    <span>
+                        <a href="{{ path('editLieu',{ 'id': l.id }) }}">Modifier</a>
+                    </span>
+                </div>
+            {% else %}
+            {% endfor %}
+
+        </div>
+
+        <a class="btn ptn-primary" href="{{ path('addLieu')}}">Ajouter</a>
+    </div>
+
 {% endblock %}
