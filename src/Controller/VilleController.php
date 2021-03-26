@@ -68,6 +68,8 @@ class VilleController extends AbstractController
                 $villeToEdit->setNomVille($villeEditForm->get('nomVille')->getData());
                 $villeToEdit->setCodePostal($villeEditForm->get('codePostal')->getData());
                 $em->flush();
+                $this->addFlash('success', 'Les changements ont bien été pris en compte');
+                return $this->redirectToRoute('ville', $request->query->all());
             }
         }
         else{
@@ -102,6 +104,7 @@ class VilleController extends AbstractController
                 $villeToAdd->setCodePostal($villeAddForm->get('codePostal')->getData());
                 $em->persist($villeToAdd);
                 $em->flush();
+                $this->addFlash('success', 'La ville a été ajoutée');
                 return $this->redirectToRoute('ville', $request->query->all());
             }
         }
