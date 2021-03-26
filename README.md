@@ -18,9 +18,11 @@ organisation géographique des sorties.
 
 ## Setup
 
-Pour faire fonctionner ce projet, clonez le projet localement dans le repertoir dédié d'un service web.
+Pour faire fonctionner ce projet, clonez le projet localement dans le repertoire dédié d'un service web.
 
 Il faut ensiute créer une base de donnée Sortir (ou configurez un autre nom dans le fichier .env du projet) et ouvrir un terminal à la racine du projet.
+Pensez à modifier votre utilisateur bdd au besoin (DATABASE_URL="mysql://<NOM_USER>:<PASSWORD>@127.0.0.1:3306/sortie?serverVersion=8.0&charset=utf8"
+
 
 Utilisez la commande Composer pour installer les composants du projet:
 
@@ -32,4 +34,4 @@ Utilisez la commande php doctrine pour mettre en place, et à jour la base de do
 
 Finalement il faut executer le fichier "create_events.sql" dans la base de donnée.
 
-Pour pouvoir se connecter et apporter des changements il sera nécessaire d'ajouer au moin un utilisateur administratif à la main dans la base de donnée. Dans le dosser "sql" à la racine du projet se trouve des jeux de données exemple.
+Pour pouvoir se connecter et apporter des changements il sera nécessaire d'ajouer au moins un utilisateur administratif à la main dans la base de donnée. Dans le dossier "sql" à la racine du projet se trouve des jeux de données exemple.
