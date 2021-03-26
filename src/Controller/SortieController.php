@@ -124,6 +124,14 @@ class SortieController extends AbstractController
         // TODO handle case when id is not in the database (DAMIEN)
 
         if($sortie != null) {
+            if($sortie->getEtat()->getId() == 2 || $sortie->getEtat()->getId() == 5 || $sortie->getEtat()->getId() == 6){
+                return $this->redirectToRoute('sorties_0');
+            }
+
+            if(date_format($sortie->getDatecloture(),'Y-m-d H:i') <= date_format(new DateTime('now', new \DateTimeZone('Europe/Paris')),'Y-m-d H:i')){
+                return $this->redirectToRoute('sorties_0');
+            }
+
             $isAlreadyIn = $em->getRepository(Inscription::class)->findBySortieIdAndParticipants($sortie->getId(), $participant->getId());
             if ($isAlreadyIn) {
                 // TODO handle case when user already joined the Sortie
@@ -153,8 +161,10 @@ class SortieController extends AbstractController
         $participant = $request->getSession()->get("compteConnecte");
         if($participant){
             $sortie = $em->getRepository(Sortie::class)->findOneBy( ['id' => $id]);
-            // TODO handle case when id is not in the database (DAMIEN)
 
+            if($sortie == null){
+                return $this->redirectToRoute('sorties_0');
+            }
             $userIsInSortie = $em->getRepository(Inscription::class)->findBySortieIdAndParticipants($sortie,$participant);
             if($userIsInSortie){
                 $em->remove($userIsInSortie);
@@ -173,7 +183,17 @@ class SortieController extends AbstractController
         $user = $request->getSession()->get('compteConnecte');
 
         $sortie = $em->getRepository(Sortie::class)->findOneBy( ['id' => $id]);
+
         if($sortie != null) {
+
+            if($user->getAdministrateur() && $sortie->getEtat()->getId() == 6){
+                return $this->redirectToRoute('sorties_0');
+            }
+
+            if(!$user->getAdministrateur() && $sortie->getOrganisateur() != $user){
+                return $this->redirectToRoute('sorties_0');
+            }
+
             if (($sortie->getOrganisateur()->getId() == $user->getId()) || $user->getAdministrateur()) {
                 //TODO add date condition in this if ^^^
                 $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']));
