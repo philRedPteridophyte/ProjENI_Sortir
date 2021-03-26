@@ -174,7 +174,7 @@ class SortieController extends AbstractController
 
         $sortie = $em->getRepository(Sortie::class)->findOneBy( ['id' => $id]);
         if($sortie != null) {
-            if ($sortie->getOrganisateur()->getId() == $user->getId()) {
+            if (($sortie->getOrganisateur()->getId() == $user->getId()) || $user->getAdministrateur()) {
                 //TODO add date condition in this if ^^^
                 $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']));
                 $sortie->setDescriptioninfos("Sortie annulée le : " . date_format(new DateTime('now', new \DateTimeZone("Europe/Paris")), 'Y-m-d H:i:s'));
