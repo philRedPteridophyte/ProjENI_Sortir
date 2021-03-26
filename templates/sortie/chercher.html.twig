@@ -37,9 +37,9 @@
                         <span>{% if r.user_inscrit %}<i class="fas fa-check"></i>{% endif %}</span>
                         <span>{{ r.sortie.organisateur.pseudo }}</span>
                         <span>
+
                             {% if r.sortie.etat.id == 4 and r.sortie.organisateur.id == user.id  %}
-                                <a href="" title="Editer la sortie"><i class="fas fa-edit"></i></a>
-                                | <a href="{{ path('cancelSortie',{ 'id': r.sortie.id }) }}" title="Supprimer la sortie"><i class="fas fa-eraser"></i></a>
+                                <a href="{{ path('cancelSortie',{ 'id': r.sortie.id }) }}" title="Supprimer la sortie"><i class="fas fa-eraser"></i></a>
                             {% elseif r.sortie.etat.id != 4 and r.sortie.organisateur.id == user.id  %}
                                 <a href="{{ path('sortie_get_by_id_1',{ 'id': r.sortie.id }) }}" title="Afficher la sortie"><i class="fas fa-file-alt"></i></a>
                             {% else %}
@@ -49,10 +49,15 @@
                             {% if user.administrateur and r.sortie.etat.id != 6 %}
                                 | <a href="{{ path('cancelSortie',{ 'id': r.sortie.id }) }}" title="Supprimer la sortie"><i class="fas fa-eraser"></i></a>
                             {% endif %}
-                            {% if (r.sortie.etat.id == 1 or r.sortie.etat.id == 3) and r.user_inscrit == 0 and r.sortie.datecloture|date("Y-m-d H:i") > "now"|date("Y-m-d H:i")%}
-                                | <a href="{{ path('joinSortie',{ 'id': r.sortie.id }) }}" title="S'incrire à la sortie"><i class="fas fa-calendar-plus"></i></a>
-                            {% elseif (r.sortie.etat.id == 1 or r.sortie.etat.id == 3) and r.user_inscrit == 1 %}
-                                | <a href="{{ path('leaveSortie',{ 'id': r.sortie.id }) }}" title="Se désister de la sortie"><i class="fas fa-calendar-minus"></i></a>
+
+                            {% if r.sortie.etat.id == 3 and r.user_inscrit == 0 and r.sortie.datecloture|date("Y-m-d H:i") > "now"|date("Y-m-d H:i")%}
+                                {% if r.sortie.organisateur.id != user.id %}
+                                    | <a href="{{ path('joinSortie',{ 'id': r.sortie.id }) }}" title="S'incrire à la sortie"><i class="fas fa-calendar-plus"></i></a>
+                                {% endif %}
+                            {% elseif r.sortie.etat.id == 3 and r.user_inscrit == 1 %}
+                                {% if r.sortie.organisateur.id != user.id %}
+                                    | <a href="{{ path('leaveSortie',{ 'id': r.sortie.id }) }}" title="Se désister de la sortie"><i class="fas fa-calendar-minus"></i></a>
+                                {% endif %}
                             {% endif %}
                         </span>
                     </div>
